@@ -1,0 +1,45 @@
+<script>
+$("#apiName").text("MG-002: METER 정보 수집");
+$("#apiMehtod").val("POST");
+$("#apiUrl").val(host+"/meter/info");
+$("#apiAction").prop("disabled", false);
+$("#apiInput").show();
+$("#apiDesc").html("");
+$("#apiDesc").append("<div>- INPUT 항목</div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;1. smgwid : SMGW Id 정보</div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;2. metertype : </div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;3. meterid : </div>");
+
+$("#apiPlan").html("");
+</script>
+<TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+<input type="hidden" name="input" id="input" value="MG-002" />
+<tr>
+    <th width="120">&nbsp;</th>
+    <th width="120">속성명</th>
+    <th width="120">KEY</th>
+    <th width="*"  >VALUE</th>
+    <th width="450">DESCRIPTION</th>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>SMGW 고유 ID</td>
+    <td>smgwId</td>
+    <td><input style="width:98%;"  type ="text" name="smgwId" id="smgwId" value="KA4wmmr9Ly8YnvEh" onFocus="this.select();"/></td>
+    <td>{KA4wmmr9Ly8YnvEh}</td>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>meterType</td>
+    <td>미터종류</td>
+    <td><select style="width:98%;"  name="meterType" id="meterType">
+    <option value="1">전기</option>
+    <option value="2">열량</option>
+    <option value="3">가스</option>
+    <option value="4">수도</option>
+    <option value="5">온수</option>
+    </select></td>
+    <td>&nbsp;1 = 전기 미터, 2 = 열량 미터, 3 = 가스 미터, 4 = 수도 미터, 5 = 온수 미터 </td>
+</tr>
+<tr><td>Parameters</td><td>meterId</td><td></td><td><input style="width:98%;"  type ="text" name="meterId" id="meterId" value="" onFocus="this.select();"/></td><td>&nbsp;</td></tr>
+</TABLE>

@@ -1,0 +1,96 @@
+<script>
+$("#apiName").text("SM-010: MDMS서버의 요청에 대한 응답");
+$("#ContentType").val("application/xml; charset=utf-8");
+$("#apiMehtod").val("PUT");
+$("#apiUrl").val(host+"/smgw/ms/result");
+$("#apiAction").prop("disabled", false);
+$("#apiInput").show();
+$("#apiDesc").html("");
+$("#apiDesc").append("<div>- INPUT 항목</div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;1. smgwId : SMGW Id 정보</div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;2. msCode : 요청 Code 정보 </div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;3. msId : 요청 ID 정보 </div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;4. TOU 테이블 response XML 참조</div>");
+
+$("#apiPlan").html("");
+</script>
+<TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+<input type="hidden" name="input" id="input" value="SM-010" />
+<tr>
+    <th width="120">&nbsp;</th>
+    <th width="120">속성명</th>
+    <th width="120">KEY</th>
+    <th width="*"  >VALUE</th>
+    <th width="450">DESCRIPTION</th>
+</tr>
+<tr>
+    <td>Header</td>
+    <td>SMGW Id</td>
+    <td>smgwId</td>
+    <td><input style="width:98%;"  type ="text" name="smgwId" id="smgwId" value="GW-2914012000-G09" onFocus="this.select();"/></td>
+    <td>GW-5011013600-SYW</td>
+</tr>
+<tr>
+    <td>Header</td>
+    <td>MS CODE ID</td>
+    <td>msCodeId</td>
+    <td><select style="width:98%;"  name="msCode" id="msCode">
+    <option value="MS-001">(MS-001)TOU 테이블 업로드</option>
+    <option value="MS-002">(MS-002)TOU 테이블 수정</option>
+    <option value="MS-003">(MS-003)MDMS 설정 파일 변경</option>
+    <option value="MS-004">(MS-004)검침 데이터 요청</option>
+    <option value="MS-005">(MS-005)LP 데이터 요청</option>
+    <option value="MS-006">(MS-006)TOU 테이블 운행,중지,삭제</option>
+    </select></td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+    <td>Header</td>
+    <td>MS ID</td>
+    <td>msId</td>
+    <td><input style="width:98%;"  type ="text" name="msId" id="msId" value="" onFocus="this.select();"/></td>
+    <td>request 정보 그대로</td>
+</tr>
+</TABLE>
+<TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+<tr>
+    <th width="120">&nbsp;</th>
+    <th width="120">속성명</th>
+    <th width="120">KEY</th>
+    <th width="*"  >VALUE</th>
+    <th width="450">DESCRIPTION</th>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>검침</td>
+    <td>xml</td>
+    <td><textarea rows="15" style="width:99%;" id="xml" name="xml" ><?xml version="1.0" encoding="utf-8"?>
+<x:xDLMS-APDU xmlns:x="http://www.dlms.com/COSEMpdu">
+  <x:set-response>
+    <x:set-response-with-list>
+      <x:invoke-id-and-priority>64</x:invoke-id-and-priority>
+      <!-- <xsd:enumeration value="success"/>
+         <xsd:enumeration value="hardware-fault"/>
+         <xsd:enumeration value="temporary-failure"/>
+         <xsd:enumeration value="read-write-denied"/>
+         <xsd:enumeration value="object-undefined"/>
+         <xsd:enumeration value="object-class-inconsistent"/>
+         <xsd:enumeration value="object-unavailable"/>
+         <xsd:enumeration value="type-unmatched"/>
+         <xsd:enumeration value="scope-of-access-violated"/>
+         <xsd:enumeration value="data-block-unavailable"/>
+         <xsd:enumeration value="long-get-aborted"/>
+         <xsd:enumeration value="no-long-get-in-progress"/>
+         <xsd:enumeration value="long-set-aborted"/>
+         <xsd:enumeration value="no-long-set-in-progress"/>
+         <xsd:enumeration value="data-block-number-invalid"/>
+         <xsd:enumeration value="other-reason"/>-->
+      <!--0번째: 적용할 미터 ID정보 1st: TOU 이름 2rd: 계절 설정(예약) 3rd: 주 설정(예약) 4th: 일 설정(예약) 5th: 예약 적용 시간 6th: 정기비정기 휴일-->
+      <x:result>success success success success success success success</x:result>
+    </x:set-response-with-list>
+  </x:set-response>
+</x:xDLMS-APDU>
+</textarea></td>
+    <td>TOU 테이블 response XML</td>
+</tr>
+</TABLE>

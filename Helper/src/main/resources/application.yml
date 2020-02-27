@@ -1,0 +1,74 @@
+logging:
+  config: classpath:logback.xml
+  level:
+    ROOT: INFO
+    org.springframework.web: INFO
+    org.springframework: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    com.gelix.mdmsApi: DEBUG
+    com.gelix.commonmdms: DEBUG
+
+server:
+  port: 9999
+  servlet:
+      context-path: /mdms
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  resources:
+    static-locations: classpath:/static/
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: 
+    hikari:
+      driver-class-name: org.h2.Driver
+      connectionInitSql: SELECT 1 FROM DUAL
+      connection-timeout: 30000
+      idle-timeout: 600000
+      connection-test-query: SELECT 1 FROM DUAL
+      maximum-pool-size: 100
+      leak-detection-threshold: 20000
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+  output:
+    ansi:
+      enabled:always
+
+  application:
+    name: mdms-api
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      cors:
+        allowed-origins: "*"
+        allowed-methods: GET
+  endpoint:
+    health:
+      show-details: ALWAYS
+    shutdown:
+      enabled: false
+  health:
+    diskspace:
+      enabled: true
+gmp:
+  ocr:
+    datapath: /project/Tesseract-OCR/tessdata
+  file:
+    excel:
+      download: /project/file/excel/download
+      upload: /project/file/excel/upload
+      sample: /project/file/excel/sample
+    xsd: /project/file/xsd/COSEMpdu_GB8.xsd
+    images:
+      download: /project/file/images/download
+      upload: /project/file/images/upload
+    
+

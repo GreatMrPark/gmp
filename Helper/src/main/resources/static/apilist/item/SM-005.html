@@ -1,0 +1,47 @@
+<script>
+$("#apiName").text("SM-005: SMGw 설치 인증");
+$("#ContentType").val("application/xml; charset=utf-8");
+$("#apiMehtod").val("POST");
+$("#apiUrl").val(host+"/inst/smgw");
+$("#apiAction").prop("disabled", false);
+$("#apiInput").show();
+$("#apiDesc").html("");
+$("#apiDesc").append("<div>- INPUT 항목</div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;1. smgwid : </div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;GW-5011013600-SYW - 1 - M-4111710400-ZSH</div>");
+
+$("#apiPlan").html("");
+</script>
+<TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+<input type="hidden" name="input" id="input" value="SM-005" />
+<tr>
+    <th width="120">&nbsp;</th>
+    <th width="120">속성명</th>
+    <th width="120">KEY</th>
+    <th width="*"  >VALUE</th>
+    <th width="450">DESCRIPTION</th>
+</tr>
+<tr>
+    <td>Header</td>
+    <td>SMGW Id</td>
+    <td>smgwId</td>
+    <td><input style="width:98%;"  type ="text" name="smgwId" id="smgwId" value="GW-5011013600-SYW" onFocus="this.select();"/></td>
+    <td>GW-5011013600-SYW</td>
+</tr>
+</TABLE>
+<TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+<tr>
+    <th width="120">&nbsp;</th>
+    <th width="120">속성명</th>
+    <th width="120">KEY</th>
+    <th width="*"  >VALUE</th>
+    <th width="450">DESCRIPTION</th>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>검침</td>
+    <td>xml</td>
+    <td><textarea rows="15" style="width:99%;" id="xml" name="xml" ></textarea></td>
+    <td>COSEM_XML_샘플의 각 미터의 검침.xml 참조</td>
+</tr>
+</TABLE>

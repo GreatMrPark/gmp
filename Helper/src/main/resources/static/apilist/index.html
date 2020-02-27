@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>API</title>
+
+<link rel="stylesheet" type="text/css" href="./css/api.css">
+<link rel="stylesheet" type="text/css" href="./EasyTree/skin-xp/ui.easytree.css">
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<xscript src="//code.jquery.com/jquery-3.2.1.min.js"></xscript>
+<script src="./js/common.js"></script>
+</head>
+<body>
+<div id="wGnb">
+    <h1 id="logo"><img src="logo.png" /></h1>
+    <h1 id="gnbMenu"><ol id="projectMenu"><li>두유비</li></ol></h1>
+    <h1 id="gnbLink"><ol id="projectLink"><li>두유비</li></ol></h1>
+</div>
+
+<div id="wBody">
+    <div id="wSubMenu"><script>$.include("./list.html");</script></div>
+    <div id="wContent">
+    <h1><span id="apiName">API</span></h1>
+    <h2><span id="apiDesc">API Client WEB TOOL</span></h2>
+    <hr size="1" />
+	<table border="0" width="100%">
+	<tr>
+	    <td width="60"><select name="apiMehtod" id="apiMehtod">
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+            <option value="PUT">PUT</option>
+            <option value="DELETE">DELETE</option>
+	    </select>
+	    </td>
+	    <td><input type="text" style="width:98%;border:none;"
+	        name="apiUrl" 
+	        id="apiUrl" 
+	        value="" onFocus="this.select();"/></td>
+<!--        	        
+        <td><div style="text-align:right"><input type="button" 
+                                                    id="window-btn"
+                                                    name="#window-btn"
+                                                   value="브라우저종료"
+                                                   disabled="true" /></div></td>
+-->                                                     
+        <td><div style="text-align:right"><input type="button" 
+                                                    id="apiAction"
+                                                    name="apiAction"
+                                                   value="실행" 
+                                                   onClick="doAction();" 
+                                                   disabled="true" /></div></td>
+                                                   
+        <td><div style="text-align:right"><input type="button" 
+                                                    id="apiJsonAction"
+                                                    name="apiJsonAction"
+                                                   value="JSON" 
+                                                   onClick="jsonAction();"/></div></td>
+	</tr>
+	</table>
+	
+	<table border="1" width="100%">
+    <TR align="center"><th>INPUT</th></TR>
+    <TR align="center">
+        <td>
+	    <TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+	    <tr>
+	        <th width="120">&nbsp;</th>
+	        <th width="120">속성명</th>
+	        <th width="120">KEY</th>
+	        <th width="*"  >VALUE</th>
+	        <th width="450">DESCRIPTION</th>
+	    </tr>
+	    <tr>
+	        <td>Header</td>
+	        <td>Content-Type</td>
+	        <td>Content-Type</td>
+	        <td><input style="width:98%;" 
+	                    type="text" 
+	                    name="ContentType" 
+	                    id="ContentType" 
+	                    value="application/json; charset=utf-8" 
+	                    onFocus="this.select();"
+	                    /></td>
+	        <td></td>
+	    </tr>
+	    <tr>
+	        <td>Header</td>
+	        <td>X-Auth-Token</td>
+	        <td>X-Auth-Token</td>
+	        <td><input style="width:98%;" 
+	                    type="text" 
+	                    name="XAuthToken" 
+	                    id="XAuthToken" 
+	                    value="b79da6a4-ba6c-4608-8294-29b98b5e58d8" 
+	                    onFocus="this.select();"/></td>
+	        <td><input type="button" 
+	                    value="토근생성"
+	                    onclick="fnGetToken();" 
+	                    disabled="true" /></td>
+	    </tr>
+	    </table>
+	    <form name="FrmApi" id="FrmApi" method="post" target="fraResult">
+        <div id="apiContent"><script>$.include("./blank.html");</script></div>
+        <div id="apiInput"></div>
+	    </form>
+	    </td>
+    </TR>
+	</table>
+	<table border="1" width="100%">
+	<TR align="center"><th >OUTPUT</th></TR>
+	<TR valign="top">
+	    <TD>
+	    <TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+	    <tr><TD><textarea rows="15" style="width:99%;" id="responseResult" name="responseResult" ></textarea></TD></tr>
+	    </TABLE>
+	    </TD>
+	</tr>
+	<TR align="center"><th>CONSOLE</th></TR>
+	<TR valign="top">
+	    <TD>
+	    <TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+	    <tr><TD><textarea rows="15" style="width:99%;" id="responseConsole" name="responseConsole" ></textarea></TD></tr>
+	    </TABLE>
+	    </TD>
+	</tr>
+	</table>
+    <div id="apiPlan" style="width:100%;"></div>
+    </div>
+</div>
+<div id="wLiveWrap"></div>
+<div id="wLayer"></div>
+</body>
+<script src="./EasyTree/jquery.easytree.min.js"></script>
+<script>$('#wSubMenu').easytree();</script>
+</html>

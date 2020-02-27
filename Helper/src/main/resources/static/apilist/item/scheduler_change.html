@@ -1,0 +1,48 @@
+<script>
+$("#apiName").text("배치잡 > 스케쥴러 > 변경");
+$("#apiMehtod").val("POST");
+$("#apiUrl").val(host+"/scheduler/change");
+$("#apiAction").prop("disabled", false);
+$("#apiInput").show();
+$("#apiDesc").html("");
+$("#apiDesc").append("<div>- INPUT 항목</div>");
+
+$("#apiPlan").html("");
+</script>
+<TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+<input type="hidden" name="input" id="input" value="schedulerChange" />
+<tr>
+    <th width="120">&nbsp;</th>
+    <th width="120">속성명</th>
+    <th width="120">KEY</th>
+    <th width="*"  >VALUE</th>
+    <th width="450">DESCRIPTION</th>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>JOB NAME</td>
+    <td>jobName</td>
+    <td><select style="width:98%;"  name="jobName" id="jobName">
+    <option value="MdmsLpDataLoadScheduler">MdmsLpDataLoadScheduler</option>
+    <option value="MdmsReadDataLoadScheduler">MdmsReadDataLoadScheduler</option>
+    <option value="MdmsMaxDataLoadScheduler">MdmsMaxDataLoadScheduler</option>
+    </select></td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>JOB CRON</td>
+    <td>jobCron</td>
+    <td>
+        <input style="width:98%;"  type="text" name="jobCron" id="jobCron" value="0/3 * * * * ?" />
+    </td>
+    <td>1.Seconds(0-59)<br/>
+        2.Minutes(0-59)<br/>
+        3.Hours(0-23)<br/>
+        4.Day-of-Month(1-31)<br/>
+        5.Month(1-12 : JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC)<br/>
+        6.Day-of-Week(1-7 : SUN, MON, TUE, WED, THU, FRI, SAT)<br/>
+        7.Year(optional field) <br/>
+    </td>
+</tr>
+</TABLE>

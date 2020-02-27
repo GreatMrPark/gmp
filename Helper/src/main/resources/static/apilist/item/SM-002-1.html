@@ -1,0 +1,460 @@
+<script>
+$("#apiName").text("SM-002: 미터들의 검침 데이터 전달");
+$("#ContentType").val("application/xml; charset=utf-8");
+$("#apiMehtod").val("PUT");
+$("#apiUrl").val(host+"/meter/read");
+$("#apiAction").prop("disabled", false);
+$("#apiInput").show();
+$("#apiDesc").html("");
+$("#apiDesc").append("<div>- INPUT 항목</div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;1. smgwid : </div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;2. metertype : </div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;3. meterid : </div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;4. 검침 XML 파일 : 검침.xml</div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;GW-5011013600-SYW - 1 - M-4111710400-ZSH</div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;GW-1117013100-HRL - 2 - M-4111710400-JL5</div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;GW-1117013100-HRL - 3 - M-4111710400-E83</div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;GW-1117013100-HRL - 4 - M-4111710400-7PV</div>");
+$("#apiDesc").append("<div>&nbsp;&nbsp;&nbsp;&nbsp;GW-1117013100-HRL - 5 - M-4111710400-7L6</div>");
+
+$("#apiPlan").html("");
+</script>
+<TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+<input type="hidden" name="input" id="input" value="SM-002" />
+<tr>
+    <th width="120">&nbsp;</th>
+    <th width="120">속성명</th>
+    <th width="120">KEY</th>
+    <th width="*"  >VALUE</th>
+    <th width="450">DESCRIPTION</th>
+</tr>
+<tr>
+    <td>Header</td>
+    <td>SMGW Id</td>
+    <td>smgwId</td>
+    <td><input style="width:98%;"  type ="text" name="smgwId" id="smgwId" value="GW-4111710400-49Z" onFocus="this.select();"/></td>
+    <td>GW-5011013600-SYW</td>
+</tr>
+<tr>
+    <td>Header</td>
+    <td>미터종류</td>
+    <td>meterType</td>
+    <td><select style="width:98%;"  name="meterType" id="meterType">
+    <option value="1" selected>전기</option>
+    <option value="2">열량</option>
+    <option value="3">가스</option>
+    <option value="4">수도</option>
+    <option value="5">온수</option>
+    </select></td>
+    <td>&nbsp;1 = 전기 미터, 2 = 열량 미터, 3 = 가스 미터, 4 = 수도 미터, 5 = 온수 미터 </td>
+</tr>
+<tr>
+    <td>Header</td>
+    <td>미터아이디</td>
+    <td>meterId</td>
+    <td><input style="width:98%;"  type ="text" name="meterId" id="meterId" value="M-4111710400-9BC" onFocus="this.select();"/></td>
+    <td>&nbsp;</td>
+</tr>
+</TABLE>
+<TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+<tr>
+    <th width="120">&nbsp;</th>
+    <th width="120">속성명</th>
+    <th width="120">KEY</th>
+    <th width="*"  >VALUE</th>
+    <th width="450">DESCRIPTION</th>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>검침</td>
+    <td>xml</td>
+    <td><textarea rows="15" style="width:99%;" id="xml" name="xml" ><?xml version="1.0" encoding="UTF-8"?>
+<x:xDLMS-APDU xmlns:x="http://www.dlms.com/COSEMpdu">
+    <x:set-request>
+        <x:set-request-with-list>
+            <x:invoke-id-and-priority>64</x:invoke-id-and-priority>
+            <x:attribute-descriptor-list>
+        <!--검침 시간 정보-->
+        <x:Cosem-Attribute-Descriptor-With-Selection>
+          <x:cosem-attribute-descriptor>
+            <x:class-id>8</x:class-id>
+            <!--00/00/01/00/00/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 0.0.1.0.0.255 임-->
+            <x:instance-id>0000010000FF</x:instance-id>
+            <x:attribute-id>2</x:attribute-id>
+          </x:cosem-attribute-descriptor>
+        </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--유효전력량(전체구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/01/08/00/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.1.8.0.255 임-->
+                        <x:instance-id>0101010800FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--피상전력량(전체구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/09/08/00/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.9.8.0.255 임-->
+                        <x:instance-id>0101090800FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--지상 무효전력량(전체구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/05/08/00/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.5.8.0.255 임-->
+                        <x:instance-id>0101050800FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--진상 무효전력량(전체구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/08/08/00/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.8.8.0.255 임-->
+                        <x:instance-id>0101080800FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--평균역율(전체구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/0D/09/00/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.13.9.0.255 임-->
+                        <x:instance-id>01010D0900FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                
+                <!--유효전력량(A구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/01/08/01/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.1.8.1.255 임-->
+                        <x:instance-id>0101010801FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--피상전력량(A구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/09/08/01/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.9.8.1.255 임-->
+                        <x:instance-id>0101090801FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--지상 무효전력량(A구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/05/08/01/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.5.8.1.255 임-->
+                        <x:instance-id>0101050801FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--진상 무효전력량(A구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/08/08/01/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.8.8.1.255 임-->
+                        <x:instance-id>0101080801FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--평균역율(A구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/0D/09/01/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.13.9.1.255 임-->
+                        <x:instance-id>01010D0901FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                
+                <!--유효전력량(B구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/01/08/02/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.1.8.2.255 임-->
+                        <x:instance-id>0101010802FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--피상전력량(B구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/09/08/02/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.9.8.2.255 임-->
+                        <x:instance-id>0101090802FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--지상 무효전력량(B구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/05/08/02/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.5.8.2.255 임-->
+                        <x:instance-id>0101050802FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--진상 무효전력량(B구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/08/08/02/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.8.8.2.255 임-->
+                        <x:instance-id>0101080802FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--평균역율(B구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/0D/09/02/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.13.9.2.255 임-->
+                        <x:instance-id>01010D0902FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                
+                <!--유효전력량(C구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/01/08/03/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.1.8.3.255 임-->
+                        <x:instance-id>0101010803FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--피상전력량(C구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/09/08/03/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.9.8.3.255 임-->
+                        <x:instance-id>0101090803FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--지상 무효전력량(C구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/05/08/03/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.5.8.3.255 임-->
+                        <x:instance-id>0101050803FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--진상 무효전력량(C구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/08/08/03/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.8.8.3.255 임-->
+                        <x:instance-id>0101080803FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--평균역율(C구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/0D/09/03/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.13.9.3.255 임-->
+                        <x:instance-id>01010D0903FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                
+                <!--유효전력량(D구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/01/08/04/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.1.8.0.255 임-->
+                        <x:instance-id>0101010804FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--피상전력량(D구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/09/08/04/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.9.8.4.255 임-->
+                        <x:instance-id>0101090804FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--지상 무효전력량(D구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/05/08/04/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.5.8.4.255 임-->
+                        <x:instance-id>0101050804FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--진상 무효전력량(D구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/08/08/00/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.8.8.4.255 임-->
+                        <x:instance-id>0101080804FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+                <!--평균역율(D구간)-->
+                <x:Cosem-Attribute-Descriptor-With-Selection>
+                    <x:cosem-attribute-descriptor>
+                        <x:class-id>3</x:class-id>
+            <!--01/01/0D/09/04/FF 씩으로 구분-->
+            <!--구분된 값으로 10진수로 표현하면 1.1.13.9.4.255 임-->
+                        <x:instance-id>01010D0904FF</x:instance-id>
+                        <x:attribute-id>2</x:attribute-id>
+                    </x:cosem-attribute-descriptor>
+                </x:Cosem-Attribute-Descriptor-With-Selection>
+            </x:attribute-descriptor-list>
+            <x:value-list>
+        <x:Data>
+          <!--검침 시간 정보-->
+          <!--2019-09-20 15:00:00-->
+          <!--07E3(년도)/09(월정보)/14(일정보)/FF(요일정보)/0F(시)/00(분)/00(초)/FF(미리세컨드)/800000(Default)/ 씩으로 구분-->
+          <x:octet-string>07E30914FF0F0000FF800000</x:octet-string>
+        </x:Data>
+        <!--유효전력량(전체구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>40</x:double-long-unsigned>
+                </x:Data>
+                <!--피상전력량(전체구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>40</x:double-long-unsigned>
+                </x:Data>
+                <!--지상 무효전력량(전체구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>40</x:double-long-unsigned>
+                </x:Data>
+                <!--진상 무효전력량(전체구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>40</x:double-long-unsigned>
+                </x:Data>
+                <!--평균역률(전체구간)-->
+                <x:Data>
+                    <x:float32>0.5427154</x:float32>
+                </x:Data>
+                
+                <!--유효전력량(A구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>10</x:double-long-unsigned>
+                </x:Data>
+                <!--피상전력량(A구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>40</x:double-long-unsigned>
+                </x:Data>
+                <!--지상 무효전력량(A구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>40</x:double-long-unsigned>
+                </x:Data>
+                <!--진상 무효전력량(A구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>40</x:double-long-unsigned>
+                </x:Data>
+                <!--평균역률(A구간)-->
+                <x:Data>
+                    <x:float32>0.5427154</x:float32>
+                </x:Data>
+                
+                <!--유효전력량(B구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>10</x:double-long-unsigned>
+                </x:Data>
+                <!--피상전력량(B구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>40</x:double-long-unsigned>
+                </x:Data>
+                <!--지상 무효전력량(B구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>40</x:double-long-unsigned>
+                </x:Data>
+                <!--진상 무효전력량(B구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>40</x:double-long-unsigned>
+                </x:Data>
+                <!--평균역률(B구간)-->
+                <x:Data>
+                    <x:float32>0.5427154</x:float32>
+                </x:Data>
+                
+                <!--유효전력량(C구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>10</x:double-long-unsigned>
+                </x:Data>
+                <!--피상전력량(C구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>40</x:double-long-unsigned>
+                </x:Data>
+                <!--지상 무효전력량(C구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>40</x:double-long-unsigned>
+                </x:Data>
+                <!--진상 무효전력량(C구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>40</x:double-long-unsigned>
+                </x:Data>
+                <!--평균역률(C구간)-->
+                <x:Data>
+                    <x:float32>0.5427154</x:float32>
+                </x:Data>
+                
+                <!--유효전력량(D구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>10</x:double-long-unsigned>
+                </x:Data>
+                <!--피상전력량(D구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>40</x:double-long-unsigned>
+                </x:Data>
+                <!--지상 무효전력량(D구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>40</x:double-long-unsigned>
+                </x:Data>
+                <!--진상 무효전력량(D구간)-->
+                <x:Data>
+                    <x:double-long-unsigned>40</x:double-long-unsigned>
+                </x:Data>
+                <!--평균역률(D구간)-->
+                <x:Data>
+                    <x:float32>0.5427154</x:float32>
+                </x:Data>
+            </x:value-list>
+        </x:set-request-with-list>
+    </x:set-request>
+        
+</x:xDLMS-APDU></textarea></td>
+    <td>COSEM_XML_샘플의 각 미터의 검침.xml 참조</td>
+</tr>
+</TABLE>

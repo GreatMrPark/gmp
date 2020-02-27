@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~  Copyright (c) 2019 KEPCO, Inc. All right reserved.
+  ~  This software is the confidential and proprietary information of KEPCO, Inc. You shall not disclose such Confidential Information and
+  ~  shall use it only in accordance with the terms of the license agreement
+  ~  you entered into with KEPCO.
+  ~
+  ~  Revision History
+  ~  Author Date Description
+  ~   doson               2019.9.27
+  -->
+
+<configuration>
+    <property name="LOGS_ABSOLUTE_PATH" value="/home/developer/logs" />
+
+    <!-- Configure Console -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%date %level - %message%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Configure APP LOG -->
+    <appender name="APP" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <file>${LOGS_ABSOLUTE_PATH}/mdms-api/app.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_ABSOLUTE_PATH}/gmp/app-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>60</maxHistory>
+            <totalSizeCap>10GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--<logger name="org.springframework" level="INFO">-->
+        <!--<appender-ref ref="APP"/>-->
+    <!--</logger>-->
+
+    <logger name="jdbc" level="OFF"/>
+    <logger name="jdbc.sqlonly" level="OFF"/>
+    <logger name="jdbc.sqltiming" level="DEBUG"/><!-- DEBUG -->
+    <logger name="jdbc.audit" level="OFF"/>
+    <logger name="jdbc.resultset" level="OFF"/>
+    <logger name="jdbc.resultsettable" level="DEBUG"/><!-- DEBUG -->
+    <logger name="jdbc.connection" level="OFF"/>
+
+    <root level="INFO">
+        <appender-ref ref="APP"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
