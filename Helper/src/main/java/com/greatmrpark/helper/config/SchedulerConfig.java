@@ -35,6 +35,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.greatmrpark.helper.batch.scheduler.DynamicScheduler;
+import com.greatmrpark.helper.batch.scheduler.GmpWebCrawlerScheduler;
 
 /**
  * <p>
@@ -54,11 +55,13 @@ import com.greatmrpark.helper.batch.scheduler.DynamicScheduler;
 @Configuration
 @EnableScheduling
 public class SchedulerConfig implements CommandLineRunner {
-    
+
     @Autowired DynamicScheduler dynamicScheduler;
+    @Autowired GmpWebCrawlerScheduler gmpWebCrawlerScheduler;
     
     @Override
     public void run(String... args) {
-//        dynamicScheduler.startScheduler();
+//      dynamicScheduler.startScheduler();
+        gmpWebCrawlerScheduler.startScheduler();
     }
 }

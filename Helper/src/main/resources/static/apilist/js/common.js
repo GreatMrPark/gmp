@@ -549,3 +549,13 @@ function jsonAction() {
         );
     }
 }
+
+function setJobCron() {
+	var jobCron = ""; // 0/3 * * * * ?
+	var jobSecond	= $("#jobSecond").val();
+	var jobMinute	= $("#jobMinute").val();
+	var jobHour		= $("#jobHour").val();
+	
+	jobCron = jobSecond + " " + jobMinute + " " + jobHour + " " + "* * ?";
+	 $("#jobCron").val(jobCron);
+}

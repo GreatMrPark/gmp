@@ -1,32 +1,3 @@
-/*
- *  Copyright (c) 2019 GELIX, Inc.
- *  All right reserved.
- *  This software is the confidential and proprietary information of GELIX
- *  , Inc. You shall not disclose such Confidential Information and
- *  shall use it only in accordance with the terms of the license agreement
- *  you entered into with GELIX.
- *
- *  Revision History
- *  Author Date Description
- *  ------------------ -------------- ------------------
- *  greatmrpark 2019. 7. 1.
- *
- */
-
-/*
- *  Copyright (c) 2019 GELIX, Inc.
- *  All right reserved.
- *  This software is the confidential and proprietary information of GELIX
- *  , Inc. You shall not disclose such Confidential Information and
- *  shall use it only in accordance with the terms of the license agreement
- *  you entered into with GELIX.
- *
- *  Revision History
- *  Author Date Description
- *  ------------------ -------------- ------------------
- *  greatmrpark 2019. 7. 1.
- *
- */
 package com.greatmrpark.helper.batch.controller;
 
 import java.time.format.DateTimeFormatter;
@@ -108,7 +79,7 @@ public class SchedulerController {
      * @return
      */
     @PostMapping("/scheduler/start")
-    public ResponseEntity<String> startScheduler(@RequestBody BatchInfo params) {
+    public ResponseEntity<BatchInfo> startScheduler(@RequestBody BatchInfo params) {
 
         /**
          * 0. 기능설명
@@ -124,7 +95,8 @@ public class SchedulerController {
             scheduler.startScheduler();
         }
         
-        return new ResponseEntity<String>("OK", HttpStatus.OK);
+        BatchInfo result = params;
+        return new ResponseEntity<BatchInfo>(result, HttpStatus.OK);
     }
 
     /**
@@ -140,7 +112,7 @@ public class SchedulerController {
      * @return
      */
     @PostMapping("/scheduler/stop")
-    public ResponseEntity<String> stopScheduler(@RequestBody BatchInfo params) {
+    public ResponseEntity<BatchInfo> stopScheduler(@RequestBody BatchInfo params) {
 
         /**
          * 0. 기능설명
@@ -160,7 +132,8 @@ public class SchedulerController {
             scheduler.stopScheduler();
         }
 
-        return new ResponseEntity<String>("OK", HttpStatus.OK);
+        BatchInfo result = params;
+        return new ResponseEntity<BatchInfo>(result, HttpStatus.OK);
     }
 
     /**
@@ -177,7 +150,7 @@ public class SchedulerController {
      * @return
      */
     @PostMapping("/scheduler/change")
-    public ResponseEntity<String> changeScheduler(@RequestBody BatchInfo params) {
+    public ResponseEntity<BatchInfo> changeScheduler(@RequestBody BatchInfo params) {
 
       /**
        * 0. 기능설명
@@ -203,6 +176,7 @@ public class SchedulerController {
           scheduler.changeTrigger(new CronTrigger(params.getJobCron()));
       }
 
-      return new ResponseEntity<String>("OK", HttpStatus.OK);
+      BatchInfo result = params;
+      return new ResponseEntity<BatchInfo>(result, HttpStatus.OK);
     }
 }

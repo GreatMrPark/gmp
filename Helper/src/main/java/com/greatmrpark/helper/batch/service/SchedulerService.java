@@ -123,7 +123,7 @@ public class SchedulerService {
          */
         
         LocalDateTime toDate = LocalDateTime.now();
-        String loginId   = "gwaAdmin";
+        String loginId   = "greatmrpark";
         
         List<TbBatchJob> contents = batchJobRepository.findAll();
         if (contents == null || contents.isEmpty() || contents.size() == 0) {
@@ -164,7 +164,7 @@ public class SchedulerService {
         log.debug("params : {}", gson.toJson(params));
         
         LocalDateTime toDate = LocalDateTime.now();
-        String loginId   = "gwaAdmin";
+        String loginId   = "greatmrpark";
         
         Optional<TbBatchJob> tbBatchJobOpt = batchJobRepository.findFirstByJobNameOrderByBatchJobSeqDesc(params.getJobName());
         if (tbBatchJobOpt.isPresent()==false) {
@@ -212,7 +212,7 @@ public class SchedulerService {
         log.debug("params : {}", gson.toJson(params));
         
         LocalDateTime toDate = LocalDateTime.now();
-        String loginId   = "gwaAdmin";
+        String loginId   = "greatmrpark";
         
         Optional<TbBatchJob> tbBatchJobOpt = batchJobRepository.findFirstByJobNameOrderByBatchJobSeqDesc(params.getJobName());
         if (tbBatchJobOpt.isPresent()==false) {
@@ -260,7 +260,7 @@ public class SchedulerService {
         log.debug("params : {}", gson.toJson(params));
         
         LocalDateTime toDate = LocalDateTime.now();
-        String loginId   = "gwaAdmin";
+        String loginId   = "greatmrpark";
         
         Optional<TbBatchJob> tbBatchJobOpt = batchJobRepository.findFirstByJobNameOrderByBatchJobSeqDesc(params.getJobName());
         if (tbBatchJobOpt.isPresent()==false) {
