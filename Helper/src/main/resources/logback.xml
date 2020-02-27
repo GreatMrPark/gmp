@@ -28,7 +28,7 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>
-        <file>${LOGS_ABSOLUTE_PATH}/mdms-api/app.log</file>
+        <file>${LOGS_ABSOLUTE_PATH}/gmp/app.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>${LOGS_ABSOLUTE_PATH}/gmp/app-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <maxFileSize>100MB</maxFileSize>

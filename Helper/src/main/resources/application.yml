@@ -6,32 +6,51 @@ logging:
     org.springframework: INFO
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-    com.gelix.mdmsApi: DEBUG
-    com.gelix.commonmdms: DEBUG
+    com.greatmrpark: DEBUG
 
 server:
   port: 9999
   servlet:
-      context-path: /mdms
+      context-path: /gmp
   error:
     whitelabel:
       enabled: false
+  tomcat:
+    max-connections: 5
+    max-threads: 10
 
 spring:
   resources:
     static-locations: classpath:/static/
   datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password: 
+    url: jdbc:mariadb://localhost:3306/gmp?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf8&autoReconnect=true
+    driverClassName: org.mariadb.jdbc.Driver
+    username: greatmrpark
+    password: gmp
     hikari:
-      driver-class-name: org.h2.Driver
+      driver-class-name: org.mariadb.jdbc.Driver
       connectionInitSql: SELECT 1 FROM DUAL
-      connection-timeout: 30000
-      idle-timeout: 600000
+      connection-timeout: 10000
+      validation-timeout: 100000
+      idle-timeout: 300000
       connection-test-query: SELECT 1 FROM DUAL
-      maximum-pool-size: 100
-      leak-detection-threshold: 20000
+      maximum-pool-size: 50
+      auto-commit: false
+      register-mbeans: true
+      leak-detection-threshold: 60000
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.MariaDBDialect
+    hibernate:
+      use-new-id-generator-mappings: true
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate.jdbc.batch_size: 50
+      hibernate.hql.bulk_id_strategy: org.hibernate.hql.spi.id.inline.InlineIdsOrClauseBulkIdStrategy
+      hibernate.hbm2ddl.jdbc_metadata_extraction_strategy: individually
+      format_sql: true
   jackson:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
@@ -40,7 +59,7 @@ spring:
       enabled:always
 
   application:
-    name: mdms-api
+    name: gmp
 
 management:
   endpoints:
