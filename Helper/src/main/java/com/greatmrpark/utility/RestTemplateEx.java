@@ -1,0 +1,10 @@
+package com.greatmrpark.utility;
+
+public class RestTemplateEx {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
+    }
+
+}
