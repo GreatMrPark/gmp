@@ -1,20 +1,4 @@
-/*
- *  Copyright (c) 2017 DOUB, Inc.
- *  All right reserved.
- *  This software is the confidential and proprietary information of DOUB
- *  , Inc. You shall not disclose such Confidential Information and
- *  shall use it only in accordance with the terms of the license agreement
- *  you entered into with DOUB.
- *
- *  Revision History
- *  Author Date Description
- *  ------------------ -------------- ------------------
- *  Seo Jong Hwa 17. 12. 13 오후 12:10
- *
- */
-
 package com.greatmrpark.helper.common.utils;
-
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

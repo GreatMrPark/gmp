@@ -13,8 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * <p>
  * <pre>
- * com.gelix.gwaadmin.batch.scheduler
- * DynamicScheduler.java
+ * 
+ * GmpWebCrawlerScheduler.java
  * 개정이력(Modification Information)·
  * 수정일   수정자    수정내용
  * ------------------------------------

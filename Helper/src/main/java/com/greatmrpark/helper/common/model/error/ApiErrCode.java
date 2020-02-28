@@ -1,8 +1,5 @@
 package com.greatmrpark.helper.common.model.error;
 
-/**
- * The enum Bot commongwa err code.
- */
 public enum ApiErrCode implements ErrCodable {
 
     /**

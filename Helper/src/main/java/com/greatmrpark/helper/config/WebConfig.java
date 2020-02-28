@@ -1,16 +1,3 @@
-/*
- *  Copyright (c) 2019 KEPCO, Inc. All right reserved.
- *  This software is the confidential and proprietary information of KEPCO, Inc. You shall not disclose such Confidential Information and
- *  shall use it only in accordance with the terms of the license agreement
- *  you entered into with KEPCO.
- *
- *  Revision History
- *  Author Date Description
- *   ------------------ -------------- ------------------
- *   doson               2019.9.26
- *
- */
-
 package com.greatmrpark.helper.config;
 
 import org.springframework.context.annotation.Configuration;

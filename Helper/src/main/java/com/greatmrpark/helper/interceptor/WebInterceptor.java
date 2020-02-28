@@ -1,17 +1,3 @@
-/*
- *  Copyright (c) 2019 GELIX, Inc.
- *  All right reserved.
- *  This software is the confidential and proprietary information of GELIX
- *  , Inc. You shall not disclose such Confidential Information and
- *  shall use it only in accordance with the terms of the license agreement
- *  you entered into with GELIX.
- *
- *  Revision History
- *  Author Date Description
- *  ------------------ -------------- ------------------
- *  greatmrpark 2019. 5. 9.
- *
- */
 package com.greatmrpark.helper.interceptor;
 
 import org.slf4j.Logger;

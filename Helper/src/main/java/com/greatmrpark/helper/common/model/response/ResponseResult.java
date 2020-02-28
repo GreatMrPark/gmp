@@ -1,15 +1,3 @@
-/*
- *  Copyright (c) 2019 KEPCO, Inc. All right reserved.
- *  This software is the confidential and proprietary information of KEPCO, Inc. You shall not disclose such Confidential Information and
- *  shall use it only in accordance with the terms of the license agreement
- *  you entered into with KEPCO.
- *
- *  Revision History
- *  Author Date Description
- *   ------------------ -------------- ------------------
- *   doson               2019.10.7
- *
- */
 package com.greatmrpark.helper.common.model.response;
 
 import java.io.Serializable;
@@ -21,7 +9,7 @@ import lombok.Data;
 /**
  * <p>
  * <pre>
- * com.gelix.gwaapi.domain.commongwa
+ * 
  * RespMessage.java
  * 개정이력(Modification Information)·
  * 수정일   수정자    수정내용

@@ -23,9 +23,9 @@ public class CrawlerClient {
     public String post(String url) throws Exception {
         
         // 1. DATA 수신
-        System.out.println("================================");
-        System.out.println("URL : " + url);
-        System.out.println("================================");
+        log.debug("================================");
+        log.debug("URL : {}", url);
+        log.debug("================================");
 
         // 2. http client 생성
         HttpPost http = new HttpPost(url);

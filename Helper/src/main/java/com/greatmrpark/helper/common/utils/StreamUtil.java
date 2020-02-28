@@ -1,17 +1,3 @@
-/*
- *  Copyright (c) 2019 GELIX, Inc.
- *  All right reserved.
- *  This software is the confidential and proprietary information of GELIX
- *  , Inc. You shall not disclose such Confidential Information and
- *  shall use it only in accordance with the terms of the license agreement
- *  you entered into with GELIX.
- *
- *  Revision History
- *  Author Date Description
- *  ------------------ -------------- ------------------
- *  greatmrpark 2019. 5. 27.
- *
- */
 package com.greatmrpark.helper.common.utils;
 
 import java.util.Map;
@@ -22,7 +8,7 @@ import java.util.function.Predicate;
 /**
  * <p>
  * <pre>
- * com.gelix.commongwa.utils
+ * 
  * StreamUtil.java
  * 개정이력(Modification Information)·
  * 수정일   수정자    수정내용

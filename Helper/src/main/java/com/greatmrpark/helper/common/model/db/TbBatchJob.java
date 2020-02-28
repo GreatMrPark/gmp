@@ -29,8 +29,6 @@ import lombok.NoArgsConstructor;
  * BATCH_JOB_T                        
  * <p>
  * <pre>
- * com.gelix.commongwa.model.db
- * TbCls.java
  * 개정이력(Modification Information)·
  * 수정일   수정자    수정내용
  * ------------------------------------

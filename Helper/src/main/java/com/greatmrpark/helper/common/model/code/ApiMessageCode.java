@@ -1,8 +1,5 @@
 package com.greatmrpark.helper.common.model.code;
 
-/**
- * The enum Bot commongwa err code.
- */
 public enum ApiMessageCode {
 
     OK("정상"),
