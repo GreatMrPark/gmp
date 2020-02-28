@@ -2,8 +2,13 @@ package com.greatmrpark.helper.batch.job;
 
 import java.time.format.DateTimeFormatter;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,8 +41,14 @@ public class GmpWebCrawlerJob {
     private ObjectMapper objectMapper = new ObjectMapper();
     private DateTimeFormatter ldtFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss"); 
 
+    @PersistenceContext
+    private EntityManager entityManager;
+    
+    @Value("${spring.jpa.properties.hibernate.jdbc.batch_size:1000}")
+    private int batchSize;
+    
     /**
-     * SMGW 프로비전 백업 프로세스
+     * WEB CRAWLER
      * 전체, USE YN : Y, DEL YN : N , STATUS : 
      * Process.
      */
@@ -47,7 +58,49 @@ public class GmpWebCrawlerJob {
         int totalCount = 0;
         int processCount = 0;
         
+        crwler1372AltNews();
+        
         log.info("{} / {} SUCCESS", processCount, totalCount);
         log.info("end GmpWebCrawlerJob.process-----------------------------------------------------");
+    }
+    
+    /**
+     * 1372 알림뉴스
+     */
+    @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
+    public void crwler1372AltNews() {
+
+    }
+    
+    /**
+     * 1372 상담조회
+     */
+    @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
+    public void crwler1372Counsel() {
+        
+    }
+
+    /**
+     * 1372 정보자료
+     */
+    @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
+    public void crwler1372InfoData() {
+        
+    }
+
+    /**
+     * consumernews
+     */
+    @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
+    public void crwlerConsumernews() {
+        
+    }
+
+    /**
+     * kcal
+     */
+    @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
+    public void crwlerKca() {
+        
     }
 }

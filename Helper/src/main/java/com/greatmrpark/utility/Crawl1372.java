@@ -36,7 +36,7 @@ public class Crawl1372 {
     static Gson gson = new GsonBuilder().create();
     static int PTIME = 1000 * 1; 
     static int LPCYCLE = 5;
-    static String IMG_PATH = "D:\\project\\download\\images\\";
+    static String IMG_PATH      = "D:\\project\\download\\images\\";
     static String DEFAULT_URL   = "http://www.1372.go.kr";
     static String SEARCH_URL    = "http://www.1372.go.kr/search.ccn?nMenuCode=66";
     static String START_COUNT   = "0";

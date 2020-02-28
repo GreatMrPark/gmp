@@ -50,7 +50,7 @@ public class JPASchemaExtractor {
         scanner.addIncludeFilter(new AnnotationTypeFilter(Entity.class));
 
 
-        for (BeanDefinition bd : scanner.findCandidateComponents("com.gelix.commongwa.model.db")) {
+        for (BeanDefinition bd : scanner.findCandidateComponents("com.greatmrpark.helper.common.model.db")) {
             String name = bd.getBeanClassName();
             try {
                 System.out.println("Added annotated entity class " + bd.getBeanClassName());
