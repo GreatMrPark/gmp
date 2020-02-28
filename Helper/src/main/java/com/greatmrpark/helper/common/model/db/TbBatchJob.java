@@ -100,6 +100,17 @@ public class TbBatchJob implements Serializable {
     String jobDesc;
     
     /**
+     * 잡 실행일
+     */
+    @CreatedDate
+    @Column(name="JOB_EXECUTE_DATE", nullable = true)
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+    @Expose
+    LocalDateTime jobExecuteDate = LocalDateTime.now();
+    
+    /**
      * 스케쥴러
      */
     @Column(name="SCHEDULER", length=250)

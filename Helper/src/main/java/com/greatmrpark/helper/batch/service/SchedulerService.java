@@ -281,4 +281,44 @@ public class SchedulerService {
         
         return true;
     }
+    
+    /**
+     * 잡 실행 완료 시간 갱신
+     * @param jobName
+     * @return
+     */
+    public Boolean batchJobSchedulerExecute(String jobName) {
+
+        /**
+         * 0. 기능설명
+         */
+        log.debug("배치잡 > 스케쥴러 > 실행 완료 시간 갱신");
+        
+        /**
+         *  1. data 수신
+         */
+        log.debug("jobName : {}", gson.toJson(jobName));
+        
+        LocalDateTime toDate = LocalDateTime.now();
+        String loginId   = "greatmrpark";
+        
+        Optional<TbBatchJob> tbBatchJobOpt = batchJobRepository.findFirstByJobNameOrderByBatchJobSeqDesc(jobName);
+        if (tbBatchJobOpt.isPresent()==false) {
+            return false;
+        }
+        TbBatchJob tbBatchJob = tbBatchJobOpt.get();
+        log.debug("{} tbBatchJob : {}", this.getClass(), gson.toJson(tbBatchJob));
+        
+        tbBatchJob.setJobExecuteDate(toDate);
+        tbBatchJob.setUpdId(loginId);
+        tbBatchJob.setUpdDate(toDate);
+        log.debug("{} tbBatchJob : {}", this.getClass(), gson.toJson(tbBatchJob));
+        TbBatchJob tbBatchJobSave = batchJobRepository.saveAndFlush(tbBatchJob);
+        if (tbBatchJobSave == null) {
+            return false;
+        }
+        log.debug("{} tbBatchJobSave : {}", this.getClass(), gson.toJson(tbBatchJobSave));
+        
+        return true;
+    }
 }

@@ -2,31 +2,40 @@ package com.greatmrpark.helper.common.utils;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 
 import javax.imageio.ImageIO;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.greatmrpark.helper.crawler.Go1372Crawler;
-
+import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.tess4j.Tesseract;
 
+@Slf4j
 public class CrawlerUtil {
-
-    private Gson gson = new GsonBuilder().create();
     
     @Value("${gmp.file.images.download}")
     private static int imageDownloaPath;
     
     @Value("${gmp.ocrdatapath}")
     private static String datapath;
-    
-    @Autowired
-    Go1372Crawler go1372Crawler;
+        
+    /**
+     * 휴식
+     * @param ptime
+     */
+    public static void sleep(int ptime) {
+        ptime = 1000 * 1;
+        try {
+            log.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            log.debug("{} 초 휴식", ptime / 1000);
+            log.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            Thread.sleep(ptime);
+        } catch (InterruptedException e) {e.printStackTrace();}
+        
+    }
         
     /**
      * 숫자인지 확인
@@ -47,26 +56,30 @@ public class CrawlerUtil {
      * 이미지 다운로드
      * @param imgUrl
      */
-    public static void downloadImage(String imgUrl) {
+    public static String downloadImage(String imgUrl) {
         
-        System.out.println("IMG URL : " + imgUrl);
-        
+        String fileName = "";
         try {
-            URL url;
-            url = new URL(imgUrl);
-            String fileName = imgUrl.substring( imgUrl.lastIndexOf('/')+1, imgUrl.length() ); // 이미지 파일명 추출
-            String ext = imgUrl.substring( imgUrl.lastIndexOf('.')+1, imgUrl.length() );  // 이미지 확장자 추출
-            BufferedImage img = ImageIO.read(url);
+            URL url = new URL(imgUrl);
+            URLConnection con = url.openConnection();
+            HttpURLConnection exitCode = (HttpURLConnection)con;
             
-            String fileFullPath = imageDownloaPath+fileName;
-            
-            ImageIO.write(img, ext, new File(fileFullPath));
-            
-            doOCR(fileFullPath);
+            if (exitCode.getResponseCode() == 200) {
+                fileName = imgUrl.substring( imgUrl.lastIndexOf('/')+1, imgUrl.length() ); // 이미지 파일명 추출
+                String ext = imgUrl.substring( imgUrl.lastIndexOf('.')+1, imgUrl.length() );  // 이미지 확장자 추출
+                BufferedImage img = ImageIO.read(url);
+                
+                String fileFullPath = imageDownloaPath+fileName;
+                log.debug("fileFullPath : " , fileFullPath);
+                
+                ImageIO.write(img, ext, new File(fileFullPath));
+            }
             
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("downloadImage : {}", e.getMessage());
         }
+        
+        return fileName;
     }
     
     /**

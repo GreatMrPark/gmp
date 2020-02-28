@@ -1,4 +1,4 @@
-package com.greatmrpark.helper.client;
+package com.greatmrpark.helper.crawler.client;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
