@@ -64,7 +64,7 @@ public class GmpWebCrawlerJob {
     SchedulerService schedulerService;
 
     @Autowired
-    Go1372CrawlerService go1372Crawler;
+    Go1372CrawlerService go1372CrawlerService;
     
     /**
      * WEB CRAWLER
@@ -95,7 +95,7 @@ public class GmpWebCrawlerJob {
         int processCount = 0;
         
         String collection = "altNews";
-        ArrayList<HashMap<String, Object>> contents = go1372Crawler.post(collection);
+        ArrayList<HashMap<String, Object>> contents = go1372CrawlerService.post(collection);
         if (!contents.isEmpty() && contents != null && contents.size() > 0) {
             log.debug("contents : " , gson.toJson(contents));
         }
