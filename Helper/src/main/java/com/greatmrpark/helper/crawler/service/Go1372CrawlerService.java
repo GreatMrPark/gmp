@@ -10,6 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
@@ -31,7 +32,13 @@ public class Go1372CrawlerService {
     private String START_COUNT   = "0";
     private String IS_TAG_SEARCH = "Y";
     private Integer PAGE_SIZE    = 10;
-
+    
+    @Value("${gmp.file.images.download}")
+    private String imageDownloaPath;
+    
+    @Value("${gmp.ocr.datapath}")
+    private String datapath;
+    
     @Autowired
     CrawlerClient crawlerClient;
     
@@ -56,7 +63,9 @@ public class Go1372CrawlerService {
         try {
             html = crawlerClient.post(url);
             links = parserList(html);
+            log.debug("links : {}", gson.toJson(links));
             pages = parserPage(html);
+            log.debug("pages : {}", gson.toJson(pages));
             if (pages != null && pages.size() > 0) {
 
                 CrawlerUtil.sleep(PTIME);
@@ -77,7 +86,9 @@ public class Go1372CrawlerService {
                         links.addAll(parserList(html));
                     }
                 }
+                log.debug("links : {}", gson.toJson(links));
             }
+            log.debug("links : {}", gson.toJson(links));
             
 
             if (!links.isEmpty() && links != null && links.size() > 0) {
@@ -93,6 +104,7 @@ public class Go1372CrawlerService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        log.debug("contents : {}", gson.toJson(contents));
 
         LocalDateTime endDateTime = LocalDateTime.now();
         Duration duration = Duration.between(startDateTime, endDateTime);
@@ -150,6 +162,7 @@ public class Go1372CrawlerService {
                 }
             }
         }
+        log.debug("links : {}", gson.toJson(links));
         return links;
     }
     
@@ -163,7 +176,7 @@ public class Go1372CrawlerService {
         HashMap<String, Object> content = new HashMap<String, Object>();
         
         Document doc = Jsoup.parse(html);
-        doc.outputSettings().prettyPrint(false); // 줄바꿈 살림
+//        doc.outputSettings().prettyPrint(false); // 줄바꿈 살림
         Elements contents = doc.select(".boardView");
         String subject = contents.select("#contentsViewTitle").text().toString();
         String text = contents.select("#contentsViewTitle2").html().toString();
@@ -172,43 +185,54 @@ public class Go1372CrawlerService {
         ArrayList<HashMap<String, String>> etcList = new ArrayList<HashMap<String, String>>();
         Elements rows = contents.select("tbody tr");
         for(Element row : rows) {
-
-            int cellCount = row.childNodeSize();
+            
+            Elements cells = row.select("td");
+            int cellCount = cells.size();
+            log.debug("cellCount : {}", cellCount);
             
             if (cellCount > 1 && ((cellCount % 2) == 0)) {
-
-                Elements cells = row.select("td");
 
                 HashMap<String, String> etcMap = new HashMap<String, String>();
                 for (int i=0; i < cells.size(); i += 2) {
                     Element th = cells.get(i);
                     Element td = cells.get(i+1);
+                    log.debug("th : {}", th.text().toString());
+                    log.debug("td : {}", td.text().toString());
                     etcMap.put(th.text().toString(), td.text().toString());
                 }
                 etcList.add(etcMap);
             }
-        } 
+        }
+        log.debug("etcList : {}", gson.toJson(etcList));
         
         // 이미지 추출
         ArrayList<String> imgList = new ArrayList<String>();
         Elements images = contents.select("#contentsViewTitle2 img");
         for(Element img : images) {
-            String imageName = "";
+            String imageFullPath = "";
             if (img.attr("src").toLowerCase().contains("http")) {
-                imageName = CrawlerUtil.downloadImage(img.attr("src"));
+                imageFullPath = CrawlerUtil.downloadImage(imageDownloaPath, img.attr("src"));
             }
             else {
-                imageName = CrawlerUtil.downloadImage(DEFAULT_URL + img.attr("src"));
+                imageFullPath = CrawlerUtil.downloadImage(imageDownloaPath, DEFAULT_URL + img.attr("src"));
             }
-            if (!"".equals(imageName)) {
-                imgList.add(imageName);
+
+            log.debug("imageFullPath : {}" , imageFullPath);
+            
+            if (!"".equals(imageFullPath)) {
+                imgList.add(imageFullPath);
             }
         }
+
+        log.debug("imgList : {}" , gson.toJson(imgList));
+        
         content.put("link", link);
         content.put("subject", subject);
         content.put("text", text);
         content.put("images", imgList);
         content.put("etcs", etcList);
+
+        log.debug("content : {}", gson.toJson(content));
         
         return content;
     }

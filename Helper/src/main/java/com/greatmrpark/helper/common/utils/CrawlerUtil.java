@@ -15,12 +15,6 @@ import net.sourceforge.tess4j.Tesseract;
 
 @Slf4j
 public class CrawlerUtil {
-    
-    @Value("${gmp.file.images.download}")
-    private static int imageDownloaPath;
-    
-    @Value("${gmp.ocrdatapath}")
-    private static String datapath;
         
     /**
      * 휴식
@@ -56,9 +50,9 @@ public class CrawlerUtil {
      * 이미지 다운로드
      * @param imgUrl
      */
-    public static String downloadImage(String imgUrl) {
-        
+    public static String downloadImage(String filePath, String imgUrl) {
         String fileName = "";
+        String fileFullPath = "";
         try {
             URL url = new URL(imgUrl);
             URLConnection con = url.openConnection();
@@ -67,11 +61,8 @@ public class CrawlerUtil {
             if (exitCode.getResponseCode() == 200) {
                 fileName = imgUrl.substring( imgUrl.lastIndexOf('/')+1, imgUrl.length() ); // 이미지 파일명 추출
                 String ext = imgUrl.substring( imgUrl.lastIndexOf('.')+1, imgUrl.length() );  // 이미지 확장자 추출
-                BufferedImage img = ImageIO.read(url);
-                
-                String fileFullPath = imageDownloaPath+fileName;
-                log.debug("fileFullPath : " , fileFullPath);
-                
+                BufferedImage img = ImageIO.read(url);                
+                fileFullPath = filePath + "/" + fileName;
                 ImageIO.write(img, ext, new File(fileFullPath));
             }
             
@@ -79,7 +70,7 @@ public class CrawlerUtil {
             log.error("downloadImage : {}", e.getMessage());
         }
         
-        return fileName;
+        return fileFullPath;
     }
     
     /**
@@ -87,7 +78,7 @@ public class CrawlerUtil {
      * @param fileFullPath
      * @return
      */
-    public static String doOCR(String fileFullPath) {
+    public static String doOCR(String fileFullPath, String datapath) {
         
         System.out.println("fileFullPath : " + fileFullPath);
         

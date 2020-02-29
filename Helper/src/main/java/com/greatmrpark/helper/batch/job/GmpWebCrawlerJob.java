@@ -97,7 +97,7 @@ public class GmpWebCrawlerJob {
         String collection = "altNews";
         ArrayList<HashMap<String, Object>> contents = go1372CrawlerService.post(collection);
         if (!contents.isEmpty() && contents != null && contents.size() > 0) {
-            log.debug("contents : " , gson.toJson(contents));
+            log.debug("contents : {}" , gson.toJson(contents));
         }
         else {
             log.debug("contents : {}" , ApiMessageCode.API_MSG_0008.getValue());

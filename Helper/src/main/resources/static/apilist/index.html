@@ -35,26 +35,15 @@
 	    <td><input type="text" style="width:98%;border:none;"
 	        name="apiUrl" 
 	        id="apiUrl" 
-	        value="" onFocus="this.select();"/></td>
-<!--        	        
-        <td><div style="text-align:right"><input type="button" 
-                                                    id="window-btn"
-                                                    name="#window-btn"
-                                                   value="브라우저종료"
-                                                   disabled="true" /></div></td>
--->                                                     
-        <td><div style="text-align:right"><input type="button" 
-                                                    id="apiAction"
-                                                    name="apiAction"
-                                                   value="실행" 
-                                                   onClick="doAction();" 
-                                                   disabled="true" /></div></td>
-                                                   
-        <td><div style="text-align:right"><input type="button" 
-                                                    id="apiJsonAction"
-                                                    name="apiJsonAction"
-                                                   value="JSON" 
-                                                   onClick="jsonAction();"/></div></td>
+	        value="" onFocus="this.select();"/>
+	    </td>
+        <td>
+            <div style="text-align:right">
+                <input type="button" id="window-btn" name="#window-btn" value="브라우저종료" disabled="true" />
+                <input type="button" id="apiAction" name="apiAction" value="실행(XML)" onClick="doAction();" disabled="true" />
+                <input type="button" id="apiJsonAction" name="apiJsonAction" value="실행(JSON)" onClick="jsonAction();"/>
+            </div>
+        </td>
 	</tr>
 	</table>
 	

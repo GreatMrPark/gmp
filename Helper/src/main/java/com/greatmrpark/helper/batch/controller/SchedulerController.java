@@ -26,6 +26,7 @@ import com.greatmrpark.helper.common.model.db.TbBatchJob;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 스케쥴 Controller
  * <p>
  * <pre>
  * 
