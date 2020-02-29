@@ -1,5 +1,6 @@
 package com.greatmrpark.helper.common.model.db;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -48,7 +49,7 @@ import lombok.NoArgsConstructor;
         table = "SEQUENCE",
         pkColumnName = "SEQ", allocationSize = 1
 )
-public class TbCrawler {
+public class TbCrawler implements Serializable {
     
     /**
      * 일련번호 
@@ -127,6 +128,8 @@ public class TbCrawler {
     LocalDateTime collectDate;
     
     /* 등록자 */
+    @Column(name = "REG_ID", length=16)
+    @Expose
     String regId;
     
     /**
@@ -141,6 +144,8 @@ public class TbCrawler {
     LocalDateTime regDate;
                          
     /* 수정자 */
+    @Column(name = "UPD_ID", length=16)
+    @Expose
     String updId;
                          
     /**

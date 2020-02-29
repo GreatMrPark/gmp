@@ -124,17 +124,11 @@ public class GmpWebCrawlerJob {
         TbCrawler tbCrawler = tbCrawlerOpt.get();
         log.debug("tbCrawlerOpt : {}", gson.toJson(tbCrawlerOpt));
         
-        String defaultUrl = "http://www.1372.go.kr";
-        String siteName = "소비자상담센터";
-        String pageName = "알림뉴스";
-
-        String collection = "altNews";
-        String keyword = "교원";
-        
-        /**
-         * TODO [2020.02.29] 
-         */
-        ArrayList<HashMap<String, Object>> contents = go1372CrawlerService.post(collection, keyword);
+        String defaultUrl = tbCrawler.getDefaultUrl();
+        String siteName   = tbCrawler.getSiteName();
+        String pageName   = tbCrawler.getPageName();
+                
+        ArrayList<HashMap<String, Object>> contents = go1372CrawlerService.post(tbCrawler);
         if (!contents.isEmpty() && contents != null && contents.size() > 0) {
             log.debug("contents : {}" , gson.toJson(contents));
 

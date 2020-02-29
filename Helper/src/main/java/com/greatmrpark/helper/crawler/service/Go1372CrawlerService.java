@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.greatmrpark.helper.common.model.db.TbCrawler;
 import com.greatmrpark.helper.common.utils.CrawlerUtil;
 import com.greatmrpark.helper.crawler.client.CrawlerClient;
 
@@ -42,7 +43,7 @@ public class Go1372CrawlerService {
     @Autowired
     CrawlerClient crawlerClient;
     
-    public ArrayList<HashMap<String, Object>> post(String collection, String keyword) {
+    public ArrayList<HashMap<String, Object>> post(TbCrawler crawler) {
         
         LocalDateTime startDateTime = LocalDateTime.now();
 
@@ -52,7 +53,11 @@ public class Go1372CrawlerService {
         ArrayList<String> pages = new ArrayList<String>();
         ArrayList<HashMap<String, Object>> contents = new ArrayList<HashMap<String, Object>>();
         
-        url  = SEARCH_URL;
+        String searchUrl = crawler.getSearchUrl();
+        String collection = crawler.getCollection();
+        String keyword = crawler.getKeyword();
+        
+        url  = searchUrl;
         url += "&isTagSearch=" + IS_TAG_SEARCH;
         url += "&startCount="+ START_COUNT;
         url += "&collection=" + collection; 
@@ -74,7 +79,7 @@ public class Go1372CrawlerService {
                         int page = (Integer.parseInt(p) - 1) * PAGE_SIZE;
                         String startCount =  Integer.toString(page);
                         
-                        url  = SEARCH_URL;
+                        url  = searchUrl;
                         url += "&isTagSearch=" + IS_TAG_SEARCH;
                         url += "&startCount="+ startCount;
                         url += "&collection=" + collection; 

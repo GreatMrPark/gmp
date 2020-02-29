@@ -1,5 +1,6 @@
 package com.greatmrpark.helper.common.model.db;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -48,7 +49,7 @@ import lombok.NoArgsConstructor;
         table = "SEQUENCE",
         pkColumnName = "SEQ", allocationSize = 1
 )
-public class TbCrawlerCollection {
+public class TbCrawlerCollection implements Serializable {
     
     /**
      * 일련번호 
@@ -161,7 +162,7 @@ public class TbCrawlerCollection {
      * 분석일 
      */
     @LastModifiedDate
-    @Column(name="UPD_DATE")
+    @Column(name="ANLS_DATE")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
