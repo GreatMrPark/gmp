@@ -42,7 +42,7 @@ public class Go1372CrawlerService {
     @Autowired
     CrawlerClient crawlerClient;
     
-    public ArrayList<HashMap<String, Object>> post(String collection) {
+    public ArrayList<HashMap<String, Object>> post(String collection, String keyword) {
         
         LocalDateTime startDateTime = LocalDateTime.now();
 
@@ -52,8 +52,6 @@ public class Go1372CrawlerService {
         ArrayList<String> pages = new ArrayList<String>();
         ArrayList<HashMap<String, Object>> contents = new ArrayList<HashMap<String, Object>>();
         
-        log.debug("키워드를 조회함");
-        String keyword = "교원";
         url  = SEARCH_URL;
         url += "&isTagSearch=" + IS_TAG_SEARCH;
         url += "&startCount="+ START_COUNT;
@@ -178,7 +176,7 @@ public class Go1372CrawlerService {
         Document doc = Jsoup.parse(html);
 //        doc.outputSettings().prettyPrint(false); // 줄바꿈 살림
         Elements contents = doc.select(".boardView");
-        String subject = contents.select("#contentsViewTitle").text().toString();
+        String title = contents.select("#contentsViewTitle").text().toString();
         String text = contents.select("#contentsViewTitle2").html().toString();
         
         // 컨덴츠
@@ -225,10 +223,13 @@ public class Go1372CrawlerService {
         }
 
         log.debug("imgList : {}" , gson.toJson(imgList));
-        
+
+        content.put("defaultUrl", DEFAULT_URL);
+        content.put("siteName", "소비자상담센터");
+        content.put("pageName", "알림뉴스");
         content.put("link", link);
-        content.put("subject", subject);
-        content.put("text", text);
+        content.put("title", title);
+        content.put("contents", text);
         content.put("images", imgList);
         content.put("etcs", etcList);
 

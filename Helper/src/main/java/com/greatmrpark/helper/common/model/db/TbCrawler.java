@@ -23,11 +23,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * CRAWLER_COLLECTION_T
+ * CRAWLER_T
  *
  * <p>
  * com.greatmrpark.helper.common.model.db
- * TbCrawlerCollection.java
+ * TbCrawler.java
  *
  * @history
  * 개정이력(Modification Information)·
@@ -42,123 +42,109 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name= "CRAWLER_COLLECTION_T")
+@Table(name= "CRAWLER_T")
 @TableGenerator(
-        name = "CRAWLER_COLLECTION_T_SEQ_GENERATOR",
+        name = "CRAWLER_T_SEQ_GENERATOR",
         table = "SEQUENCE",
         pkColumnName = "SEQ", allocationSize = 1
 )
-public class TbCrawlerCollection {
+public class TbCrawler {
     
     /**
      * 일련번호 
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "CRAWLER_COLLECTION_T_SEQ_GENERATOR")
-    @Column(name="BATCH_JOB_SEQ", nullable = false, length=20)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "CRAWLER_T_SEQ_GENERATOR")
+    @Column(name="CRAWLER_SEQ", nullable = false, length=20)
     @Expose
-    Long crawlerCollectionSeq;
+    Long crawlerSeq;
     
     /**
-     * 기본도메인 
+     * 크롤러이름 
      */
-    @Column(name = "DEFAULT_URL", length=128)
+    @Column(name = "CRAWLER_NAME", length=32)
     @Expose
-    String defaultUrl;
+    String crawlerName;
     
     /**
-     * 사이트이름 
+     * 사이트명 
      */
     @Column(name = "SITE_NAME", length=64)
     @Expose
     String siteName;
-    
+                        
+    /**
+     * 기본URL 
+     */
+    @Column(name = "DEFAULT_URL", length=128)
+    @Expose
+    String defaultUrl;
+                       
+    /**
+     * 검색URL 
+     */
+    @Column(name = "SEARCH_URL", length=512)
+    @Expose
+    String searchUrl;
+                       
+    /**
+     * 수집대상 
+     */
+    @Column(name = "COLLECTION", length=16)
+    @Expose
+    String collection;
+                        
     /**
      * 페이지명 
      */
     @Column(name = "PAGE_NAME", length=64)
     @Expose
     String pageName;
-    
+                        
     /**
-     * 링크 
+     * 키워드 
      */
-    @Column(name = "LINK", length=512)
+    @Column(name = "KEYWORD", length=64)
     @Expose
-    String link;
-    
+    String keyword;
+                         
     /**
-     * 제목 
+     * 필터 
      */
-    @Column(name = "TITLE", length=128)
+    @Column(name = "FILTER", length=64)
     @Expose
-    String title;
-    
+    String filter;
+                          
     /**
-     * 내용 
+     * 최종수집일 
      */
-    @Column(name = "CONTENTS")
+    @LastModifiedDate
+    @Column(name="COLLECT_DATE")
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Expose
-    String contents;
+    LocalDateTime collectDate;
     
-    /**
-     * 이미지 
-     */
-    @Column(name = "IMAGES", length=512)
-    @Expose
-    String images;
-    
-    /**
-     * 텍스트 
-     */
-    @Column(name = "IMAGES_CONTENT")
-    @Expose
-    String imagesContent;
-    
-    /**
-     * 분석내용 
-     */
-    @Column(name = "ANALYSIS_CONTENT")
-    @Expose
-    String analysisContent;
-    
-    /**
-     * 카테고리 
-     */
-    @Column(name = "CATEGORY", length=32)
-    @Expose
-    String category;
+    /* 등록자 */
+    String regId;
     
     /**
      * 등록일 
      */
-    @Column(name = "REG_DATE", length=16)
+    @LastModifiedDate
+    @Column(name="REG_DATE")
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Expose
-    String regDate;
-    
+    LocalDateTime regDate;
+                         
+    /* 수정자 */
+    String updId;
+                         
     /**
-     * 출처 
-     */
-    @Column(name = "SOURCE", length=64)
-    @Expose
-    String source;
-    
-    /**
-     * 조회 
-     */
-    @Column(name = "VIEWS", length=8)
-    @Expose
-    String views;
-    
-    /**
-     * 첨부자료 
-     */
-    @Column(name = "ATTACHED", length=32)
-    @Expose
-    String attached;
-
-    /**
-     * 분석일 
+     * 수정일
      */
     @LastModifiedDate
     @Column(name="UPD_DATE")
@@ -166,5 +152,6 @@ public class TbCrawlerCollection {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
     @Expose
-    LocalDateTime anlsDate;
+    LocalDateTime updDate;
+
 }
