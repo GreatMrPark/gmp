@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.greatmrpark.helper.batch.model.BatchInfo;
+import com.greatmrpark.helper.batch.model.BatchRequest;
 import com.greatmrpark.helper.common.model.db.TbBatchJob;
 import com.greatmrpark.helper.common.repository.BatchJobRepository;
 
@@ -122,7 +122,7 @@ public class SchedulerService {
      * @param params
      * @return
      */
-    public Boolean batchJobSchedulerStart(BatchInfo params) {
+    public Boolean batchJobSchedulerStart(BatchRequest params) {
 
         /**
          * 0. 기능설명
@@ -170,7 +170,7 @@ public class SchedulerService {
      * @param params
      * @return
      */
-    public Boolean batchJobSchedulerStop(BatchInfo params) {
+    public Boolean batchJobSchedulerStop(BatchRequest params) {
 
         /**
          * 0. 기능설명
@@ -218,7 +218,7 @@ public class SchedulerService {
      * @param params
      * @return
      */
-    public Boolean batchJobSchedulerChange(BatchInfo params) {
+    public Boolean batchJobSchedulerChange(BatchRequest params) {
 
         /**
          * 0. 기능설명

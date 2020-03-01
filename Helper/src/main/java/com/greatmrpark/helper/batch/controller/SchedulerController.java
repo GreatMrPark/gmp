@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.greatmrpark.helper.batch.model.BatchInfo;
+import com.greatmrpark.helper.batch.model.BatchRequest;
 import com.greatmrpark.helper.batch.provider.ContextProvider;
 import com.greatmrpark.helper.batch.scheduler.DynamicAbstractScheduler;
 import com.greatmrpark.helper.batch.service.SchedulerService;
@@ -80,7 +80,7 @@ public class SchedulerController {
      * @return
      */
     @PostMapping("/scheduler/start")
-    public ResponseEntity<BatchInfo> startScheduler(@RequestBody BatchInfo params) {
+    public ResponseEntity<BatchRequest> startScheduler(@RequestBody BatchRequest params) {
 
         /**
          * 0. 기능설명
@@ -96,8 +96,8 @@ public class SchedulerController {
             scheduler.startScheduler();
         }
         
-        BatchInfo result = params;
-        return new ResponseEntity<BatchInfo>(result, HttpStatus.OK);
+        BatchRequest result = params;
+        return new ResponseEntity<BatchRequest>(result, HttpStatus.OK);
     }
 
     /**
@@ -113,7 +113,7 @@ public class SchedulerController {
      * @return
      */
     @PostMapping("/scheduler/stop")
-    public ResponseEntity<BatchInfo> stopScheduler(@RequestBody BatchInfo params) {
+    public ResponseEntity<BatchRequest> stopScheduler(@RequestBody BatchRequest params) {
 
         /**
          * 0. 기능설명
@@ -133,8 +133,8 @@ public class SchedulerController {
             scheduler.stopScheduler();
         }
 
-        BatchInfo result = params;
-        return new ResponseEntity<BatchInfo>(result, HttpStatus.OK);
+        BatchRequest result = params;
+        return new ResponseEntity<BatchRequest>(result, HttpStatus.OK);
     }
 
     /**
@@ -151,7 +151,7 @@ public class SchedulerController {
      * @return
      */
     @PostMapping("/scheduler/change")
-    public ResponseEntity<BatchInfo> changeScheduler(@RequestBody BatchInfo params) {
+    public ResponseEntity<BatchRequest> changeScheduler(@RequestBody BatchRequest params) {
 
       /**
        * 0. 기능설명
@@ -177,7 +177,7 @@ public class SchedulerController {
           scheduler.changeTrigger(new CronTrigger(params.getJobCron()));
       }
 
-      BatchInfo result = params;
-      return new ResponseEntity<BatchInfo>(result, HttpStatus.OK);
+      BatchRequest result = params;
+      return new ResponseEntity<BatchRequest>(result, HttpStatus.OK);
     }
 }

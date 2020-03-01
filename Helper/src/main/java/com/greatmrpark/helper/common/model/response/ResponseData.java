@@ -21,10 +21,11 @@ import lombok.Data;
 @Data
 public class ResponseData {
     public long totalCnt;   /* 총개수 */
+    public int resultCnt;
+    
     public int page;       /* 페이지*/
     public int pageCnt;    /* 페이지개수*/
     public int pageSize;    /* 한 페이지 레코드 개수*/
 
-    public int resultCnt;
     public Object resultData;
 }

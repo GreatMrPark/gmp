@@ -18,7 +18,7 @@ import lombok.Data;
  * @version 1.0.0
  */
 @Data
-public class BatchInfo {
+public class BatchRequest {
     String jobName;
     String jobCron;
 }

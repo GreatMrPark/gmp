@@ -1,0 +1,83 @@
+<script>
+$("#apiName").text("크롤러 > 저장");
+$("#apiMehtod").val("POST");
+$("#apiUrl").val(host+"/crawler/save");
+$("#apiAction").prop("disabled", false);
+$("#apiInput").show();
+$("#apiDesc").html("");
+$("#apiDesc").append("<div>- INPUT 항목</div>");
+
+$("#apiPlan").html("");
+</script>
+<TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+<input type="hidden" name="input" id="input" value="crawlerSave" />
+<tr>
+    <th width="120">&nbsp;</th>
+    <th width="120">속성명</th>
+    <th width="120">KEY</th>
+    <th width="*"  >VALUE</th>
+    <th width="450">DESCRIPTION</th>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>크롤러</td>
+    <td>crawlerName</td>
+    <td><input style="width:98%;"  type ="text" name="crawlerName" id="crawlerName" value="" onFocus="this.select();"/></td>
+    <td>
+         소비자상담센터 > 알림뉴스(1372altnews)
+        , 소비자상담센터 > 상담조회(1372counsel)
+        , 소비자상담센터 > 정보자료(1372infodata)
+        , 한국소비자원 > 게시글(kcaboard)
+        , 소비자가만드는신문 > 뉴스(consumernews)
+    </td>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>사이트명</td>
+    <td>SITE_NAME</td>
+    <td><input style="width:98%;"  type ="text" name="siteName" id="siteName" value="" onFocus="this.select();"/></td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>기본URL</td>
+    <td>DEFAULT_URL</td>
+    <td><input style="width:98%;"  type ="text" name="defaultUrl" id="defaultUrl" value="" onFocus="this.select();"/></td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>검색URL</td>
+    <td>SEARCH_URL</td>
+    <td><input style="width:98%;"  type ="text" name="searchUrl" id="searchUrl" value="" onFocus="this.select();"/></td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>수집대상</td>
+    <td>COLLECTION</td>
+    <td><input style="width:98%;"  type ="text" name="collection" id="collection" value="" onFocus="this.select();"/></td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>페이지명</td>
+    <td>PAGE_NAME</td>
+    <td><input style="width:98%;"  type ="text" name="pageName" id="pageName" value="" onFocus="this.select();"/></td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>키워드</td>
+    <td>KEYWORD</td>
+    <td><input style="width:98%;"  type ="text" name="keyword" id="keyword" value="교원" onFocus="this.select();"/></td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>필터</td>
+    <td>FILTER</td>
+    <td><input style="width:98%;"  type ="text" name="filter" id="filter" value="" onFocus="this.select();"/></td>
+    <td>&nbsp;</td>
+</tr>
+</TABLE>

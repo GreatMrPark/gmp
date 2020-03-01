@@ -1,6 +1,6 @@
 package com.greatmrpark.helper.crawler.model;
 
-import com.greatmrpark.helper.batch.model.BatchInfo;
+import com.greatmrpark.helper.common.model.Paging;
 
 import lombok.Data;
 
@@ -22,6 +22,13 @@ import lombok.Data;
  * @version 1.0.0
  */
 @Data
-public class CrawlerInfo {
-    String crawlerName;
+public class CrawlerRequest extends Paging {
+    public String crawlerName;
+    public String siteName;
+    public String defaultUrl;
+    public String searchUrl;
+    public String collection;
+    public String pageName;
+    public String keyword;
+    public String filter;
 }
