@@ -83,8 +83,7 @@ public class CrawlerUtil {
         long endTime = 0;
         long startTime = System.currentTimeMillis();
         File file = new File(fileFullPath);
-        Tesseract tesseract = new Tesseract(); 
-//        Tesseract tesseract = Tesseract.getInstance();
+        Tesseract tesseract = new Tesseract(); // Tesseract tesseract = Tesseract.getInstance();
         try { 
 
             tesseract.setDatapath(datapath); // ocr 경로
