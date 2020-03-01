@@ -123,7 +123,7 @@ public class CrawlerService {
      * @return
      * @throws ApiCheckedException
      */
-    public Object crawlerView(TbCrawler params) throws ApiCheckedException {
+    public Object crawlerView(CrawlerRequest params) throws ApiCheckedException {
 
         /**
          * 0. 기능설명
@@ -176,7 +176,7 @@ public class CrawlerService {
      * @return
      * @throws ApiCheckedException
      */
-    public Object crawlerSave(TbCrawler params) throws ApiCheckedException {
+    public Object crawlerSave(CrawlerRequest params) throws ApiCheckedException {
 
         /**
          * 0. 기능설명
@@ -248,7 +248,7 @@ public class CrawlerService {
      * @return
      * @throws ApiCheckedException
      */
-    public Boolean crawlerStart(TbCrawler params) throws ApiCheckedException {
+    public Boolean crawlerStart(CrawlerRequest params) throws ApiCheckedException {
 
         /**
          * 0. 기능설명

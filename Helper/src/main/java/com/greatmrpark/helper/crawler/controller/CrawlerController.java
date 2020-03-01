@@ -215,8 +215,7 @@ public class CrawlerController {
          * 3. data 처리
          */
         try {
-            TbCrawler crawler =  objectMapper.convertValue(params, TbCrawler.class);
-            resultData = crawlerService.crawlerView(crawler);
+            resultData = crawlerService.crawlerView(params);
             if(resultData!=null) {
                 totalCnt    = 1;
                 resultCnt   = 1;
@@ -310,8 +309,7 @@ public class CrawlerController {
          * 3. data 처리
          */
         try {
-            TbCrawler crawler =  objectMapper.convertValue(params, TbCrawler.class);
-            resultData = crawlerService.crawlerSave(crawler);
+            resultData = crawlerService.crawlerSave(params);
             if(resultData!=null) {
                 totalCnt    = 1;
                 resultCnt   = 1;
@@ -405,8 +403,7 @@ public class CrawlerController {
          * 3. data 처리
          */
         try {
-            TbCrawler crawler =  modelMapper.map(params, TbCrawler.class);
-            resultData = crawlerService.crawlerStart(crawler);
+            resultData = crawlerService.crawlerStart(params);
             if(resultData!=null) {
                 totalCnt    = 1;
                 resultCnt   = 1;
