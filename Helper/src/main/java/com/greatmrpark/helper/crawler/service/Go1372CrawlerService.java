@@ -185,7 +185,7 @@ public class Go1372CrawlerService {
         String text = contents.select("#contentsViewTitle2").html().toString();
         
         // 컨덴츠
-        ArrayList<HashMap<String, String>> etcList = new ArrayList<HashMap<String, String>>();
+        HashMap<String, String> etcMap = new HashMap<String, String>();
         Elements rows = contents.select("tbody tr");
         for(Element row : rows) {
             
@@ -194,8 +194,6 @@ public class Go1372CrawlerService {
             log.debug("cellCount : {}", cellCount);
             
             if (cellCount > 1 && ((cellCount % 2) == 0)) {
-
-                HashMap<String, String> etcMap = new HashMap<String, String>();
                 for (int i=0; i < cells.size(); i += 2) {
                     Element th = cells.get(i);
                     Element td = cells.get(i+1);
@@ -203,31 +201,47 @@ public class Go1372CrawlerService {
                     log.debug("td : {}", td.text().toString());
                     etcMap.put(th.text().toString(), td.text().toString());
                 }
-                etcList.add(etcMap);
             }
         }
-        log.debug("etcList : {}", gson.toJson(etcList));
+        log.debug("etcMap : {}", gson.toJson(etcMap));
         
         // 이미지 추출
+        Elements image = contents.select("#contentsViewTitle2 img");
         ArrayList<String> imgList = new ArrayList<String>();
-        Elements images = contents.select("#contentsViewTitle2 img");
-        for(Element img : images) {
+        String images = "";
+        for(Element img : image) {
             String imageFullPath = "";
+            String imgUrl = "";
             if (img.attr("src").toLowerCase().contains("http")) {
-                imageFullPath = CrawlerUtil.downloadImage(imageDownloaPath, img.attr("src"));
+                imgUrl = img.attr("src");
             }
             else {
-                imageFullPath = CrawlerUtil.downloadImage(imageDownloaPath, DEFAULT_URL + img.attr("src"));
+                imgUrl = DEFAULT_URL + img.attr("src");
             }
-
-            log.debug("imageFullPath : {}" , imageFullPath);
             
-            if (!"".equals(imageFullPath)) {
+
+            if (!"".equals(imgUrl)) {
+                imageFullPath = CrawlerUtil.downloadImage(imageDownloaPath, imgUrl);
+                images += imgUrl + ",";
                 imgList.add(imageFullPath);
             }
+            log.debug("images : {}" , images);
+            log.debug("imageFullPath : {}" , imageFullPath);
+            
         }
-
         log.debug("imgList : {}" , gson.toJson(imgList));
+        
+        // OCR
+        StringBuffer sb = new StringBuffer();
+        if (!imgList.isEmpty() && imgList != null && imgList.size() > 0) {
+            for(String imageFullPath : imgList) {
+                log.debug("imageFullPath : {}", imageFullPath);
+                log.debug("datapath : {}", datapath);
+                sb.append(CrawlerUtil.doOCR(imageFullPath, datapath));
+                sb.append("\n");
+            }
+        }               
+        String imagesContent    = sb.toString();
 
         content.put("defaultUrl", DEFAULT_URL);
         content.put("siteName", "소비자상담센터");
@@ -235,8 +249,9 @@ public class Go1372CrawlerService {
         content.put("link", link);
         content.put("title", title);
         content.put("contents", text);
-        content.put("images", imgList);
-        content.put("etcs", etcList);
+        content.put("images", images);
+        content.put("imagesContent", imagesContent);
+        content.put("etcs", etcMap);
 
         log.debug("content : {}", gson.toJson(content));
         

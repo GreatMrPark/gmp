@@ -56,7 +56,7 @@ public class TbCrawlerCollection implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "CRAWLER_COLLECTION_T_SEQ_GENERATOR")
-    @Column(name="BATCH_JOB_SEQ", nullable = false, length=20)
+    @Column(name="CRAWLER_COLLECTION_SEQ", nullable = false, length=20)
     @Expose
     Long crawlerCollectionSeq;
     
@@ -133,7 +133,7 @@ public class TbCrawlerCollection implements Serializable {
     /**
      * 등록일 
      */
-    @Column(name = "REG_DATE", length=16)
+    @Column(name = "REG_DATE", length=32)
     @Expose
     String regDate;
     
@@ -154,7 +154,7 @@ public class TbCrawlerCollection implements Serializable {
     /**
      * 첨부자료 
      */
-    @Column(name = "ATTACHED", length=32)
+    @Column(name = "ATTACHED", length=128)
     @Expose
     String attached;
 

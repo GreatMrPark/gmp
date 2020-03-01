@@ -1,5 +1,6 @@
 package com.greatmrpark.helper.batch.job;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,7 +65,7 @@ public class GmpWebCrawlerJob {
     @Value("${gmp.file.images.download}")
     private static int imageDownloaPath;
     
-    @Value("${gmp.ocrdatapath}")
+    @Value("${gmp.ocr.datapath}")
     private static String datapath;
 
     @Autowired
@@ -112,6 +113,7 @@ public class GmpWebCrawlerJob {
         int totalCount      = 0;
         int succesCount     = 0;
         int failCount       = 0;
+        LocalDateTime nowDate = LocalDateTime.now();
         String crawlerName  = "1372altnews"; // 1372altnews
                 
         /**
@@ -128,14 +130,47 @@ public class GmpWebCrawlerJob {
         String siteName   = tbCrawler.getSiteName();
         String pageName   = tbCrawler.getPageName();
                 
-        ArrayList<HashMap<String, Object>> contents = go1372CrawlerService.post(tbCrawler);
-        if (!contents.isEmpty() && contents != null && contents.size() > 0) {
-            log.debug("contents : {}" , gson.toJson(contents));
+        ArrayList<HashMap<String, Object>> contentList = go1372CrawlerService.post(tbCrawler);
+        if (!contentList.isEmpty() && contentList != null && contentList.size() > 0) {
+            log.debug("contentList : {}" , gson.toJson(contentList));
 
-            totalCount = contents.size();
-            for (HashMap<String, Object> content : contents) {
+            totalCount = contentList.size();
+            try {
+            for (HashMap<String, Object> map : contentList) {
+                
+                String link             = (String) map.get("link");
+                String title            = (String) map.get("title");
+                String contents         = (String) map.get("contents");
+                
+                String analysisContent  = gson.toJson(map);
+                String images           = (String) map.get("images");
+                String imagesContent    = (String) map.get("imagesContent");
+
+                HashMap<String, String> etcs = (HashMap<String, String>)map.get("etcs");
+                String category         = etcs.get("카테고리");
+                String regDate          = etcs.get("등록일");
+                String source           = etcs.get("출처");
+                String views            = etcs.get("조회");
+                String attached         = etcs.get("첨부자료");
+                                
                 TbCrawlerCollection tbCrawlerCollection = new TbCrawlerCollection();
-                tbCrawlerCollection.setAnalysisContent(gson.toJson(content));
+                tbCrawlerCollection.setDefaultUrl(defaultUrl);
+                tbCrawlerCollection.setSiteName(siteName);
+                tbCrawlerCollection.setPageName(pageName);
+                tbCrawlerCollection.setLink(link);
+                tbCrawlerCollection.setTitle(title);
+                tbCrawlerCollection.setContents(contents);
+                tbCrawlerCollection.setImages(images);
+                tbCrawlerCollection.setImagesContent(imagesContent);
+                tbCrawlerCollection.setAnalysisContent(analysisContent);
+                tbCrawlerCollection.setCategory(category);
+                tbCrawlerCollection.setRegDate(regDate);
+                tbCrawlerCollection.setSource(source);
+                tbCrawlerCollection.setViews(views);
+                tbCrawlerCollection.setAttached(attached);
+                tbCrawlerCollection.setAnlsDate(nowDate);
+                log.debug("tbCrawlerCollection : ", gson.toJson(tbCrawlerCollection));
+                
                 Boolean b = saveCrawlerCollection(tbCrawlerCollection);
                 if (b) {
                     succesCount++;
@@ -146,6 +181,7 @@ public class GmpWebCrawlerJob {
                     log.debug("crwler1372AltNews 실패");
                 }
             }
+            } catch(Exception e) {e.printStackTrace();}
         }
         else {
             log.debug("contents : {}" , ApiMessageCode.API_MSG_0008.getValue());
@@ -187,7 +223,7 @@ public class GmpWebCrawlerJob {
     public void crwlerKca() {
         
     }
-
+    
     /**
      * 크롤링 수집 정보 저장
      *

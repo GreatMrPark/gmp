@@ -8,8 +8,6 @@ import java.net.URLConnection;
 
 import javax.imageio.ImageIO;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.tess4j.Tesseract;
 
@@ -80,14 +78,13 @@ public class CrawlerUtil {
      */
     public static String doOCR(String fileFullPath, String datapath) {
         
-        System.out.println("fileFullPath : " + fileFullPath);
-        
         String result = "";
         long totalTime = 0;
         long endTime = 0;
         long startTime = System.currentTimeMillis();
         File file = new File(fileFullPath);
         Tesseract tesseract = new Tesseract(); 
+//        Tesseract tesseract = Tesseract.getInstance();
         try { 
 
             tesseract.setDatapath(datapath); // ocr 경로
@@ -96,23 +93,19 @@ public class CrawlerUtil {
             ImageIO.scanForPlugins();
             result = tesseract.doOCR(file);
 
-            System.out.println("==============================");
-            System.out.println("Result For OCR : ");
-            System.out.println("==============================");
-            System.out.println(result);
-            System.out.println("==============================");
+            log.debug("==============================");
+            log.debug("Result For OCR : {} ", result);
+            log.debug("==============================");
             
             endTime = System.currentTimeMillis();
             totalTime = endTime - startTime;
             
-            System.out.println("Total Time Taken For OCR: " + (totalTime / 1000));
-            
-            return result;
-            
+            log.debug("Total Time Taken For OCR: {} " , (totalTime / 1000));
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            log.error("doOCR : {} ", e.getMessage());
             result = "";
-            return result;
         } 
+
+        return result;
     }
 }
