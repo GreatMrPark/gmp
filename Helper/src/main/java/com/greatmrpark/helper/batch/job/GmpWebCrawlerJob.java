@@ -86,10 +86,12 @@ public class GmpWebCrawlerJob {
     public void process() {
         log.info("start GmpWebCrawlerJob.process-----------------------------------------------------");
         
-        try {
-            
+        try {            
             crwler1372AltNews();
             crwler1372Counsel();
+            crwler1372InfoData();
+            crwlerKcaBoard();
+            crwlerConsumerNews();
             
             /**
              * job 실행 완료 시간 update
@@ -208,8 +210,101 @@ public class GmpWebCrawlerJob {
     @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
     public void crwler1372Counsel() throws ApiCheckedException {
 
-
         log.info("start crwler1372Counsel-----------------------------------------------------");
+   
+        int totalCount      = 0;
+        int succesCount     = 0;
+        int failCount       = 0;
+        
+        String userId = "greatmrpark";
+        LocalDateTime nowDate = LocalDateTime.now();
+        String crawlerName  = "1372counsel"; // 1372altnews
+                
+        /**
+         * 크롤링 대상 정보 조회
+         */
+        Optional<TbCrawler> tbCrawlerOpt = crawlerRepository.findOptByCrawlerName(crawlerName);
+        if (tbCrawlerOpt.isPresent() == false) {
+            throw new ApiCheckedException(ApiErrCode.API_ERR_0002, crawlerName);
+        }
+        TbCrawler tbCrawler = tbCrawlerOpt.get();
+        log.debug("tbCrawlerOpt : {}", gson.toJson(tbCrawlerOpt));
+        
+        String defaultUrl = tbCrawler.getDefaultUrl();
+        String siteName   = tbCrawler.getSiteName();
+        String pageName   = tbCrawler.getPageName();
+                
+        ArrayList<HashMap<String, Object>> contentList = go1372CrawlerService.post(tbCrawler);
+        if (!contentList.isEmpty() && contentList != null && contentList.size() > 0) {
+            log.debug("contentList : {}" , gson.toJson(contentList));
+
+            totalCount = contentList.size();
+            try {
+            for (HashMap<String, Object> map : contentList) {
+                
+                String link             = (String) map.get("link");
+                String title            = (String) map.get("title");
+                String contents         = (String) map.get("contents");
+                String reply            = (String) map.get("reply");
+                
+                String analysisContent  = gson.toJson(map);
+                String images           = (String) map.get("images");
+                String imagesContent    = (String) map.get("imagesContent");
+
+                HashMap<String, String> etcs = (HashMap<String, String>)map.get("etcs");
+                String regNo        = etcs.get("접수번호");
+                String replyDate    = etcs.get("답변일");
+                String regDate      = etcs.get("작성일");
+                String item         = etcs.get("품목");
+                                
+                TbCrawlerCollection tbCrawlerCollection = new TbCrawlerCollection();
+                tbCrawlerCollection.setDefaultUrl(defaultUrl);
+                tbCrawlerCollection.setSiteName(siteName);
+                tbCrawlerCollection.setPageName(pageName);
+                tbCrawlerCollection.setLink(link);
+                tbCrawlerCollection.setTitle(title);
+                tbCrawlerCollection.setContents(contents);
+                tbCrawlerCollection.setReply(reply);
+                tbCrawlerCollection.setImages(images);
+                tbCrawlerCollection.setImagesContent(imagesContent);
+                tbCrawlerCollection.setAnalysisContent(analysisContent);
+                
+                tbCrawlerCollection.setRegNo(regNo);
+                tbCrawlerCollection.setReplyDate(replyDate);
+                tbCrawlerCollection.setRegDate(regDate);
+                tbCrawlerCollection.setItem(item);
+                
+                tbCrawlerCollection.setAnlsDate(nowDate);
+                log.debug("tbCrawlerCollection : ", gson.toJson(tbCrawlerCollection));
+                
+                Boolean b = saveCrawlerCollection(tbCrawlerCollection);
+                if (b) {
+                    succesCount++;
+                    log.debug("crwler1372Counsel 성공");
+                }
+                else {
+                    failCount++;
+                    log.debug("crwler1372Counsel 실패");
+                }
+            }
+            } catch(Exception e) {e.printStackTrace();}
+        }
+        else {
+            log.debug("contents : {}" , ApiMessageCode.API_MSG_0008.getValue());
+        }
+
+        log.debug("crwler1372Counsel 총 : {} (성공 : {}, 실패 : {}) 건 저장" , totalCount, succesCount, failCount);
+        
+        log.info("end crwler1372Counsel-----------------------------------------------------");
+    }
+
+    /**
+     * 1372 정보자료
+     */
+    @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
+    public void crwler1372InfoData() throws ApiCheckedException {
+
+        log.info("start crwler1372InfoData-----------------------------------------------------");
    
         int totalCount      = 0;
         int succesCount     = 0;
@@ -277,11 +372,11 @@ public class GmpWebCrawlerJob {
                 Boolean b = saveCrawlerCollection(tbCrawlerCollection);
                 if (b) {
                     succesCount++;
-                    log.debug("crwler1372AltNews 성공");
+                    log.debug("crwler1372InfoData 성공");
                 }
                 else {
                     failCount++;
-                    log.debug("crwler1372AltNews 실패");
+                    log.debug("crwler1372InfoData 실패");
                 }
             }
             } catch(Exception e) {e.printStackTrace();}
@@ -290,32 +385,32 @@ public class GmpWebCrawlerJob {
             log.debug("contents : {}" , ApiMessageCode.API_MSG_0008.getValue());
         }
 
-        log.debug("crwler1372Counsel 총 : {} (성공 : {}, 실패 : {}) 건 저장" , totalCount, succesCount, failCount);
+        log.debug("crwler1372InfoData 총 : {} (성공 : {}, 실패 : {}) 건 저장" , totalCount, succesCount, failCount);
         
-        log.info("end crwler1372Counsel-----------------------------------------------------");
+        log.info("end crwler1372InfoData-----------------------------------------------------");
     }
 
     /**
-     * 1372 정보자료
+     * kcal 게시판
      */
     @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
-    public void crwler1372InfoData() throws ApiCheckedException {
-        
-    }
-
-    /**
-     * consumernews
-     */
-    @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
-    public void crwlerConsumernews() throws ApiCheckedException {
+    public void crwlerKcaBoard() throws ApiCheckedException {
         
     }
 
     /**
-     * kcal
+     * kcal 보도자료
      */
     @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
-    public void crwlerKca() throws ApiCheckedException {
+    public void crwlerKcaReport() throws ApiCheckedException {
+        
+    }
+
+    /**
+     * consumernews 뉴스
+     */
+    @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
+    public void crwlerConsumerNews() throws ApiCheckedException {
         
     }
     

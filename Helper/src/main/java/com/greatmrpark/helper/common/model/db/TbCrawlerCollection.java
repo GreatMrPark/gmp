@@ -103,6 +103,13 @@ public class TbCrawlerCollection implements Serializable {
     String contents;
     
     /**
+     * 답글 
+     */
+    @Column(name = "REPLY")
+    @Expose
+    String reply;
+    
+    /**
      * 이미지 
      */
     @Column(name = "IMAGES", length=512)
@@ -110,7 +117,7 @@ public class TbCrawlerCollection implements Serializable {
     String images;
     
     /**
-     * 텍스트 
+     * 이미지 내용 
      */
     @Column(name = "IMAGES_CONTENT")
     @Expose
@@ -131,13 +138,6 @@ public class TbCrawlerCollection implements Serializable {
     String category;
     
     /**
-     * 등록일 
-     */
-    @Column(name = "REG_DATE", length=32)
-    @Expose
-    String regDate;
-    
-    /**
      * 출처 
      */
     @Column(name = "SOURCE", length=64)
@@ -152,11 +152,39 @@ public class TbCrawlerCollection implements Serializable {
     String views;
     
     /**
+     * 접수번호 
+     */
+    @Column(name = "REG_NO", length=16)
+    @Expose
+    String regNo;
+
+    /**
+     * 품목 
+     */
+    @Column(name = "ITEM", length=32)
+    @Expose
+    String item;
+    
+    /**
      * 첨부자료 
      */
     @Column(name = "ATTACHED", length=128)
     @Expose
     String attached;
+    
+    /**
+     * 등록일 
+     */
+    @Column(name = "REG_DATE", length=32)
+    @Expose
+    String regDate;
+    
+    /**
+     * 답변일 
+     */
+    @Column(name = "REPLY_DATE", length=32)
+    @Expose
+    String replyDate;
 
     /**
      * 분석일 

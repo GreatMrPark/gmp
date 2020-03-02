@@ -1,3 +1,17 @@
+/*
+ *  Copyright (c) 2020 Great Mr. Park
+ *  All right reserved.
+ *  This software is the confidential and proprietary information of Great Mr. Park.
+ *  You shall not disclose such Confidential Information and
+ *  shall use it only in accordance with the terms of the license agreement
+ *  you entered into with Great Mr. Park.
+ *
+ *  Revision History
+ *  Author Date Description
+ *  ------------------ -------------- ------------------
+ *  greatmrpark 2020. 3. 2.
+ *
+ */	
 package com.greatmrpark.helper.crawler.service;
 
 import java.time.Duration;
@@ -23,16 +37,19 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class Go1372CrawlerService {
+public class KcaCrawlerService {
 
     private Gson gson = new GsonBuilder().create();
     private int PTIME = 1; 
     
-    private String DEFAULT_URL   = "http://www.1372.go.kr";
-    private String START_COUNT   = "0";
-    private String IS_TAG_SEARCH = "Y";
+    private String DEFAULT_URL   = "https://www.kca.go.kr";
+    private String SEARCH_URL    = "https://www.kca.go.kr/search/index.do";
+    private String[] COLLECTION = {"report", "board"}; // report : 보도자료, webpage : 웹페이지, board : 게시판, menu : 메뉴정도, consumer : 소비자 문제연구
+    private String QUERY_STRING  = "교원";
+    private String MODE   = "list";
+    private String SCODE   = "";
     private Integer PAGE_SIZE    = 10;
-    
+
     @Value("${gmp.file.images.download}")
     private String imageDownloaPath;
     
@@ -41,7 +58,7 @@ public class Go1372CrawlerService {
     
     @Autowired
     CrawlerClient crawlerClient;
-    
+
     public ArrayList<HashMap<String, Object>> post(TbCrawler crawler) {
         
         LocalDateTime startDateTime = LocalDateTime.now();
@@ -52,16 +69,15 @@ public class Go1372CrawlerService {
         ArrayList<String> pages = new ArrayList<String>();
         ArrayList<HashMap<String, Object>> contents = new ArrayList<HashMap<String, Object>>();
         
-        String defaultUrl = crawler.getDefaultUrl();
-        String searchUrl = crawler.getSearchUrl();
+        String searchUrl  = crawler.getSearchUrl();
         String collection = crawler.getCollection();
+        String srchopt    = crawler.getSrchopt();
+        String mode       = "list";
         String keyword = crawler.getKeyword();
         
         url  = searchUrl;
-        url += "&isTagSearch=" + IS_TAG_SEARCH;
-        url += "&startCount="+ START_COUNT;
         url += "&collection=" + collection; 
-        url += "&query=" + keyword;
+        url += "&kwd=" + keyword;
         
         try {
             html = crawlerClient.post(url);
@@ -77,13 +93,13 @@ public class Go1372CrawlerService {
 
                     if (!"".contentEquals(p)) {
                         int page = (Integer.parseInt(p) - 1) * PAGE_SIZE;
-                        String startCount =  Integer.toString(page);
                         
                         url  = searchUrl;
-                        url += "&isTagSearch=" + IS_TAG_SEARCH;
-                        url += "&startCount="+ startCount;
                         url += "&collection=" + collection; 
-                        url += "&query=" + keyword;
+                        url += "&srchopt=" + srchopt; 
+                        url += "&mode=" + mode;
+                        url += "&kwd=" + keyword;
+                        url += "&page="+ p;
                         
                         html = crawlerClient.post(url);
                         links.addAll(parserList(html));
@@ -98,17 +114,11 @@ public class Go1372CrawlerService {
                 for(String link: links) {
                     CrawlerUtil.sleep(PTIME);
 
-                    if ("altNews".equals(collection)) {
-                        contents.add(parserAltNews(link));
-                    }
-                    else if ("counsel".equals(collection)) {
-                        contents.add(parserCounsel(link));
-                    }
-                    else if ("infoData".equals(collection)) {
-                        contents.add(parserInfoData(link));
+                    if (collection=="board") {
+                        contents.add(parserBoard(link));
                     }
                     else {
-                        contents.add(parserAltNews(link));
+                        contents.add(parserBoard(link));
                     }
                 }
             }
@@ -179,11 +189,11 @@ public class Go1372CrawlerService {
     }
     
     /**
-     * 소비자상담센터 > 알림뉴스
+     * 한국소비자원 > 게시글
      * @param html
      * @param link
      */
-    public HashMap<String, Object> parserAltNews(String link) {
+    public HashMap<String, Object> parserBoard(String link) {
 
         HashMap<String, Object> content = new HashMap<String, Object>();
         try {
@@ -202,6 +212,8 @@ public class Go1372CrawlerService {
                 
                 Elements cells = row.select("td");
                 int cellCount = cells.size();
+                log.debug("cellCount : {}", cellCount);
+                
                 if (cellCount > 1 && ((cellCount % 2) == 0)) {
                     for (int i=0; i < cells.size(); i += 2) {
                         Element th = cells.get(i);
@@ -212,6 +224,7 @@ public class Go1372CrawlerService {
                     }
                 }
             }
+            log.debug("etcMap : {}", gson.toJson(etcMap));
             
             // 이미지 추출
             Elements image = contents.select("#contentsViewTitle2 img");
@@ -227,6 +240,7 @@ public class Go1372CrawlerService {
                     imgUrl = DEFAULT_URL + img.attr("src");
                 }
                 
+
                 if (!"".equals(imgUrl)) {
                     imageFullPath = CrawlerUtil.downloadImage(imageDownloaPath, imgUrl);
                     images += imgUrl + ",";
@@ -236,6 +250,7 @@ public class Go1372CrawlerService {
                 log.debug("imageFullPath : {}" , imageFullPath);
                 
             }
+            log.debug("imgList : {}" , gson.toJson(imgList));
             
             // OCR
             StringBuffer sb = new StringBuffer();
@@ -259,57 +274,52 @@ public class Go1372CrawlerService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        log.debug("content : {}", gson.toJson(content));
         
         return content;
-    }
-    
+    } 
+
     /**
-     * 소비자상담센터 > 상담조회
-     *
-     * @history
-     * <pre>
-     * ------------------------------------
-     * 2020. 3. 2. greatmrpark 최초작성
-     * ------------------------------------
-     * </pre>
-     *
-     * @Method parserCounsel
-     *
+     * 한국소비자원 > 보도자료
      * @param html
      * @param link
      */
-    public HashMap<String, Object> parserCounsel(String link) {
+    public HashMap<String, Object> parserReport(String link) {
 
         HashMap<String, Object> content = new HashMap<String, Object>();
         try {
             String html = crawlerClient.post(link);
+            
             Document doc = Jsoup.parse(html);
+//            doc.outputSettings().prettyPrint(false); // 줄바꿈 살림
             Elements contents = doc.select(".boardView");
-            String title    = contents.select("#contentsViewTitle").text().toString();
-            String text     = contents.select(".autocounsel_last_box").get(0).html().toString();
-            String reply    = contents.select(".autocounsel_last_box").get(1).html().toString();
-
+            String title = contents.select("#contentsViewTitle").text().toString();
+            String text = contents.select("#contentsViewTitle2").html().toString();
+            
             // 컨덴츠
             HashMap<String, String> etcMap = new HashMap<String, String>();
             Elements rows = contents.select("tbody tr");
-            for(Element row : rows) {                
-                int cellCount = row.children().size();
-                if (cellCount > 1) {
-    
-                    Elements thcells = row.select("th");
-                    Elements tdcells = row.select("td");
-                    
-                    for (int i=0; i<tdcells.size(); i++){
-                        Element th = thcells.get(i);
-                        Element td = tdcells.get(i);
+            for(Element row : rows) {
+                
+                Elements cells = row.select("td");
+                int cellCount = cells.size();
+                log.debug("cellCount : {}", cellCount);
+                
+                if (cellCount > 1 && ((cellCount % 2) == 0)) {
+                    for (int i=0; i < cells.size(); i += 2) {
+                        Element th = cells.get(i);
+                        Element td = cells.get(i+1);
+                        log.debug("th : {}", th.text().toString());
+                        log.debug("td : {}", td.text().toString());
                         etcMap.put(th.text().toString(), td.text().toString());
                     }
                 }
-            } 
+            }
             log.debug("etcMap : {}", gson.toJson(etcMap));
-
+            
             // 이미지 추출
-            Elements image = contents.select(".autocounsel_last_box img");
+            Elements image = contents.select("#contentsViewTitle2 img");
             ArrayList<String> imgList = new ArrayList<String>();
             String images = "";
             for(Element img : image) {
@@ -322,6 +332,7 @@ public class Go1372CrawlerService {
                     imgUrl = DEFAULT_URL + img.attr("src");
                 }
                 
+
                 if (!"".equals(imgUrl)) {
                     imageFullPath = CrawlerUtil.downloadImage(imageDownloaPath, imgUrl);
                     images += imgUrl + ",";
@@ -333,7 +344,6 @@ public class Go1372CrawlerService {
             }
             log.debug("imgList : {}" , gson.toJson(imgList));
             
-
             // OCR
             StringBuffer sb = new StringBuffer();
             if (!imgList.isEmpty() && imgList != null && imgList.size() > 0) {
@@ -349,66 +359,16 @@ public class Go1372CrawlerService {
             content.put("link", link);
             content.put("title", title);
             content.put("contents", text);
-            content.put("reply", reply);
             content.put("images", images);
             content.put("imagesContent", imagesContent);
             content.put("etcs", etcMap);
-
-            log.debug("content : {}", gson.toJson(content));
             
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        log.debug("content : {}", gson.toJson(content));
+        
         return content;
-    }
-    
-    /**
-     * 소비자상담센터 > 정보자료
-     *
-     * @history
-     * <pre>
-     * ------------------------------------
-     * 2020. 3. 2. greatmrpark 최초작성
-     * ------------------------------------
-     * </pre>
-     *
-     * @Method parserInfoData
-     *
-     * @param link
-     * @return
-     */
-    public HashMap<String, Object> parserInfoData(String link) {
-
-        HashMap<String, Object> content = new HashMap<String, Object>();
-        try {
-            String html = crawlerClient.post(link);
-            Document doc = Jsoup.parse(html);
-            Elements contents = doc.select(".boardView");
-            System.out.println("링크 : " + link);
-            System.out.println("제목 : " + contents.select("#contentsViewTitle").text().toString());
-            System.out.println("내용 : " + contents.select("#contentsViewTitle2").html().toString());
-    
-            // 컨덴츠
-            Elements rows = contents.select("tbody tr");
-            for(Element row : rows) {
-    
-                Elements cells = row.select("td");
-                int cellCount = cells.size();
-    
-                if (cellCount > 1 && ((cellCount % 2) == 0)) {
-                    
-                    for (int i=0; i < cells.size(); i += 2){
-    
-                        Element th = cells.get(i);
-                        Element td = cells.get(i+1);
-                        System.out.println(th.text().toString() + " : " + td.text().toString());
-                    }
-                }
-            } 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return content;
-    }  
+    } 
 }

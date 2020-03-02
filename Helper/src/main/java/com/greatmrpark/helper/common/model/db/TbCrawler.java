@@ -89,11 +89,19 @@ public class TbCrawler implements Serializable {
     String searchUrl;
                        
     /**
-     * 수집대상 
+     * 수집대상(소비자상담센터)
      */
     @Column(name = "COLLECTION", length=16)
     @Expose
     String collection;
+
+    
+    /**
+     * 수집대상(한국소비자원)
+     */
+    @Column(name = "SRCHOPT", length=16)
+    @Expose
+    String srchopt;
                         
     /**
      * 페이지명 

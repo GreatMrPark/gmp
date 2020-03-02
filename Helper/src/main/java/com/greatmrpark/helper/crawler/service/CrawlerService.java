@@ -266,11 +266,32 @@ public class CrawlerService {
         if (StringUtils.isBlank(params.getCrawlerName())) {
             throw new ApiCheckedException(ApiErrCode.API_ERR_0001, "crawlerName");
         }
+        String crawlerName = params.getCrawlerName();
         
         /**
          * 3. DATA 처리
          */
-        gmpWebCrawlerJob.crwler1372AltNews();
+        if ("1372altnews".equals(crawlerName)) {
+            gmpWebCrawlerJob.crwler1372AltNews();
+        }
+        else if ("1372counsel".equals(crawlerName)) {
+            gmpWebCrawlerJob.crwler1372Counsel();
+        }
+        else if ("1372infodata".equals(crawlerName)) {
+            gmpWebCrawlerJob.crwler1372InfoData();
+        }
+        else if ("kcaboard".equals(crawlerName)) {
+            gmpWebCrawlerJob.crwlerKcaBoard();
+        }
+        else if ("kcaboard".equals(crawlerName)) {
+            gmpWebCrawlerJob.crwlerKcaReport();
+        }
+        else if ("consumernews".equals(crawlerName)) {
+            gmpWebCrawlerJob.crwlerConsumerNews();
+        }
+        else {
+            throw new ApiCheckedException(ApiErrCode.API_ERR_0002, crawlerName);
+        }
 
         /**
          * 4. DATA 결과
