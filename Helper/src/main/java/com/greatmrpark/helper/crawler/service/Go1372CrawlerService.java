@@ -66,9 +66,7 @@ public class Go1372CrawlerService {
         try {
             html = crawlerClient.post(url);
             links = parserList(html);
-            log.debug("links : {}", gson.toJson(links));
             pages = parserPage(html);
-            log.debug("pages : {}", gson.toJson(pages));
             if (pages != null && pages.size() > 0) {
 
                 CrawlerUtil.sleep(PTIME);
@@ -89,10 +87,7 @@ public class Go1372CrawlerService {
                         links.addAll(parserList(html));
                     }
                 }
-                log.debug("links : {}", gson.toJson(links));
-            }
-            log.debug("links : {}", gson.toJson(links));
-            
+            }            
 
             if (!links.isEmpty() && links != null && links.size() > 0) {
                 for(String link: links) {
@@ -116,7 +111,6 @@ public class Go1372CrawlerService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        log.debug("contents : {}", gson.toJson(contents));
 
         LocalDateTime endDateTime = LocalDateTime.now();
         Duration duration = Duration.between(startDateTime, endDateTime);
@@ -174,7 +168,6 @@ public class Go1372CrawlerService {
                 }
             }
         }
-        log.debug("links : {}", gson.toJson(links));
         return links;
     }
     
@@ -206,8 +199,6 @@ public class Go1372CrawlerService {
                     for (int i=0; i < cells.size(); i += 2) {
                         Element th = cells.get(i);
                         Element td = cells.get(i+1);
-                        log.debug("th : {}", th.text().toString());
-                        log.debug("td : {}", td.text().toString());
                         etcMap.put(th.text().toString(), td.text().toString());
                     }
                 }
@@ -231,18 +222,13 @@ public class Go1372CrawlerService {
                     imageFullPath = CrawlerUtil.downloadImage(imageDownloaPath, imgUrl);
                     images += imgUrl + ",";
                     imgList.add(imageFullPath);
-                }
-                log.debug("images : {}" , images);
-                log.debug("imageFullPath : {}" , imageFullPath);
-                
+                }                
             }
             
             // OCR
             StringBuffer sb = new StringBuffer();
             if (!imgList.isEmpty() && imgList != null && imgList.size() > 0) {
                 for(String imageFullPath : imgList) {
-                    log.debug("imageFullPath : {}", imageFullPath);
-                    log.debug("datapath : {}", datapath);
                     sb.append(CrawlerUtil.doOCR(imageFullPath, datapath));
                     sb.append("\n");
                 }
@@ -333,8 +319,6 @@ public class Go1372CrawlerService {
             StringBuffer sb = new StringBuffer();
             if (!imgList.isEmpty() && imgList != null && imgList.size() > 0) {
                 for(String imageFullPath : imgList) {
-                    log.debug("imageFullPath : {}", imageFullPath);
-                    log.debug("datapath : {}", datapath);
                     sb.append(CrawlerUtil.doOCR(imageFullPath, datapath));
                     sb.append("\n");
                 }
@@ -420,19 +404,12 @@ public class Go1372CrawlerService {
                     images += imgUrl + ",";
                     imgList.add(imageFullPath);
                 }
-                log.debug("images : {}" , images);
-                log.debug("imageFullPath : {}" , imageFullPath);
-                
             }
-            log.debug("imgList : {}" , gson.toJson(imgList));
-            
 
             // OCR
             StringBuffer sb = new StringBuffer();
             if (!imgList.isEmpty() && imgList != null && imgList.size() > 0) {
                 for(String imageFullPath : imgList) {
-                    log.debug("imageFullPath : {}", imageFullPath);
-                    log.debug("datapath : {}", datapath);
                     sb.append(CrawlerUtil.doOCR(imageFullPath, datapath));
                     sb.append("\n");
                 }

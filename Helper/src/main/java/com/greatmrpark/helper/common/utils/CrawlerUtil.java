@@ -5,8 +5,11 @@ import java.io.File;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
+
+import org.apache.commons.lang3.text.StrSubstitutor;
 
 import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.tess4j.Tesseract;
@@ -106,5 +109,25 @@ public class CrawlerUtil {
         } 
 
         return result;
+    }
+    
+    /**
+     * 메시지 템플릿
+     *
+     * @history
+     * ------------------------------------
+     * 2020. 3. 3. greatmrpark 최초작성
+     * ------------------------------------
+     * </pre>
+     *
+     * @Method messageTemplate
+     *
+     * @param message
+     * @param value
+     * @return
+     */
+    public static String messageTemplate(String templateString , Map<String, Object> substitutes) {
+        StrSubstitutor sub = new StrSubstitutor(substitutes);
+        return sub.replace(templateString);
     }
 }

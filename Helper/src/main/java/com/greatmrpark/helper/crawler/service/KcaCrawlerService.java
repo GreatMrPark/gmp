@@ -71,7 +71,6 @@ public class KcaCrawlerService {
         
         String searchUrl  = crawler.getSearchUrl();
         String collection = crawler.getCollection();
-        String srchopt    = crawler.getSrchopt();
         String mode       = "list";
         String keyword = crawler.getKeyword();
         
@@ -96,7 +95,7 @@ public class KcaCrawlerService {
                         
                         url  = searchUrl;
                         url += "&collection=" + collection; 
-                        url += "&srchopt=" + srchopt; 
+                        url += "&srchopt=" + collection; 
                         url += "&mode=" + mode;
                         url += "&kwd=" + keyword;
                         url += "&page="+ p;

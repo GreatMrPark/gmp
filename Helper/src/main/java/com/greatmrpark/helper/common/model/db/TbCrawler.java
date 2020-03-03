@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.google.gson.annotations.Expose;
+import com.greatmrpark.helper.common.model.convert.BooleanToYNConvert;
 import com.greatmrpark.helper.common.model.convert.LocalDateTimeAttributeConverter;
 
 import lombok.Data;
@@ -94,14 +95,6 @@ public class TbCrawler implements Serializable {
     @Column(name = "COLLECTION", length=16)
     @Expose
     String collection;
-
-    
-    /**
-     * 수집대상(한국소비자원)
-     */
-    @Column(name = "SRCHOPT", length=16)
-    @Expose
-    String srchopt;
                         
     /**
      * 페이지명 
@@ -111,11 +104,82 @@ public class TbCrawler implements Serializable {
     String pageName;
                         
     /**
-     * 키워드 
+     * 기본키워드 
      */
     @Column(name = "KEYWORD", length=64)
     @Expose
     String keyword;
+    
+    /**
+    * 컨덴츠메소드 (GET, POST)
+    */
+    @Column(name = "CONTENT_METHOD", length=8)
+    @Expose
+    String contentMethod;          
+    
+    /**
+    * 컨덴츠타입 (application/x-www-form-urlencoded; charset=uft-8)
+    */
+    @Column(name = "CONTENT_TYPE", length=64)
+    @Expose
+    String contentType;          
+
+    
+    /**
+    * 페이지요소 
+    */
+    @Column(name = "PAGE_EL", length=64)
+    @Expose
+    String pageEl;          
+    
+    /**
+     * 목록요소 
+     */
+    @Column(name = "LIST_EL", length=64)
+    @Expose
+    String listEl;
+    
+    /**
+    * 본문요소 
+    */
+    @Column(name = "BODY_EL", length=64)
+    @Expose
+    String bodyEl;
+    
+    /**
+    * 제목요소 
+    */
+    @Column(name = "TITLE_EL", length=64)
+    @Expose
+    String titleEl;
+    
+    /**
+    * 내용요소 
+    */
+    @Column(name = "CONTENTS_EL", length=64)
+    @Expose
+    String contentsEl;
+    
+    /**
+    * 답글요소 
+    */
+    @Column(name = "REPLY_EL", length=64)
+    @Expose
+    String replyEl;
+    
+    /**
+    * 항목요소 
+    */
+    @Column(name = "ITEM_EL", length=64)
+    @Expose
+    String itemEl;    
+    
+    /**
+     * 상세키워드 (',' 로 구분) 
+     */
+    @Column(name = "KEYWORD_DETAILS", length=64)
+    @Expose
+    String keywordDetails;
                          
     /**
      * 필터 
@@ -123,6 +187,30 @@ public class TbCrawler implements Serializable {
     @Column(name = "FILTER", length=64)
     @Expose
     String filter;
+
+    /**
+     * 답글여부 (Y,N)
+     */
+    @Column(name="REPLY_YN", length=1)
+    @Convert(converter = BooleanToYNConvert.class)
+    @Expose
+    Boolean replyYn = false;
+
+    /**
+     * 사용여부 (Y,N)
+     */
+    @Column(name="USE_YN", length=1)
+    @Convert(converter = BooleanToYNConvert.class)
+    @Expose
+    Boolean useYn = false;
+
+    /**
+     * 삭제여부 (Y,N)
+     */
+    @Column(name="DEL_YN", length=1)
+    @Convert(converter = BooleanToYNConvert.class)
+    @Expose
+    Boolean delYn = false;
                           
     /**
      * 최종수집일 
