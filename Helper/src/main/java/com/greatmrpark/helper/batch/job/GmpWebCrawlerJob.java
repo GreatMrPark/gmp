@@ -91,6 +91,7 @@ public class GmpWebCrawlerJob {
             crwler1372Counsel();
             crwler1372InfoData();
             crwlerKcaBoard();
+            crwlerKcaReport();
             crwlerConsumerNews();
             
             /**
@@ -108,7 +109,7 @@ public class GmpWebCrawlerJob {
     /**
      * 1372 알림뉴스
      */
-    @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
+    @Transactional
     public void crwler1372AltNews() throws ApiCheckedException {
 
         log.info("start crwler1372AltNews-----------------------------------------------------");
@@ -207,7 +208,7 @@ public class GmpWebCrawlerJob {
     /**
      * 1372 상담조회
      */
-    @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
+    @Transactional
     public void crwler1372Counsel() throws ApiCheckedException {
 
         log.info("start crwler1372Counsel-----------------------------------------------------");
@@ -301,7 +302,7 @@ public class GmpWebCrawlerJob {
     /**
      * 1372 정보자료
      */
-    @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
+    @Transactional
     public void crwler1372InfoData() throws ApiCheckedException {
 
         log.info("start crwler1372InfoData-----------------------------------------------------");
@@ -312,7 +313,7 @@ public class GmpWebCrawlerJob {
         
         String userId = "greatmrpark";
         LocalDateTime nowDate = LocalDateTime.now();
-        String crawlerName  = "1372counsel"; // 1372altnews
+        String crawlerName  = "1372infodata";
                 
         /**
          * 크롤링 대상 정보 조회
@@ -345,10 +346,13 @@ public class GmpWebCrawlerJob {
                 String imagesContent    = (String) map.get("imagesContent");
 
                 HashMap<String, String> etcs = (HashMap<String, String>)map.get("etcs");
-                String category         = etcs.get("카테고리");
+                String source           = etcs.get("만족도");
                 String regDate          = etcs.get("등록일");
-                String source           = etcs.get("출처");
+                String satisfaction     = etcs.get("출처");
                 String views            = etcs.get("조회");
+                String kind             = etcs.get("품종");
+                String product          = etcs.get("해당품목");
+                String writer           = etcs.get("작성자");
                 String attached         = etcs.get("첨부자료");
                                 
                 TbCrawlerCollection tbCrawlerCollection = new TbCrawlerCollection();
@@ -361,10 +365,13 @@ public class GmpWebCrawlerJob {
                 tbCrawlerCollection.setImages(images);
                 tbCrawlerCollection.setImagesContent(imagesContent);
                 tbCrawlerCollection.setAnalysisContent(analysisContent);
-                tbCrawlerCollection.setCategory(category);
+                tbCrawlerCollection.setSatisfaction(satisfaction);
                 tbCrawlerCollection.setRegDate(regDate);
                 tbCrawlerCollection.setSource(source);
                 tbCrawlerCollection.setViews(views);
+                tbCrawlerCollection.setKind(kind);
+                tbCrawlerCollection.setProduct(product);
+                tbCrawlerCollection.setWriter(writer);
                 tbCrawlerCollection.setAttached(attached);
                 tbCrawlerCollection.setAnlsDate(nowDate);
                 log.debug("tbCrawlerCollection : ", gson.toJson(tbCrawlerCollection));
@@ -393,7 +400,7 @@ public class GmpWebCrawlerJob {
     /**
      * kcal 게시판
      */
-    @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
+    @Transactional
     public void crwlerKcaBoard() throws ApiCheckedException {
         
     }
@@ -401,7 +408,7 @@ public class GmpWebCrawlerJob {
     /**
      * kcal 보도자료
      */
-    @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
+    @Transactional
     public void crwlerKcaReport() throws ApiCheckedException {
         
     }
@@ -409,7 +416,7 @@ public class GmpWebCrawlerJob {
     /**
      * consumernews 뉴스
      */
-    @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
+    @Transactional
     public void crwlerConsumerNews() throws ApiCheckedException {
         
     }

@@ -306,10 +306,103 @@ public class Go1372CrawlerService {
                     }
                 }
             } 
-            log.debug("etcMap : {}", gson.toJson(etcMap));
 
             // 이미지 추출
             Elements image = contents.select(".autocounsel_last_box img");
+            ArrayList<String> imgList = new ArrayList<String>();
+            String images = "";
+            for(Element img : image) {
+                String imageFullPath = "";
+                String imgUrl = "";
+                if (img.attr("src").toLowerCase().contains("http")) {
+                    imgUrl = img.attr("src");
+                }
+                else {
+                    imgUrl = DEFAULT_URL + img.attr("src");
+                }
+                
+                if (!"".equals(imgUrl)) {
+                    imageFullPath = CrawlerUtil.downloadImage(imageDownloaPath, imgUrl);
+                    images += imgUrl + ",";
+                    imgList.add(imageFullPath);
+                }
+                
+            }
+            
+            // OCR
+            StringBuffer sb = new StringBuffer();
+            if (!imgList.isEmpty() && imgList != null && imgList.size() > 0) {
+                for(String imageFullPath : imgList) {
+                    log.debug("imageFullPath : {}", imageFullPath);
+                    log.debug("datapath : {}", datapath);
+                    sb.append(CrawlerUtil.doOCR(imageFullPath, datapath));
+                    sb.append("\n");
+                }
+            }               
+            String imagesContent    = sb.toString();
+
+            content.put("link", link);
+            content.put("title", title);
+            content.put("contents", text);
+            content.put("reply", reply);
+            content.put("images", images);
+            content.put("imagesContent", imagesContent);
+            content.put("etcs", etcMap);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return content;
+    }
+    
+    /**
+     * 소비자상담센터 > 정보자료
+     *
+     * @history
+     * <pre>
+     * ------------------------------------
+     * 2020. 3. 2. greatmrpark 최초작성
+     * ------------------------------------
+     * </pre>
+     *
+     * @Method parserInfoData
+     *
+     * @param link
+     * @return
+     */
+    public HashMap<String, Object> parserInfoData(String link) {
+
+        HashMap<String, Object> content = new HashMap<String, Object>();
+        try {
+            String html = crawlerClient.post(link);
+            Document doc = Jsoup.parse(html);
+            Elements contents = doc.select(".boardView");
+            String title    = contents.select("#contentsViewTitle").text().toString();
+            String text     = contents.select("#contentsViewTitle2").html().toString();
+    
+            // 컨덴츠
+            HashMap<String, String> etcMap = new HashMap<String, String>();
+            Elements rows = contents.select("tbody tr");
+            for(Element row : rows) {
+    
+                Elements cells = row.select("td");
+                cells.select("#contentsViewTitle2").remove();
+                int cellCount = cells.size();
+    
+                if (((cellCount % 2) == 0) && (cellCount <=4)) {
+                    
+                    for (int i=0; i < cells.size(); i += 2) {
+                        Element th = cells.get(i);
+                        Element td = cells.get(i+1);
+                        
+                        etcMap.put(th.text().toString(), td.text().toString());
+                    }
+                }
+            } 
+
+            // 이미지 추출
+            Elements image = contents.select("#contentsViewTitle2 img");
             ArrayList<String> imgList = new ArrayList<String>();
             String images = "";
             for(Element img : image) {
@@ -349,63 +442,9 @@ public class Go1372CrawlerService {
             content.put("link", link);
             content.put("title", title);
             content.put("contents", text);
-            content.put("reply", reply);
             content.put("images", images);
             content.put("imagesContent", imagesContent);
             content.put("etcs", etcMap);
-
-            log.debug("content : {}", gson.toJson(content));
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return content;
-    }
-    
-    /**
-     * 소비자상담센터 > 정보자료
-     *
-     * @history
-     * <pre>
-     * ------------------------------------
-     * 2020. 3. 2. greatmrpark 최초작성
-     * ------------------------------------
-     * </pre>
-     *
-     * @Method parserInfoData
-     *
-     * @param link
-     * @return
-     */
-    public HashMap<String, Object> parserInfoData(String link) {
-
-        HashMap<String, Object> content = new HashMap<String, Object>();
-        try {
-            String html = crawlerClient.post(link);
-            Document doc = Jsoup.parse(html);
-            Elements contents = doc.select(".boardView");
-            System.out.println("링크 : " + link);
-            System.out.println("제목 : " + contents.select("#contentsViewTitle").text().toString());
-            System.out.println("내용 : " + contents.select("#contentsViewTitle2").html().toString());
-    
-            // 컨덴츠
-            Elements rows = contents.select("tbody tr");
-            for(Element row : rows) {
-    
-                Elements cells = row.select("td");
-                int cellCount = cells.size();
-    
-                if (cellCount > 1 && ((cellCount % 2) == 0)) {
-                    
-                    for (int i=0; i < cells.size(); i += 2){
-    
-                        Element th = cells.get(i);
-                        Element td = cells.get(i+1);
-                        System.out.println(th.text().toString() + " : " + td.text().toString());
-                    }
-                }
-            } 
         } catch (Exception e) {
             e.printStackTrace();
         }

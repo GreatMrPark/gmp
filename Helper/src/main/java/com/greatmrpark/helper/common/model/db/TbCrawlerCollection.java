@@ -164,6 +164,34 @@ public class TbCrawlerCollection implements Serializable {
     @Column(name = "ITEM", length=32)
     @Expose
     String item;
+
+    /**
+     * 만족도 
+     */
+    @Column(name = "SATISFACTION", length=8)
+    @Expose
+    String satisfaction;
+
+    /**
+     * 품종 
+     */
+    @Column(name = "KIND", length=32)
+    @Expose
+    String kind;
+
+    /**
+     * 해당품목 
+     */
+    @Column(name = "PRODUCT", length=32)
+    @Expose
+    String product;
+    
+    /**
+     * 작성자 
+     */
+    @Column(name = "WRITER", length=32)
+    @Expose
+    String writer;
     
     /**
      * 첨부자료 
