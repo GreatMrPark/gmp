@@ -6,6 +6,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
@@ -129,5 +131,31 @@ public class CrawlerUtil {
     public static String messageTemplate(String templateString , Map<String, Object> substitutes) {
         StrSubstitutor sub = new StrSubstitutor(substitutes);
         return sub.replace(templateString);
+    }
+    
+    /**
+     * 이메일 검정
+     *
+     * @history
+     * <pre>
+     * ------------------------------------
+     * 2020. 3. 4. greatmrpark 최초작성
+     * ------------------------------------
+     * </pre>
+     *
+     * @Method isValidEmail
+     *
+     * @param email
+     * @return
+     */
+    public static boolean isValidEmail(String email) {
+        boolean b = false;
+        String regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";   
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(email.replaceAll(" ", ""));
+        if(m.matches()) {
+            b = true; 
+        }
+        return b;
     }
 }

@@ -118,9 +118,6 @@ public class CrawlConsumernews {
                 if ("consumernews".contentEquals(collection)) {
                     crawl.parserConsumernews(html, link);
                 }
-                else {
-                    crawl.parserHtml(html);
-                }
                 
             }
         }
@@ -206,29 +203,6 @@ public class CrawlConsumernews {
                 LINKS.add(map);
             }
         }
-    }
-    
-    public void parserHtml(String html) {
-
-        Document doc = Jsoup.parse(html);
-        Elements contents = doc.select(".boardView");
-        System.out.println("제목 : " + contents.select("#contentsViewTitle").text().toString());
-
-        Elements rows = contents.select("tbody tr");
-        // 컨덴츠
-        for(Element row : rows) {
-            Elements cells = row.select("td");
-            
-            for(Element c : cells) {
-                
-                if (c.select(".cpbboardView") != null) {
-                    System.out.println("내용 : " + c.select(".cpbboardView tbody tr td").html().toString());
-                }
-                
-            }
-            
-            System.out.println("=============================================================");
-        } 
     }
     
     public void parserConsumernews(String html, String link) {

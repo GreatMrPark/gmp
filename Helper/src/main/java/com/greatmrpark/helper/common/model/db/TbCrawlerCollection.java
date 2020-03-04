@@ -194,6 +194,13 @@ public class TbCrawlerCollection implements Serializable {
     String writer;
     
     /**
+     * 이메일 
+     */
+    @Column(name = "EMAIL", length=128)
+    @Expose
+    String email;
+    
+    /**
      * 첨부자료 
      */
     @Column(name = "ATTACHED", length=128)

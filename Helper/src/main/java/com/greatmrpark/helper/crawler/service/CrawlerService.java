@@ -1,5 +1,6 @@
 package com.greatmrpark.helper.crawler.service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -321,13 +322,15 @@ public class CrawlerService {
     public void crwler1372AltNews() throws ApiCheckedException {
 
         log.info("start crwler1372AltNews-----------------------------------------------------");
-   
+
+        LocalDateTime startDateTime = LocalDateTime.now();
+        LocalDateTime nowDate = LocalDateTime.now();
+        String crawlerName  = "1372altnews"; // 1372altnews
+        
         int totalCount      = 0;
         int succesCount     = 0;
         int failCount       = 0;
         String userId = "greatmrpark";
-        LocalDateTime nowDate = LocalDateTime.now();
-        String crawlerName  = "1372altnews"; // 1372altnews
                 
         /**
          * 크롤링 대상 정보 조회
@@ -628,14 +631,16 @@ public class CrawlerService {
     public void crwlerConsumerNews() throws ApiCheckedException {
 
         log.info("start crwlerConsumerNews-----------------------------------------------------");
-   
-        int totalCount      = 0;
-        int succesCount     = 0;
-        int failCount       = 0;
+
+        LocalDateTime startDateTime = LocalDateTime.now();
         
         String userId = "greatmrpark";
         LocalDateTime nowDate = LocalDateTime.now();
         String crawlerName  = "consumernews";
+        
+        int totalCount      = 0;
+        int succesCount     = 0;
+        int failCount       = 0;
                 
         /**
          * 크롤링 대상 정보 조회
@@ -645,13 +650,13 @@ public class CrawlerService {
             throw new ApiCheckedException(ApiErrCode.API_ERR_0002, crawlerName);
         }
         TbCrawler tbCrawler = tbCrawlerOpt.get();
-        log.debug("tbCrawlerOpt : {}", gson.toJson(tbCrawlerOpt));
+        log.debug("tbCrawler : {}", gson.toJson(tbCrawler));
         
         String defaultUrl = tbCrawler.getDefaultUrl();
         String siteName   = tbCrawler.getSiteName();
         String pageName   = tbCrawler.getPageName();
                 
-        ArrayList<HashMap<String, Object>> contentList = consumernewsCrawlerService.post(tbCrawler);
+        ArrayList<HashMap<String, Object>> contentList = consumernewsCrawlerService.parserHtml(tbCrawler);
         if (!contentList.isEmpty() && contentList != null && contentList.size() > 0) {
             log.debug("contentList : {}" , gson.toJson(contentList));
 
@@ -667,15 +672,16 @@ public class CrawlerService {
                 String images           = (String) map.get("images");
                 String imagesContent    = (String) map.get("imagesContent");
 
-                HashMap<String, String> etcs = (HashMap<String, String>)map.get("etcs");
-                String source           = etcs.get("만족도");
-                String regDate          = etcs.get("등록일");
-                String satisfaction     = etcs.get("출처");
-                String views            = etcs.get("조회");
-                String kind             = etcs.get("품종");
-                String product          = etcs.get("해당품목");
-                String writer           = etcs.get("작성자");
-                String attached         = etcs.get("첨부자료");
+                HashMap<String, String> items = (HashMap<String, String>)map.get("items");
+                String source           = items.get("만족도");
+                String regDate          = items.get("승인");
+                String satisfaction     = items.get("출처");
+                String views            = items.get("조회");
+                String kind             = items.get("품종");
+                String product          = items.get("해당품목");
+                String writer           = items.get("작성자");
+                String email            = items.get("이메일");
+                String attached         = items.get("첨부자료");
                                 
                 TbCrawlerCollection tbCrawlerCollection = new TbCrawlerCollection();
                 tbCrawlerCollection.setDefaultUrl(defaultUrl);
@@ -694,6 +700,7 @@ public class CrawlerService {
                 tbCrawlerCollection.setKind(kind);
                 tbCrawlerCollection.setProduct(product);
                 tbCrawlerCollection.setWriter(writer);
+                tbCrawlerCollection.setEmail(email);
                 tbCrawlerCollection.setAttached(attached);
                 tbCrawlerCollection.setAnlsDate(nowDate);
                 log.debug("tbCrawlerCollection : ", gson.toJson(tbCrawlerCollection));
@@ -715,6 +722,11 @@ public class CrawlerService {
         }
 
         log.debug("crwlerConsumerNews 총 : {} (성공 : {}, 실패 : {}) 건 저장" , totalCount, succesCount, failCount);
+
+        LocalDateTime endDateTime = LocalDateTime.now();
+        Duration duration = Duration.between(startDateTime, endDateTime);
+
+        log.debug("수행시간 : {} Seconds({} ~ {})" , duration.getSeconds(), startDateTime, endDateTime);
         
         log.info("end crwlerConsumerNews-----------------------------------------------------");
     }
