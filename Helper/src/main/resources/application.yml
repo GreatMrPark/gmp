@@ -5,9 +5,9 @@ logging:
     org.springframework.web: INFO
     org.springframework: INFO
     org.hibernate.SQL: INFO
-    org.hibernate.type.descriptor.sql.BasicBinder: INFO
-    org.hibernate.type.descriptor.sql.BasicExtractor: INFO
-    org.hibernate.type.descriptor.sql: TRACE
+    org.hibernate.type.descriptor.sql: DEBUG
+#    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+#    org.hibernate.type.descriptor.sql.BasicExtractor: INFO
     com.greatmrpark: DEBUG
 
 server:
@@ -41,7 +41,7 @@ spring:
       register-mbeans: true
       leak-detection-threshold: 60000
   jpa:
-    show-sql: true
+    show-sql: false
     database-platform: org.hibernate.dialect.MariaDBDialect
     hibernate:
       use-new-id-generator-mappings: true
@@ -52,7 +52,9 @@ spring:
       hibernate.jdbc.batch_size: 50
       hibernate.hql.bulk_id_strategy: org.hibernate.hql.spi.id.inline.InlineIdsOrClauseBulkIdStrategy
       hibernate.hbm2ddl.jdbc_metadata_extraction_strategy: individually
-      format_sql: true
+      hibernate.show_sql: true
+      hibernate.format_sql: true
+      hibernate.use_sql_comments: true
   jackson:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false

@@ -24,7 +24,6 @@ public class CrawlerUtil {
      * @param ptime
      */
     public static void sleep(int ptime) {
-        ptime = 1000 * 1;
         try {
             log.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
             log.debug("{} 초 휴식", ptime / 1000);
@@ -106,7 +105,7 @@ public class CrawlerUtil {
             
             log.debug("Total Time Taken For OCR: {} " , (totalTime / 1000));
         } catch (Exception e) {
-            log.error("doOCR : {} ", e.getMessage());
+            log.error("doOCR : {} ", "");
             result = "";
         } 
 

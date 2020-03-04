@@ -63,8 +63,8 @@ public class CrawlerService {
     @Autowired CrawlerRepository crawlerRepository;
     
     @Autowired Go1372CrawlerService go1372CrawlerService;
-    
-    @Autowired ConsumernewsCrawlerService consumernewsCrawlerService;
+        
+    @Autowired CrawlerParser crawlerParser;
     
     /**
      * 크롤러 > 목록
@@ -97,9 +97,9 @@ public class CrawlerService {
         /**
          * 2. data 체크 및 초기화
          */
-//        if (StringUtils.isBlank(params.getCrawlerName())) {
-//            throw new ApiCheckedException(ApiErrCode.API_ERR_0001, "crawlerName");
-//        }
+        if (StringUtils.isBlank(params.getCrawlerName())) {
+            throw new ApiCheckedException(ApiErrCode.API_ERR_0001, "crawlerName");
+        }
         
         /**
          * 3. DATA 처리
@@ -286,35 +286,204 @@ public class CrawlerService {
         /**
          * 3. DATA 처리
          */
-        if ("1372altnews".equals(crawlerName)) {
-            crwler1372AltNews();
-        }
-        else if ("1372counsel".equals(crawlerName)) {
-            crwler1372Counsel();
-        }
-        else if ("1372infodata".equals(crawlerName)) {
-            crwler1372InfoData();
-        }
-        else if ("kcaboard".equals(crawlerName)) {
-            crwlerKcaBoard();
-        }
-        else if ("kcaboard".equals(crawlerName)) {
-            crwlerKcaReport();
-        }
-        else if ("consumernews".equals(crawlerName)) {
-           crwlerConsumerNews();
-        }
-        else {
+        Optional<TbCrawler> tbCrawlerOpt = crawlerRepository.findOptByCrawlerName(crawlerName);
+        if (tbCrawlerOpt.isPresent() == false) {
             throw new ApiCheckedException(ApiErrCode.API_ERR_0002, crawlerName);
         }
-
+        TbCrawler crawler = tbCrawlerOpt.get();
+        log.debug("tbCrawlerOpt : {}", gson.toJson(tbCrawlerOpt));
+        crawlerParser(crawler);
+        
         /**
          * 4. DATA 결과
          */
         
         return true;
     }
+
+    /**
+     * Crawler Parser
+     */
+    @Transactional
+    public void crawlerParser(TbCrawler crawler) throws ApiCheckedException {
+
+        log.info("start crawlerParser-----------------------------------------------------");
+
+        LocalDateTime startDateTime = LocalDateTime.now();
+        
+        String userId = "greatmrpark";
+        LocalDateTime nowDate = LocalDateTime.now();
+        
+        int totalCount      = 0;
+        int succesCount     = 0;
+        int failCount       = 0;
+                
+        String defaultUrl = crawler.getDefaultUrl();
+        String siteName   = crawler.getSiteName();
+        String pageName   = crawler.getPageName();
+                
+        ArrayList<HashMap<String, Object>> contentList = crawlerParser.parserHtml(crawler);
+        if (!contentList.isEmpty() && contentList != null && contentList.size() > 0) {
+            log.debug("contentList : {}" , gson.toJson(contentList));
+
+            totalCount = contentList.size();
+            try {
+            for (HashMap<String, Object> map : contentList) {
+                
+                String link             = (String) map.get("link");
+                String title            = (String) map.get("title");
+                String contents         = (String) map.get("contents");
+                String reply            = (String) map.get("reply");
+                
+                String analysisContent  = gson.toJson(map);
+                String images           = (String) map.get("images");
+                String imagesContent    = (String) map.get("imagesContent");
+
+                HashMap<String, String> items = (HashMap<String, String>)map.get("items");
+                
+                String regNo        = items.get("접수번호");
+
+                String source       = items.get("출처");
+                
+                String category     = items.get("카테고리");
+                String item         = items.get("품목");                
+                String kind         = items.get("품종");
+                String product      = items.get("해당품목");
+
+                String satisfaction = items.get("만족도");
+                
+                String views        = items.get("조회");
+
+                String writer       = items.get("작성자");
+                
+                String email        = items.get("이메일");
+                
+                String[] regDateKey = {"등록일","작성일","승인"};
+                String regDate      = "";
+                for (int i=0; i<regDateKey.length; i++) {
+                    if (items.containsKey(regDateKey[i])) {
+                        regDate      = items.get(regDateKey[i]);
+                    }
+                }
+
+                String replyDate    = items.get("답변일");
+                
+                String attached     = items.get("첨부자료");
+                                                
+                TbCrawlerCollection tbCrawlerCollection = new TbCrawlerCollection();
+                tbCrawlerCollection.setDefaultUrl(defaultUrl);
+                tbCrawlerCollection.setSiteName(siteName);
+                tbCrawlerCollection.setPageName(pageName);
+                tbCrawlerCollection.setLink(link);
+                tbCrawlerCollection.setTitle(title);
+                tbCrawlerCollection.setContents(contents);
+                tbCrawlerCollection.setReply(reply);
+                tbCrawlerCollection.setImages(images);
+                tbCrawlerCollection.setImagesContent(imagesContent);
+                tbCrawlerCollection.setAnalysisContent(analysisContent);
+
+                tbCrawlerCollection.setRegNo(regNo);
+                tbCrawlerCollection.setSource(source);
+                tbCrawlerCollection.setCategory(category);
+                tbCrawlerCollection.setItem(item);
+                tbCrawlerCollection.setKind(kind);
+                tbCrawlerCollection.setProduct(product);
+                
+                tbCrawlerCollection.setSatisfaction(satisfaction);
+                tbCrawlerCollection.setViews(views);
+
+                tbCrawlerCollection.setWriter(writer);
+                tbCrawlerCollection.setEmail(email);
+                
+                tbCrawlerCollection.setRegDate(regDate);                
+                tbCrawlerCollection.setReplyDate(replyDate);                
+                tbCrawlerCollection.setAttached(attached);                
+                tbCrawlerCollection.setAnlsDate(nowDate);
+                log.debug("tbCrawlerCollection : ", gson.toJson(tbCrawlerCollection));
+                
+                Boolean b = saveCrawlerCollection(tbCrawlerCollection);
+                if (b) {
+                    succesCount++;
+                    log.debug("crawlerParser 성공");
+                }
+                else {
+                    failCount++;
+                    log.debug("crawlerParser 실패");
+                }
+            }
+            } catch(Exception e) {e.printStackTrace();}
+        }
+        else {
+            log.debug("contents : {}" , ApiMessageCode.API_MSG_0008.getValue());
+        }
+
+        log.debug("crawlerParser 총 : {} (성공 : {}, 실패 : {}) 건 저장" , totalCount, succesCount, failCount);
+
+        LocalDateTime endDateTime = LocalDateTime.now();
+        Duration duration = Duration.between(startDateTime, endDateTime);
+
+        log.debug("수행시간 : {} Seconds({} ~ {})" , duration.getSeconds(), startDateTime, endDateTime);
+        
+        log.info("end crawlerParser-----------------------------------------------------");
+    }
+
+    /**
+     * 크롤링 수집 정보 존재 유무
+     *
+     * @history
+     * <pre>
+     * ------------------------------------
+     * 2020. 3. 4. greatmrpark 최초작성
+     * ------------------------------------
+     * </pre>
+     *
+     * @Method getCrawlerCollectionByLink
+     *
+     * @param link
+     * @param crawler
+     * @return
+     */
+    public Boolean getCrawlerCollectionByLink(String link, TbCrawler crawler) {
+        Boolean b = true;
+        Optional<TbCrawlerCollection> tbCrawlerCollectionOpt = crawlerCollectionRepository.findFirstByLink(link);
+        if (tbCrawlerCollectionOpt.isPresent()==true) {
+
+            if (crawler.getReplyYn()) {
+                TbCrawlerCollection tbCrawlerCollection= tbCrawlerCollectionOpt.get();
+                if (!"".contentEquals(tbCrawlerCollection.getRegDate())) {
+                    b = false;
+                }
+            }
+        }
+        return b;
+    }
     
+    /**
+     * 크롤링 수집 정보 저장
+     *
+     * @history
+     * <pre>
+     * ------------------------------------
+     * 2020. 2. 29. greatmrpark 최초작성
+     * ------------------------------------
+     * </pre>
+     *
+     * @Method saveCrawlerCollection
+     *
+     * @param tbCrawlerCollection
+     * @return
+     */
+    @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
+    public Boolean saveCrawlerCollection(TbCrawlerCollection tbCrawlerCollection) {
+        TbCrawlerCollection tbCrawlerCollectionSave = crawlerCollectionRepository.saveAndFlush(tbCrawlerCollection);
+        if (tbCrawlerCollectionSave == null) {
+            return false;
+        } 
+        else {
+            return true;
+        }
+    }
+        
     /**
      * 1372 알림뉴스
      */
@@ -385,7 +554,7 @@ public class CrawlerService {
                 tbCrawlerCollection.setViews(views);
                 tbCrawlerCollection.setAttached(attached);
                 tbCrawlerCollection.setAnlsDate(nowDate);
-                log.debug("tbCrawlerCollection : ", gson.toJson(tbCrawlerCollection));
+//                log.debug("tbCrawlerCollection : {}", gson.toJson(tbCrawlerCollection));
                 
                 Boolean b = saveCrawlerCollection(tbCrawlerCollection);
                 if (b) {
@@ -606,154 +775,5 @@ public class CrawlerService {
         log.debug("crwler1372InfoData 총 : {} (성공 : {}, 실패 : {}) 건 저장" , totalCount, succesCount, failCount);
         
         log.info("end crwler1372InfoData-----------------------------------------------------");
-    }
-
-    /**
-     * kcal 게시판
-     */
-    @Transactional
-    public void crwlerKcaBoard() throws ApiCheckedException {
-        
-    }
-
-    /**
-     * kcal 보도자료
-     */
-    @Transactional
-    public void crwlerKcaReport() throws ApiCheckedException {
-        
-    }
-
-    /**
-     * consumernews 뉴스
-     */
-    @Transactional
-    public void crwlerConsumerNews() throws ApiCheckedException {
-
-        log.info("start crwlerConsumerNews-----------------------------------------------------");
-
-        LocalDateTime startDateTime = LocalDateTime.now();
-        
-        String userId = "greatmrpark";
-        LocalDateTime nowDate = LocalDateTime.now();
-        String crawlerName  = "consumernews";
-        
-        int totalCount      = 0;
-        int succesCount     = 0;
-        int failCount       = 0;
-                
-        /**
-         * 크롤링 대상 정보 조회
-         */
-        Optional<TbCrawler> tbCrawlerOpt = crawlerRepository.findOptByCrawlerName(crawlerName);
-        if (tbCrawlerOpt.isPresent() == false) {
-            throw new ApiCheckedException(ApiErrCode.API_ERR_0002, crawlerName);
-        }
-        TbCrawler tbCrawler = tbCrawlerOpt.get();
-        log.debug("tbCrawler : {}", gson.toJson(tbCrawler));
-        
-        String defaultUrl = tbCrawler.getDefaultUrl();
-        String siteName   = tbCrawler.getSiteName();
-        String pageName   = tbCrawler.getPageName();
-                
-        ArrayList<HashMap<String, Object>> contentList = consumernewsCrawlerService.parserHtml(tbCrawler);
-        if (!contentList.isEmpty() && contentList != null && contentList.size() > 0) {
-            log.debug("contentList : {}" , gson.toJson(contentList));
-
-            totalCount = contentList.size();
-            try {
-            for (HashMap<String, Object> map : contentList) {
-                
-                String link             = (String) map.get("link");
-                String title            = (String) map.get("title");
-                String contents         = (String) map.get("contents");
-                
-                String analysisContent  = gson.toJson(map);
-                String images           = (String) map.get("images");
-                String imagesContent    = (String) map.get("imagesContent");
-
-                HashMap<String, String> items = (HashMap<String, String>)map.get("items");
-                String source           = items.get("만족도");
-                String regDate          = items.get("승인");
-                String satisfaction     = items.get("출처");
-                String views            = items.get("조회");
-                String kind             = items.get("품종");
-                String product          = items.get("해당품목");
-                String writer           = items.get("작성자");
-                String email            = items.get("이메일");
-                String attached         = items.get("첨부자료");
-                                
-                TbCrawlerCollection tbCrawlerCollection = new TbCrawlerCollection();
-                tbCrawlerCollection.setDefaultUrl(defaultUrl);
-                tbCrawlerCollection.setSiteName(siteName);
-                tbCrawlerCollection.setPageName(pageName);
-                tbCrawlerCollection.setLink(link);
-                tbCrawlerCollection.setTitle(title);
-                tbCrawlerCollection.setContents(contents);
-                tbCrawlerCollection.setImages(images);
-                tbCrawlerCollection.setImagesContent(imagesContent);
-                tbCrawlerCollection.setAnalysisContent(analysisContent);
-                tbCrawlerCollection.setSatisfaction(satisfaction);
-                tbCrawlerCollection.setRegDate(regDate);
-                tbCrawlerCollection.setSource(source);
-                tbCrawlerCollection.setViews(views);
-                tbCrawlerCollection.setKind(kind);
-                tbCrawlerCollection.setProduct(product);
-                tbCrawlerCollection.setWriter(writer);
-                tbCrawlerCollection.setEmail(email);
-                tbCrawlerCollection.setAttached(attached);
-                tbCrawlerCollection.setAnlsDate(nowDate);
-                log.debug("tbCrawlerCollection : ", gson.toJson(tbCrawlerCollection));
-                
-                Boolean b = saveCrawlerCollection(tbCrawlerCollection);
-                if (b) {
-                    succesCount++;
-                    log.debug("crwlerConsumerNews 성공");
-                }
-                else {
-                    failCount++;
-                    log.debug("crwlerConsumerNews 실패");
-                }
-            }
-            } catch(Exception e) {e.printStackTrace();}
-        }
-        else {
-            log.debug("contents : {}" , ApiMessageCode.API_MSG_0008.getValue());
-        }
-
-        log.debug("crwlerConsumerNews 총 : {} (성공 : {}, 실패 : {}) 건 저장" , totalCount, succesCount, failCount);
-
-        LocalDateTime endDateTime = LocalDateTime.now();
-        Duration duration = Duration.between(startDateTime, endDateTime);
-
-        log.debug("수행시간 : {} Seconds({} ~ {})" , duration.getSeconds(), startDateTime, endDateTime);
-        
-        log.info("end crwlerConsumerNews-----------------------------------------------------");
-    }
-    
-    /**
-     * 크롤링 수집 정보 저장
-     *
-     * @history
-     * <pre>
-     * ------------------------------------
-     * 2020. 2. 29. greatmrpark 최초작성
-     * ------------------------------------
-     * </pre>
-     *
-     * @Method saveCrawlerCollection
-     *
-     * @param tbCrawlerCollection
-     * @return
-     */
-    @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED)
-    public Boolean saveCrawlerCollection(TbCrawlerCollection tbCrawlerCollection) {
-        TbCrawlerCollection tbCrawlerCollectionSave = crawlerCollectionRepository.saveAndFlush(tbCrawlerCollection);
-        if (tbCrawlerCollectionSave == null) {
-            return false;
-        } 
-        else {
-            return true;
-        }
     }
 }

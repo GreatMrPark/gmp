@@ -1,6 +1,7 @@
 package com.greatmrpark.helper.batch.job;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +15,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.greatmrpark.helper.batch.service.SchedulerService;
+import com.greatmrpark.helper.common.model.db.TbCrawler;
+import com.greatmrpark.helper.common.repository.CrawlerRepository;
 import com.greatmrpark.helper.crawler.service.CrawlerService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +58,8 @@ public class GmpWebCrawlerJob {
     @Value("${gmp.ocr.datapath}")
     private static String datapath;
 
+    @Autowired CrawlerRepository crawlerRepository;
+    
     @Autowired SchedulerService schedulerService;
 
     @Autowired CrawlerService crawlerService;
@@ -66,12 +71,12 @@ public class GmpWebCrawlerJob {
         log.info("start GmpWebCrawlerJob.process-----------------------------------------------------");
         
         try {            
-            crawlerService.crwler1372AltNews();
-            crawlerService.crwler1372Counsel();
-            crawlerService.crwler1372InfoData();
-            crawlerService.crwlerKcaBoard();
-            crawlerService.crwlerKcaReport();
-            crawlerService.crwlerConsumerNews();
+            List<TbCrawler> crawlers = crawlerRepository.findAll();
+            if (crawlers != null && !crawlers.isEmpty() && crawlers.size() > 0 ) {
+                for(TbCrawler crawler : crawlers) {
+                    crawlerService.crawlerParser(crawler);
+                }
+            }
             
             /**
              * job 실행 완료 시간 update

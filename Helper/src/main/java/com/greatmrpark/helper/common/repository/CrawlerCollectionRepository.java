@@ -1,5 +1,7 @@
 package com.greatmrpark.helper.common.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -24,5 +26,22 @@ import com.greatmrpark.helper.common.model.db.TbCrawlerCollection;
  */
 @Repository
 public interface CrawlerCollectionRepository extends JpaRepository<TbCrawlerCollection, Long> {
+    
+    /**
+     * Collection Data 1 건 조회
+     *
+     * @history
+     * <pre>
+     * ------------------------------------
+     * 2020. 3. 4. greatmrpark 최초작성
+     * ------------------------------------
+     * </pre>
+     *
+     * @Method findByLink
+     *
+     * @param link
+     * @return
+     */
+    Optional<TbCrawlerCollection> findFirstByLink(String link);
 
 }

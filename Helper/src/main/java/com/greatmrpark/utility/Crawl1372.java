@@ -42,7 +42,8 @@ public class Crawl1372 {
     static String START_COUNT   = "0";
     static String QUERY_STRING  = "교원";
     static String IS_TAG_SEARCH = "Y";
-    static String[] COLLECTION  = {"altNews", "counsel", "infoData"}; // ALL : 통합검색, altNews : 알림뉴스, counsel : 상담조회, infoData : 정보자료
+//    static String[] COLLECTION  = {"altNews", "counsel", "infoData"}; // ALL : 통합검색, altNews : 알림뉴스, counsel : 상담조회, infoData : 정보자료
+    static String[] COLLECTION  = {"counsel"}; // ALL : 통합검색, altNews : 알림뉴스, counsel : 상담조회, infoData : 정보자료
     static ArrayList<String> PAGES = new ArrayList<String>();
     static ArrayList<HashMap<String, String>> LINKS = new ArrayList<HashMap<String, String>>();
     static ArrayList<HashMap<String, String>> CONTENS = new ArrayList<HashMap<String, String>>();
@@ -298,8 +299,8 @@ public class Crawl1372 {
         Elements contents = doc.select(".boardView");
         System.out.println("링크 : " + link);
         System.out.println("제목 : " + contents.select("#contentsViewTitle").text().toString());
-        System.out.println("내용 : " + contents.select(".autocounsel_last_box").get(0).html().toString());
-        System.out.println("답변 : " + contents.select(".autocounsel_last_box").get(1).html().toString());
+        System.out.println("내용 : " + contents.select(".autocounsel_last_box #ctx").html().toString());
+        System.out.println("답변 : " + contents.select(".autocounsel_last_box #re_ctx").html().toString());
 
         Elements rows = contents.select("tbody tr");
         for(Element row : rows) {
