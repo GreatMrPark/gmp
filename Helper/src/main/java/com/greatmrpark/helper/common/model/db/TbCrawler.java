@@ -81,13 +81,20 @@ public class TbCrawler implements Serializable {
     @Column(name = "DEFAULT_URL", length=128)
     @Expose
     String defaultUrl;
-                       
+    
     /**
-     * 검색URL 
-     */
+    * 검색URL 
+    */
     @Column(name = "SEARCH_URL", length=512)
     @Expose
     String searchUrl;
+    
+    /**
+    * 컨덴츠 URL 
+    */
+    @Column(name = "CONTENTS_URL", length=512)
+    @Expose
+    String contentsUrl;
                        
     /**
      * 수집대상(소비자상담센터)
@@ -123,6 +130,14 @@ public class TbCrawler implements Serializable {
     @Column(name = "CONTENT_TYPE", length=64)
     @Expose
     String contentType;          
+
+    
+    /**
+    * 페이지사이즈 
+    */
+    @Column(name = "PAGE_SIZE")
+    @Expose
+    Integer pageSize;          
 
     
     /**
@@ -163,9 +178,9 @@ public class TbCrawler implements Serializable {
     /**
     * 답글요소 
     */
-    @Column(name = "REPLY_EL", length=64)
+    @Column(name = "REPLY_CONTENTS_EL", length=64)
     @Expose
-    String replyEl;
+    String replyContentsEl;
     
     /**
     * 항목요소 
@@ -202,7 +217,7 @@ public class TbCrawler implements Serializable {
     @Column(name="USE_YN", length=1)
     @Convert(converter = BooleanToYNConvert.class)
     @Expose
-    Boolean useYn = false;
+    Boolean useYn = true;
 
     /**
      * 삭제여부 (Y,N)

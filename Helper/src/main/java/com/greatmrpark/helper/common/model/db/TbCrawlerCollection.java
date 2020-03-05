@@ -105,9 +105,9 @@ public class TbCrawlerCollection implements Serializable {
     /**
      * 답글 
      */
-    @Column(name = "REPLY")
+    @Column(name = "REPLY_CONTENTS")
     @Expose
-    String reply;
+    String replyContents;
     
     /**
      * 이미지 
@@ -119,16 +119,16 @@ public class TbCrawlerCollection implements Serializable {
     /**
      * 이미지 내용 
      */
-    @Column(name = "IMAGES_CONTENT")
+    @Column(name = "IMAGES_CONTENTS")
     @Expose
-    String imagesContent;
+    String imagesContents;
     
     /**
      * 분석내용 
      */
-    @Column(name = "ANALYSIS_CONTENT")
+    @Column(name = "ANALYSIS_CONTENTS")
     @Expose
-    String analysisContent;
+    String analysisContents;
     
     /**
      * 카테고리 

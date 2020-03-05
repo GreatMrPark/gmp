@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -57,7 +58,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class CrawlerParser {
     
-    private int ptime = 500; 
+    private double ptime = 1000 * 0.5; 
     private Gson gson = new GsonBuilder().create();
 
     @Value("${gmp.file.images.download}")
@@ -88,32 +89,37 @@ public class CrawlerParser {
         String keyword          = crawler.getKeyword();
         String contentMethod    = crawler.getContentMethod();
         String contentType      = crawler.getContentType();
+        Integer pageSize        = crawler.getPageSize();
         String pageEl           = crawler.getPageEl();
         String listEl           = crawler.getListEl();
         String bodyEl           = crawler.getBodyEl();
         String titleEl          = crawler.getTitleEl();
         String contentsEl       = crawler.getContentsEl();
-        String replyEl          = crawler.getReplyEl();
+        String replyContentsEl  = crawler.getReplyContentsEl();
         String itemEl           = crawler.getItemEl();
 
         urlMap.put("keyword", keyword);
+        urlMap.put("startCount", "0");
         urlMap.put("page", "1");
         url  = CrawlerUtil.messageTemplate(searchUrl, urlMap);
         
         try {
             html = crawlerClient.post(url);
             links = parserList(html, crawler);
-            pages = parserPage(html, defaultUrl, pageEl);
-            if (pages != null && pages.size() > 0) {
+            pages = parserPage(html, crawler);
+            if (pages != null && !pages.isEmpty() && pages.size() > 0) {
                 
-                for(String p : pages) {
+                for(String page : pages) {
 
                     CrawlerUtil.sleep(ptime);
 
-                    if (!"".contentEquals(p)) {
+                    if (StringUtils.isNoneBlank(page)) {
+                        
+                        String startCount =  Integer.toString((Integer.parseInt(page) - 1) * pageSize);
                         
                         urlMap.put("keyword", keyword);
-                        urlMap.put("page", p);
+                        urlMap.put("startCount", startCount);
+                        urlMap.put("page", page);
                         url  = CrawlerUtil.messageTemplate(searchUrl, urlMap);
                         
                         html = crawlerClient.post(url);
@@ -144,22 +150,28 @@ public class CrawlerParser {
     }
 
     /**
-     * 페이지
+     * 페이징
      * @param html
      */
-    public ArrayList<String> parserPage(String html, String defaultUrl, String pageEl) {
+    public ArrayList<String> parserPage(String html, TbCrawler crawler) {
         
-        Document doc = Jsoup.parse(html);
-        Elements pagination = doc.select(pageEl);
-        
-        // 페이지
+        String defaultUrl= crawler.getDefaultUrl();
+        String pageEl   = crawler.getPageEl();
+
         ArrayList<String> pages = new ArrayList<String>();
-        if (pagination != null) {
-            for(Element e : pagination) {      
-                String page = e.text().toString();
-                if (!"".equals(page)) {
-                    if (CrawlerUtil.isStringDouble(page)) {
-                        pages.add(page);
+
+        if (StringUtils.isNoneBlank(html)) { 
+            Document doc = Jsoup.parse(html);
+            if (StringUtils.isNoneBlank(pageEl)) {            
+                Elements pagination = doc.select(pageEl);
+                if (pagination != null) {
+                    for(Element e : pagination) {      
+                        String page = e.text().toString();
+                        if (StringUtils.isNoneBlank(page)) {
+                            if (CrawlerUtil.isStringDouble(page)) {
+                                pages.add(page);
+                            }
+                        }
                     }
                 }
             }
@@ -175,26 +187,38 @@ public class CrawlerParser {
      */
     public ArrayList<String> parserList(String html, TbCrawler crawler) {
         String defaultUrl= crawler.getDefaultUrl();
+        String contentsUrl = crawler.getContentsUrl();
         String listEl   = crawler.getListEl();
-        Document doc = Jsoup.parse(html);
-        Elements contents = doc.select(listEl);
         
-        // 목록
+        log.debug("listEl : {}", listEl);
+        
         ArrayList<String> links = new ArrayList<String>();
-        if (contents != null) {
-            for(Element e : contents) {
-                Elements linkHref = e.select("a");
-                String link = linkHref.attr("href");
-                if (!"".equals(link)) {
-                    /**
-                     * DB에 존재하면 처리하지 않는다.
-                     * 답글인경우 답글이 존재하면 처리하지 않는다.
-                     */
-                    if (!linkHref.attr("href").toLowerCase().contains("http")) {
-                        link = defaultUrl + link;                    
-                    }
-                    if (crawlerService.getCrawlerCollectionByLink(link, crawler)) {
-                        links.add(link);
+
+        if (StringUtils.isNoneBlank(html)) { 
+            Document doc = Jsoup.parse(html);
+            if (StringUtils.isNoneBlank(listEl)) {         
+                Elements contents = doc.select(listEl);
+                if (contents != null) {
+                    for(Element e : contents) {
+                        Elements linkHref = e.select("a");
+                        String link = linkHref.attr("href");
+                        if (StringUtils.isNoneBlank(link)) {
+                            /**
+                             * DB에 존재하면 처리하지 않는다.
+                             * 답글인경우 답글이 존재하면 처리하지 않는다.
+                             */
+                            if (!linkHref.attr("href").toLowerCase().contains("http")) {
+                                if(StringUtils.isNoneBlank(contentsUrl)) {
+                                    link = contentsUrl + link;
+                                }
+                                else {
+                                    link = defaultUrl + link;
+                                }                    
+                            }
+                            if (crawlerService.getCrawlerCollectionByLink(link, crawler)) {
+                                links.add(link);
+                            }
+                        }
                     }
                 }
             }
@@ -203,7 +227,7 @@ public class CrawlerParser {
     }
     
     /**
-     * 소비자가만드는신문 > 뉴스
+     * 상세
      * @param html
      * @param link
      */
@@ -220,58 +244,86 @@ public class CrawlerParser {
         String bodyEl           = crawler.getBodyEl();
         String titleEl          = crawler.getTitleEl();
         String contentsEl       = crawler.getContentsEl();
-        String replyEl          = crawler.getReplyEl();
+        String replyContentsEl  = crawler.getReplyContentsEl();
         String itemEl           = crawler.getItemEl();
         
         HashMap<String, Object> content = new HashMap<String, Object>();
-        try {
-            String html = crawlerClient.post(link);
+        
+        String title            = "";
+        String contents         = "";
+        String replyContents    = "";
+        
+        HashMap<String, String> items       = new HashMap<String, String>();
+        ArrayList<String> images            = new ArrayList<String>();
+        ArrayList<String>  imagesContents   = new ArrayList<String>();
+        
+        if (StringUtils.isNoneBlank(link)) {
+            try {
+                String html = crawlerClient.post(link);
+                
+                if (StringUtils.isNoneBlank(html)) {
+                    Document doc = Jsoup.parse(html);
+        //            doc.outputSettings().prettyPrint(false); // 줄바꿈 살림
+
+                    if (StringUtils.isNoneBlank(bodyEl)) {
+                        Elements body   = doc.select(bodyEl);
+                        // 제목
+                        if (StringUtils.isNoneBlank(titleEl)) {
+                            title    = body.select(titleEl).text().toString();
+                        }
+                        
+                        // 내용
+                        if (StringUtils.isNoneBlank(contentsEl)) {
+                            contents = body.select(contentsEl).html().toString();
+                            
             
-            Document doc = Jsoup.parse(html);
-//            doc.outputSettings().prettyPrint(false); // 줄바꿈 살림
-            Elements body   = doc.select(bodyEl);
-            
-            // 제목
-            String title    = body.select(titleEl).text().toString();
-            
-            // 내용
-            String contents = body.select(contentsEl).html().toString();
-            
-            // 항목 
-            HashMap<String, String> items = parserItems(body, itemEl);
-            
-            // 이미지 추출
-            Elements image = body.select(crawler.getContentsEl() + " img");
-            ArrayList<String> images = new ArrayList<String>();
-            for(Element img : image) {
-                String imageFullPath = "";
-                String imgUrl = "";
-                if (img.attr("src").toLowerCase().contains("http")) {
-                    imgUrl = img.attr("src");
-                }
-                else {
-                    imgUrl = defaultUrl + img.attr("src");
+                            // 이미지 추출
+                            Elements image = body.select(crawler.getContentsEl() + " img");
+                            for(Element img : image) {
+                                String imageFullPath = "";
+                                String imgUrl = "";
+                                if (img.attr("src").toLowerCase().contains("http")) {
+                                    imgUrl = img.attr("src");
+                                }
+                                else {
+                                    imgUrl = defaultUrl + img.attr("src");
+                                }
+                                
+                                if (StringUtils.isNoneBlank(imgUrl)) {
+                                    imageFullPath = CrawlerUtil.downloadImage(imageDownloaPath, imgUrl);
+                                    images.add(imageFullPath);
+                                }                
+                            }
+                            
+                            // OCR : TEXT 추출
+                            imagesContents    = extractionText(images);
+                            
+                        }
+                        
+                        // 답글
+                        if (StringUtils.isNoneBlank(replyContentsEl)) {
+                            replyContents = body.select(replyContentsEl).html().toString();
+                        }
+                        
+                        // 항목 
+                        if (StringUtils.isNoneBlank(itemEl)) {
+                            items = parserItems(body, itemEl);
+                        }
+                    }
                 }
                 
-                if (!"".equals(imgUrl)) {
-                    imageFullPath = CrawlerUtil.downloadImage(imageDownloaPath, imgUrl);
-                    images.add(imageFullPath);
-                }                
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            
-            // OCR : TEXT 추출
-            String imagesContent    = extractionText(images).toString();
-
-            content.put("link", link);
-            content.put("title", title);
-            content.put("contents", contents);
-            content.put("images", String.join(",", images).replaceAll(imageDownloaPath, defaultUrl));
-            content.put("imagesContent", imagesContent);
-            content.put("items", items);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+        
+        content.put("link", link);
+        content.put("title", title);
+        content.put("contents", contents);
+        content.put("replyContents", replyContents);
+        content.put("images", gson.toJson(images).replaceAll(imageDownloaPath, defaultUrl));
+        content.put("imagesContents", gson.toJson(imagesContents));
+        content.put("items", items);
         
         return content;
     }
@@ -293,59 +345,152 @@ public class CrawlerParser {
      * @return
      */
     public HashMap<String, String> parserItems(Elements body, String itemEl) {
+
+        HashMap<String, String> items = new HashMap<String, String>();
+        if (StringUtils.isNoneBlank(itemEl)) {
+
+            Elements rows = body.select(itemEl);
+            if (rows != null) {
+
+                Element first = rows.first();
+                
+                if (first.getElementsByTag("tr").size() > 0) {
+                    items = parserItemsTr(body, itemEl);
+                }
+                else if (first.getElementsByTag("ul").size() > 0) {
+                    items = parserItemsUl(body, itemEl);
+                }
+                else {
+                    log.debug("first row : {} = 없음({})" , itemEl, first);
+                }
+            }
+        }
+        return items;
+    }
+
+    /**
+     * <TR></TR> 분석
+     *
+     * @history
+     * <pre>
+     * ------------------------------------
+     * 2020. 3. 5. greatmrpark 최초작성
+     * ------------------------------------
+     * </pre>
+     *
+     * @Method parserItemsTr
+     *
+     * @param body
+     * @param itemEl
+     * @return
+     */
+    public HashMap<String, String> parserItemsTr(Elements body, String itemEl) {
         
         HashMap<String, String> items = new HashMap<String, String>();
-        Elements rows = body.select(itemEl);
-        for(Element row : rows) {
-            
-            // tr 
-            if (row.getElementsByTag("td").size() > 0) {
+        if (StringUtils.isNoneBlank(itemEl)) {
 
-                // th td
-                if (row.getElementsByTag("th").size() > 0) {
+            Elements rows = body.select(itemEl);
+            
+            if (rows != null) {
+
+//                Element first = rows.first();
+//                log.debug("<TR></TR> first row ; {} " , first);
+
+                for(Element row : rows) {                
                     
-                }
-                // td td
-                else {
-                    Elements cells = row.select("td");
-                    int cellCount = cells.size();
-                    if (cellCount > 1 && ((cellCount % 2) == 0)) {
-                        for (int i=0; i < cells.size(); i += 2) {
-                            String key = cells.get(i).text().toString();
-                            String value = cells.get(i+1).text().toString();
-                            items.put(key, value);
+                    // th td
+                    if (row.getElementsByTag("th").size() > 0) {
+                        int cellCount = row.children().size();
+                        if (cellCount > 1) {
+
+                            Elements thcells = row.select("th");
+                            Elements tdcells = row.select("td");
+                            
+                            for (int i=0; i<tdcells.size(); i++){
+                                String key   = thcells.get(i).text().toString();
+                                String value = tdcells.get(i).text().toString();
+                                items.put(key, value);
+                            }
+                        }
+                    }
+                    // td td
+                    else {
+                        Elements cells = row.select("td");
+                        int cellCount = cells.size();
+                        if (cellCount > 1 && ((cellCount % 2) == 0)) {
+                            for (int i=0; i < cells.size(); i += 2) {
+                                String key  = cells.get(i).text().toString();
+                                String value = cells.get(i+1).text().toString();
+                                items.put(key, value);
+                            }
                         }
                     }
                 }
             }
-            // li
-            else {
-                Elements cells = row.select("li");
-                for (int i=0; i < cells.size(); i++) {
-
-                    String key = "";
-                    String value = "";
-                    String email = "";
-                    String e = cells.get(i).text().toString();
-                    String[] a = e.split(" ");
-                    
-                    // 이메일 존재하는제 체크 존재하면 map에 넣고 삭제함.
-                    for (String s : a) {
-                        if (CrawlerUtil.isValidEmail(s)) {
-                            email = s;
-                            break;
-                        }
-                    } 
-                    if (!"".contentEquals(email)) {
-                        items.put("이메일", email);
-                        items.put("작성자", a[0]);
-                    }
-                    key   = a[0];
-                    value = a[1];
-                    items.put(key, value);
-                }
-            }                
         }
+            
+        return items;
+    }
+
+    /**
+     * <UL></UL> 분석
+     *
+     * @history
+     * <pre>
+     * ------------------------------------
+     * 2020. 3. 5. greatmrpark 최초작성
+     * ------------------------------------
+     * </pre>
+     *
+     * @Method parserItemsUl
+     *
+     * @param body
+     * @param itemEl
+     * @return
+     */
+    public HashMap<String, String> parserItemsUl(Elements body, String itemEl) {
+        
+        HashMap<String, String> items = new HashMap<String, String>();
+        if (StringUtils.isNoneBlank(itemEl)) {
+
+            Elements rows = body.select(itemEl);
+            
+            if (rows != null) {
+                
+//                Element first = rows.first();
+//                log.debug("<UL></UL> first row ; {} " , first);
+
+                for(Element row : rows) {
+                    
+                    // li
+                    Elements cells = row.select("li");
+                    for (int i=0; i < cells.size(); i++) {
+
+                        String key = "";
+                        String value = "";
+                        String email = "";
+                        String e = cells.get(i).text().toString();
+                        String[] a = e.split(" ");
+                        
+                        // 이메일 존재하는제 체크 존재하면 map에 넣고 삭제함.
+                        for (String s : a) {
+                            if (CrawlerUtil.isValidEmail(s)) {
+                                email = s;
+                                break;
+                            }
+                        } 
+                        if (StringUtils.isNoneBlank(email)) {
+                            items.put("이메일", email);
+                            items.put("작성자", a[0]);
+                        }
+                        key   = a[0];
+                        value = a[1];
+                        items.put(key, value);
+                    }
+                }
+            }     
+        }
+        
         return items;
     }
     
@@ -364,15 +509,23 @@ public class CrawlerParser {
      * @param list
      * @return
      */
-    public StringBuffer extractionText(ArrayList<String> images) {
-
+    public ArrayList<String> extractionText(ArrayList<String> images) {
+        ArrayList<String> imagesContents = new ArrayList<String>();
         StringBuffer sb = new StringBuffer();
         if (!images.isEmpty() && images != null && images.size() > 0) {
             for(String imageFullPath : images) {
                 sb.append(CrawlerUtil.doOCR(imageFullPath, datapath));
                 sb.append("\n");
+                imagesContents.add(sb.toString());
             }
         }               
+        return imagesContents;
+    }
+    public StringBuffer extractionText(String imageFullPath) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(CrawlerUtil.doOCR(imageFullPath, datapath));
+        sb.append("\n");
+           
         return sb;
     }
 }

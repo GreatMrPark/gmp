@@ -23,12 +23,12 @@ public class CrawlerUtil {
      * 휴식
      * @param ptime
      */
-    public static void sleep(int ptime) {
+    public static void sleep(double ptime) {
         try {
             log.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
             log.debug("{} 초 휴식", ptime / 1000);
             log.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-            Thread.sleep(ptime);
+            Thread.sleep((long) ptime);
         } catch (InterruptedException e) {e.printStackTrace();}
         
     }
@@ -95,15 +95,10 @@ public class CrawlerUtil {
             
             ImageIO.scanForPlugins();
             result = tesseract.doOCR(file);
-
-            log.debug("==============================");
-            log.debug("Result For OCR : {} ", result);
-            log.debug("==============================");
-            
             endTime = System.currentTimeMillis();
             totalTime = endTime - startTime;
             
-            log.debug("Total Time Taken For OCR: {} " , (totalTime / 1000));
+            log.debug("Total Time Taken For OCR: {} Seconds" , (totalTime / 1000));
         } catch (Exception e) {
             log.error("doOCR : {} ", "");
             result = "";

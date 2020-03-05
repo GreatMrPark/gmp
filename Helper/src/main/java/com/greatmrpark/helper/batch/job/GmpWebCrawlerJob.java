@@ -74,7 +74,12 @@ public class GmpWebCrawlerJob {
             List<TbCrawler> crawlers = crawlerRepository.findAll();
             if (crawlers != null && !crawlers.isEmpty() && crawlers.size() > 0 ) {
                 for(TbCrawler crawler : crawlers) {
+                    String crawlerName = crawler.getCrawlerName();
+
+                    log.info("start {}-----------------------------------------------------", crawlerName);
                     crawlerService.crawlerParser(crawler);
+                    log.info("end {}-----------------------------------------------------", crawlerName);
+                    
                 }
             }
             
