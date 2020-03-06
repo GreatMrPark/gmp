@@ -1,0 +1,78 @@
+<script>
+$("#apiName").text("웹파서 > 파서");
+$("#apiMehtod").val("POST");
+$("#ContentType").val("application/x-www-form-urlencoded; charset=uft-8;");
+$("#apiUrl").val("https://www.google.com/search?sxsrf=ALeKk01z2u-wkAXgauhXvkuL-I2Azgge2Q%3A1583449727099&ei=f4ZhXuHmBZmKr7wPx-Wq6AU&q=%EA%B5%90%EC%9B%90&oq=%EA%B5%90%EC%9B%90&gs_l=psy-ab.3..35i39j0j0i131l2j0l6.9285679.9288934..9289383...2.0..0.203.1205.0j9j1......0....1..gws-wiz.GAMr3_oWrlA&ved=0ahUKEwihooP0uYToAhUZxYsBHceyCl0Q4dUDCAs&uact=5");
+$("#apiAction").prop("disabled", false);
+$("#apiInput").show();
+$("#apiDesc").html("");
+$("#apiDesc").append("<div>- INPUT 항목</div>");
+
+$("#apiPlan").html("");
+$( document ).ready(function() {
+	
+});
+
+$("#fraSearchResult").ready(function() {
+//    var add = "iFrame 로딩이 완료하였습니다.";
+//    var body.append(add);
+});
+</script>
+<TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+<input type="hidden" name="input" id="input" value="parser" />
+<tr>
+    <th width="120">&nbsp;</th>
+    <th width="120">속성명</th>
+    <th width="120">KEY</th>
+    <th width="*"  >VALUE</th>
+    <th width="450">DESCRIPTION</th>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>검색어</td>
+    <td>keyword </td>
+    <td><input type="text" style="width:98%;"
+            name="keyword" 
+            id="keyword" 
+            value="교원" onFocus="this.select();"/></td>
+    <td>&nbsp;</td>
+</tr>
+</TABLE>
+<TABLE  width="100%" border="0" cellpadding="5" cellspacing="0"><TR align="center"><th >목록</th></TR></TABLE>
+<TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+<tr>
+    <th width="60">No.</th>
+    <th width="150">사이트명</th>
+    <th width="150">페이지</th>
+    <th width="200"  >기본URL</th>
+    <th width="*">검색URL</th>
+    <th width="40">실행</th>
+</tr>
+<tr align="center">
+    <td>1</td>
+    <td>소비자상담센터</td>
+    <td>알림뉴스</td>
+    <td width="*"  >http://www.1372.go.kr</td>
+    <td width="450"><input type="text" style="width:98%;border:none;"
+            name="searchUrl" 
+            id="searchUrl" 
+            value="http://www.1372.go.kr/search.ccn?nMenuCode=66&isTagSearch=Y&collection=altNews&query=${keyword}&startCount=${startCount}" onFocus="this.select();"/></td>
+    <td><input type="button" id="apiJsonAction" name="apiJsonAction" value="검색" onClick="jsonAction();"/></td>
+</tr>
+</TABLE>
+<TABLE  width="100%" border="0" cellpadding="5" cellspacing="0"><TR align="center"><th >PARSER</th></TR></TABLE>
+<TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+<tr align="center">
+    <td>
+    <iframe 
+        width="100%"
+        height="300px"
+        scrolling="auto"
+        border="0"
+        frameboarder="0"
+        name="fraSearchResult"
+        id="fraSearchResult"
+        src="./item/parser/parserPage.html"></iframe>
+    </td>
+</tr>
+</TABLE>

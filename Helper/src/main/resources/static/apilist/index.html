@@ -32,12 +32,12 @@
             <option value="DELETE">DELETE</option>
 	    </select>
 	    </td>
-	    <td><input type="text" style="width:98%;border:none;"
+	    <td width="*"><input type="text" style="width:98%;border:none;"
 	        name="apiUrl" 
 	        id="apiUrl" 
 	        value="" onFocus="this.select();"/>
 	    </td>
-        <td>
+        <td width="250">
             <div style="text-align:right">
                 <input type="button" id="window-btn" name="#window-btn" value="브라우저종료" disabled="true" />
                 <input type="button" id="apiAction" name="apiAction" value="실행(XML)" onClick="doAction();" disabled="true" />
@@ -47,7 +47,7 @@
 	</tr>
 	</table>
 	
-	<table border="1" width="100%">
+	<table border="0" width="100%">
     <TR align="center"><th>INPUT</th></TR>
     <TR align="center">
         <td>
@@ -63,13 +63,16 @@
 	        <td>Header</td>
 	        <td>Content-Type</td>
 	        <td>Content-Type</td>
-	        <td><input style="width:98%;" 
+	        <td><select style="width:98%;" 
 	                    type="text" 
 	                    name="ContentType" 
 	                    id="ContentType" 
-	                    value="application/json; charset=utf-8" 
+	                    value="" 
 	                    onFocus="this.select();"
-	                    /></td>
+	                    >
+                    <option value="application/json; charset=utf-8;">application/json; charset=utf-8;</option>/
+                    <option value="application/x-www-form-urlencoded; charset=uft-8;">application/x-www-form-urlencoded; charset=uft-8;</option>/
+	                    </select></td>
 	        <td></td>
 	    </tr>
 	    <tr>
@@ -95,7 +98,7 @@
 	    </td>
     </TR>
 	</table>
-	<table border="1" width="100%">
+	<table border="0" width="100%">
 	<TR align="center"><th >OUTPUT</th></TR>
 	<TR valign="top">
 	    <TD>
