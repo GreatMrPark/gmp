@@ -9,14 +9,114 @@ $("#apiDesc").html("");
 $("#apiDesc").append("<div>- INPUT 항목</div>");
 
 $("#apiPlan").html("");
+
+gSearchUrl = "http://google.com/";
 $( document ).ready(function() {
-	
+	setUiEvent();
 });
 
 $("#fraSearchResult").ready(function() {
 //    var add = "iFrame 로딩이 완료하였습니다.";
 //    var body.append(add);
 });
+
+function setUiEvent() {
+
+    $(".btnSearch").click(function(){
+    	var index = $(this).index();
+        gSearchUrl = $(".searchUrl").eq(index).val();doSearch()
+        doSearch();
+    });
+}
+function doSearch() {
+	var searchUrl = gSearchUrl;
+
+	if (searchUrl != "") {
+        searchUrl = searchUrl.replace("${keyword}",$('#keyword').val());
+        searchUrl = searchUrl.replace("${startCount}",$('#startCount').val());
+        
+        console.log("searchUrl : ", searchUrl);
+        
+        $('#apiUrl').val(searchUrl);
+        
+	    parserDoAction();	
+	}
+}
+
+function parserDoAction() {
+
+    var contentType = $('#ContentType').val();
+    var xAuthToken  = $('#XAuthToken').val();
+    var actionType  = $('#apiMehtod').val();
+    var actionUrl   = $('#apiUrl').val();
+
+    var header = {
+          ContentType: contentType
+        , XAuthToken: xAuthToken
+    }
+    var params;
+    
+    var input = $("#input").val();
+    
+    params = $("#FrmApi").serializeObject();
+
+
+    $("#responseResult").val("");
+    if (actionUrl === "") return;
+    
+    fnSetConsole(params);
+    fnSetConsole(header);
+    fnSetConsole(actionType);
+    fnSetConsole(actionUrl);
+    fnSetConsole("============================================================");
+    fnSetConsole(""); 
+    
+    if(actionType==="POST" || actionType==="PUT" ) {
+        params = JSON.stringify(params);
+    }
+
+    fnSetConsole(params);
+    fnSetConsole(header);
+    fnSetConsole(actionType);
+    fnSetConsole(actionUrl);
+    fnSetConsole("============================================================");
+    fnSetConsole(""); 
+    
+    fnSendAjax(
+          actionUrl
+        , header
+        , actionType
+        , dataType
+        , contentType
+        , params
+        , function (data) {fnSetResponse(data);}
+        , function (xhr, status, error) {fnSetResponse(xhr);}
+    );
+}
+
+function fnSendAjax(url, header, actionType, dataType, contentType, params, success, fail) {
+    
+    $.ajax({
+        url: url,
+        type: actionType,
+        crossDomain: true,
+        xhrFields: {withCredentials: true},
+        headers: header,
+        dataType: dataType,
+        contentType: contentType,
+        data: params,
+        success : function(data) {
+            if (typeof success !== 'undefined' && $.isFunction(success)) {
+                success(data);
+            }
+        },
+        error : function(xhr, status, error) {
+            if (typeof fail !== 'undefined' && $.isFunction(fail)) {
+                fail(xhr, status, error);
+            }
+        }
+    });
+}
 </script>
 <TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
 <input type="hidden" name="input" id="input" value="parser" />
@@ -37,6 +137,36 @@ $("#fraSearchResult").ready(function() {
             value="교원" onFocus="this.select();"/></td>
     <td>&nbsp;</td>
 </tr>
+<tr>
+    <td>Parameters</td>
+    <td>시작번호</td>
+    <td>START_COUNT </td>
+    <td><input type="text" style="width:98%;"
+            name="startCount" 
+            id="startCount" 
+            value="0" onFocus="this.select();"/></td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>페이지</td>
+    <td>PAGE</td>
+    <td><input type="text" style="width:98%;"
+            name="page" 
+            id="page" 
+            value="1" onFocus="this.select();"/></td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>페이지사이즈</td>
+    <td>PAGE_SIZE</td>
+    <td><input type="text" style="width:98%;"
+            name="pageSize" 
+            id="pageSize" 
+            value="10" onFocus="this.select();"/></td>
+    <td>&nbsp;</td>
+</tr>
 </TABLE>
 <TABLE  width="100%" border="0" cellpadding="5" cellspacing="0"><TR align="center"><th >목록</th></TR></TABLE>
 <TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
@@ -55,9 +185,9 @@ $("#fraSearchResult").ready(function() {
     <td width="*"  >http://www.1372.go.kr</td>
     <td width="450"><input type="text" style="width:98%;border:none;"
             name="searchUrl" 
-            id="searchUrl" 
+            class="searchUrl" 
             value="http://www.1372.go.kr/search.ccn?nMenuCode=66&isTagSearch=Y&collection=altNews&query=${keyword}&startCount=${startCount}" onFocus="this.select();"/></td>
-    <td><input type="button" id="apiJsonAction" name="apiJsonAction" value="검색" onClick="jsonAction();"/></td>
+    <td><input type="button" class="btnSearch" name="btnSearch" value="검색"  /></td>
 </tr>
 </TABLE>
 <TABLE  width="100%" border="0" cellpadding="5" cellspacing="0"><TR align="center"><th >PARSER</th></TR></TABLE>

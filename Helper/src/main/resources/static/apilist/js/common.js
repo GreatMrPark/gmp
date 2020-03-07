@@ -476,7 +476,6 @@ function doAction() {
     }
 }
 
-
 function jsonAction() {
     
     var contentType = $('#ContentType').val();
@@ -548,6 +547,12 @@ function jsonAction() {
             }
         );
     }
+}
+
+function htmlAction() {
+	try {
+		parserDoAction();
+	}catch(e) {alert("수행 항목이 없습니다.");}
 }
 
 function setJobCron() {
