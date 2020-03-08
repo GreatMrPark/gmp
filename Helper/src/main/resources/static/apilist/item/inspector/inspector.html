@@ -1,5 +1,5 @@
 <script>
-$("#apiName").text("웹파서 > 파서");
+$("#apiName").text("인스펙트 > 인스펙트");
 $("#apiMehtod").val("POST");
 $("#ContentType").val("application/x-www-form-urlencoded; charset=uft-8;");
 $("#apiUrl").val("https://www.google.com/search?sxsrf=ALeKk01z2u-wkAXgauhXvkuL-I2Azgge2Q%3A1583449727099&ei=f4ZhXuHmBZmKr7wPx-Wq6AU&q=%EA%B5%90%EC%9B%90&oq=%EA%B5%90%EC%9B%90&gs_l=psy-ab.3..35i39j0j0i131l2j0l6.9285679.9288934..9289383...2.0..0.203.1205.0j9j1......0....1..gws-wiz.GAMr3_oWrlA&ved=0ahUKEwihooP0uYToAhUZxYsBHceyCl0Q4dUDCAs&uact=5");
@@ -10,7 +10,7 @@ $("#apiDesc").append("<div>- INPUT 항목</div>");
 
 $("#apiPlan").html("");
 
-gSearchUrl = "http://google.com/";
+gSearchUrl = "";
 $( document ).ready(function() {
 	setUiEvent();
 });
@@ -36,7 +36,6 @@ function doSearch() {
         searchUrl = searchUrl.replace("${startCount}",$('#startCount').val());
         
         console.log("searchUrl : ", searchUrl);
-        
         $('#apiUrl').val(searchUrl);
         
         pageAction();	
@@ -83,36 +82,10 @@ function pageAction() {
     fnSetConsole("============================================================");
     fnSetConsole(""); 
     
-    gmpParser.location.href= actionUrl;
-    
-//    fnSendAjax(actionUrl , header , actionType , dataType , contentType , params );
+
+    iFrameInspect.location.href = actionUrl;
 }
 
-function fnSendAjax(url, header, actionType, dataType, contentType, params) {
-    
-    $.ajax({
-        url: url,
-        type: actionType,
-        crossDomain: true,
-        xhrFields: {withCredentials: true},
-        headers: header,
-        dataType: dataType,
-        contentType: contentType,
-        data: params,
-        success : function(data) {
-            fnSetConsole(data);
-            setGmpParser(data);
-        },
-        error : function(error) {
-        	fnSetConsole(error);
-        }
-    });
-}
-
-function setGmpParser(data) {
-    console.log("data : ", data);
-    $("#gmpParser body").html(data);
-}
 </script>
 <TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
 <input type="hidden" name="input" id="input" value="parser" />
@@ -126,7 +99,7 @@ function setGmpParser(data) {
 <tr>
     <td>Parameters</td>
     <td>검색어</td>
-    <td>keyword </td>
+    <td>KEYWORD</td>
     <td><input type="text" style="width:98%;"
             name="keyword" 
             id="keyword" 
@@ -187,6 +160,13 @@ function setGmpParser(data) {
 </tr>
 </TABLE>
 <TABLE  width="100%" border="0" cellpadding="5" cellspacing="0"><TR align="center"><th >PARSER</th></TR></TABLE>
+<TABLE  width="100%" border="0" cellpadding="1" cellspacing="0">
+<TR align="right">
+    <td>
+        <input type="button" id="btnInspect" value="DOM 찾기" />
+    </td>
+</TR>
+</TABLE>
 <TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
 <tr align="center">
     <td>
@@ -196,9 +176,82 @@ function setGmpParser(data) {
         scrolling="auto"
         border="0"
         frameboarder="0"
-        name="gmpParser"
-        id="gmpParser"
-        src="./item/parser/parserPage.html"></iframe>
+        name="iFrameInspect"
+        id="iFrameInspect"
+        src="./item/inspector/inspectorPage.html"></iframe>
     </td>
 </tr>
 </TABLE>
+
+<script>
+// iFrameInspect
+$("#btnInspect").on("click", function() {
+    domInspector(function(obj) {
+        alert(obj.outerHTML);
+    });
+});
+
+var domInspector = function(cb) {
+    iFrameInspect.document.body.style.cursor = "crosshair";
+    var style = iFrameInspect.document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = '.overTargetClass { border: 2px solid red !important; }';
+  
+    iFrameInspect.document.getElementsByTagName('head')[0].appendChild(style);
+  
+    var targets = "*";
+    var readyClick = false;
+
+    $("iframe body").on("mouseenter", targets, activeFocus)
+             .on("mouseleave", targets, deactiveFocus)
+             .on("click", targets, onclick);
+
+    function onclick(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    
+        if(readyClick) {
+            document.body.style.cursor = 'default';
+            deactiveFocus.call(this, e);
+            $("iframe body").off("mouseenter", activeFocus)
+                     .off("mouseleave", deactiveFocus)
+                     .off("click", onclick);
+            cb(this);
+            return;
+        }
+        readyClick = true;
+    }
+
+    function activeFocus(e) {
+        if(e)
+            e.stopPropagation();
+        
+        var $this = $(this);
+        $this.addClass("overTargetClass");
+    
+        var clickDefine = $this.attr("onclick");  //하드코딩된 onclick 이벤트는 잠시 다른이름으로 변경
+        if(clickDefine) {
+            $this.attr("data-org-click", clickDefine);
+            $this.removeAttr("onclick");
+        }
+
+        $this.parents(targets).each(function() {
+            deactiveFocus.call(this);
+        });
+    }
+
+    function deactiveFocus(e) {
+        if(e)
+            e.stopPropagation();
+
+        var $this = $(this);
+        $this.removeClass("overTargetClass");
+
+        var clickDefine = $this.attr("data-org-click");  //이름을 바꿔놨던 onclick 이벤트 복구
+        if(clickDefine) {
+            $this.attr("onclick", clickDefine);
+            $this.removeAttr("data-org-click");
+        }
+    }
+}
+</script>

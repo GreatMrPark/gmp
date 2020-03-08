@@ -56,14 +56,8 @@ public class CrawlerService {
     private ObjectMapper objectMapper = new ObjectMapper();
     private DateTimeFormatter ldtFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss"); 
 
-    @Autowired GmpWebCrawlerJob gmpWebCrawlerJob;
-
     @Autowired CrawlerCollectionRepository crawlerCollectionRepository;
-
     @Autowired CrawlerRepository crawlerRepository;
-    
-    @Autowired Go1372CrawlerService go1372CrawlerService;
-        
     @Autowired CrawlerParser crawlerParser;
     
     /**

@@ -306,6 +306,9 @@ function formatXml(xml) {
  * @returns
  */
 function fnSetResponse(res) {
+	try {
+		setIFrameInspect(res.data.resultData);
+	} catch(e) {}
 	if (jQuery.isXMLDoc( res )) {
 		$('#responseResult').val(formatXml((new XMLSerializer()).serializeToString(res)));
 	} else {
@@ -549,9 +552,9 @@ function jsonAction() {
     }
 }
 
-function htmlAction() {
+function pageAction() {
 	try {
-		parserDoAction();
+		pageDoAction();
 	}catch(e) {alert("수행 항목이 없습니다.");}
 }
 
