@@ -28,6 +28,7 @@ function setUiEvent() {
         doSearch();
     });
 }
+
 function doSearch() {
 	var searchUrl = gSearchUrl;
 
@@ -184,15 +185,18 @@ function pageAction() {
 </TABLE>
 
 <script>
-// iFrameInspect
 $("#btnInspect").on("click", function() {
     domInspector(function(obj) {
-        alert(obj.outerHTML);
+    	var html = obj.outerHTML;
+        $('#responseResult').val(html);
     });
 });
 
 var domInspector = function(cb) {
-    iFrameInspect.document.body.style.cursor = "crosshair";
+
+	var body =  $("#iFrameInspect").contents().find("body");
+    
+	iFrameInspect.document.body.style.cursor = "crosshair";
     var style = iFrameInspect.document.createElement('style');
     style.type = 'text/css';
     style.innerHTML = '.overTargetClass { border: 2px solid red !important; }';
@@ -202,20 +206,18 @@ var domInspector = function(cb) {
     var targets = "*";
     var readyClick = false;
 
-    $("iframe body").on("mouseenter", targets, activeFocus)
-             .on("mouseleave", targets, deactiveFocus)
-             .on("click", targets, onclick);
+//    $("#iFrameInspect").contents().find("body").on("mouseenter", targets, activeFocus).on("mouseleave", targets, deactiveFocus).on("click", targets, onclick);
+    body.on("mouseenter", targets, activeFocus).on("mouseleave", targets, deactiveFocus).on("click", targets, onclick);
 
     function onclick(e) {
         e.preventDefault();
         e.stopPropagation();
     
         if(readyClick) {
-            document.body.style.cursor = 'default';
+        	iFrameInspect.document.body.style.cursor = 'default';
             deactiveFocus.call(this, e);
-            $("iframe body").off("mouseenter", activeFocus)
-                     .off("mouseleave", deactiveFocus)
-                     .off("click", onclick);
+//            $("#iFrameInspect").contents().find("body").off("mouseenter", activeFocus).off("mouseleave", deactiveFocus).off("click", onclick);
+            body.off("mouseenter", activeFocus).off("mouseleave", deactiveFocus).off("click", onclick);
             cb(this);
             return;
         }

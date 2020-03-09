@@ -19,49 +19,6 @@ function setUiEvent() {
 
 }
 
-function pageAction() {
-
-	var dataType    = "html";
-    var contentType = $('#ContentType').val();
-    var xAuthToken  = $('#XAuthToken').val();
-    var actionType  = $('#apiMehtod').val();
-    var actionUrl   = $('#apiUrl').val();
-    
-    var header = {
-          ContentType: contentType
-        , XAuthToken: xAuthToken
-    }
-    var params;
-    
-    var input = $("#input").val();
-    
-    params = $("#FrmApi").serializeObject();
-
-
-    $("#responseResult").val("");
-    if (actionUrl === "") return;
-    
-    fnSetConsole(params);
-    fnSetConsole(header);
-    fnSetConsole(actionType);
-    fnSetConsole(actionUrl);
-    fnSetConsole("============================================================");
-    fnSetConsole(""); 
-    
-    if(actionType==="POST" || actionType==="PUT" ) {
-        params = JSON.stringify(params);
-    }
-
-    fnSetConsole(params);
-    fnSetConsole(header);
-    fnSetConsole(actionType);
-    fnSetConsole(actionUrl);
-    fnSetConsole("============================================================");
-    fnSetConsole(""); 
-    
-    iFrameInspect.location.href = actionUrl;
-}
-
 function setIFrameInspect(html) {
 	var $frame = document.getElementById('iFrameInspect');
 	var doc = $frame.contentWindow.document;
@@ -97,7 +54,9 @@ function setIFrameInspect(html) {
 <TABLE  width="100%" border="0" cellpadding="1" cellspacing="0">
 <TR align="right">
     <td>
-        <input type="button" id="btnInspect" value="DOM 찾기" />
+        <input type="button" id="btnBack" name="btnBack" value="BACK" />
+        <input type="button" id="btnForward" name="btnForward" value="FORWARD" />
+        <input type="button" id="btnInspect" name="btnInspect" value="DOM" />
     </td>
 </TR>
 </TABLE>
@@ -112,7 +71,8 @@ function setIFrameInspect(html) {
         frameboarder="0"
         name="iFrameInspect"
         id="iFrameInspect"
-        src="./item/parser/parserPage.html"></iframe>
+        src="./item/scraping/scrapingPage.html"></iframe>
     </td>
 </tr>
 </TABLE>
+<script src="./js/inspector.js"></script>

@@ -14,14 +14,20 @@
  */	
 package com.greatmrpark.helper.crawler.service;
 
+import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -60,6 +66,7 @@ public class CrawlerScraping {
     
     private double ptime = 1000 * 0.5; 
     private Gson gson = new GsonBuilder().create();
+    private Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg|png|mp3|mp3|zip|gz))$");
 
     @Value("${gmp.file.images.download}")
     private String imageDownloaPath;
@@ -123,16 +130,51 @@ public class CrawlerScraping {
         urlMap.put("page", "1");
         url  = CrawlerUtil.messageTemplate(searchUrl, urlMap);
         
-        try {
-            html = crawlerClient.post(url);
+        try {            
+            Document doc = Jsoup.parse(
+                    new URL(url).openConnection().getInputStream(),
+                    "UTF-8",
+                    defaultUrl);
+
+            Elements elems = new Elements();
+            // src attribute 가 있는 엘리먼트들을 선택
+            elems = doc.select("[src]");
+            for( Element elem : elems ){
+                if( !elem.attr("src").equals(elem.attr("abs:src")) ){
+                    elem.attr("src", elem.attr("abs:src"));
+                }
+            }
+             
+            // href attribute 가 있는 엘리먼트들을 선택
+            elems = doc.select("[href]");
+            for( Element elem : elems ){
+                if( !elem.attr("href").equals(elem.attr("abs:href")) ){
+                    elem.attr("href", elem.attr("abs:href"));
+                }
+            }
+            
+            // a target _self
+            elems = doc.getElementsByTag("a");
+            for( Element elem : elems ){
+                if( !elem.attr("target").equals("_blank") ){
+                    elem.attr("target", "_self");
+                }
+                if( !elem.attr("target").equals("_new") ){
+                    elem.attr("target", "_self");
+                }
+                
+            }
+            
+            html = doc.toString();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         LocalDateTime endDateTime = LocalDateTime.now();
         Duration duration = Duration.between(startDateTime, endDateTime);
-        log.debug("totalCount : {}, 수행시간 : {} Seconds({}~{})" ,links.size(), duration.getSeconds(), startDateTime, endDateTime);
-        
+        log.debug("수행시간 : {} Seconds({}~{})" ,duration.getSeconds(), startDateTime, endDateTime);
+
         return html;
     }
 }
