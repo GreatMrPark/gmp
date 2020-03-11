@@ -17,6 +17,21 @@ Window -> Preferences -> Java -> Code Style -> Code Templates
  *
  */
  
+/*
+ *  Copyright (c) 2019 DOUB, Inc.
+ *  All right reserved.
+ *  This software is the confidential and proprietary information of DOUB
+ *  , Inc. You shall not disclose such Confidential Information and
+ *  shall use it only in accordance with the terms of the license agreement
+ *  you entered into with DOUB.
+ *
+ *  Revision History
+ *  Author Date Description
+ *  ------------------ -------------- ------------------
+ *  @author greatmrpark @date
+ *
+ */ 
+ 
  	-> Types		
 /**
  *
