@@ -88,8 +88,8 @@ public class ScrapingController {
         /**
          * 3. data 처리
          */
-        try {
-            resultData = crawlerScraping.scrapingHtml(params.getCrawlerName());
+        try {            
+            resultData = crawlerScraping.scraping(params);
             
             if(resultData!=null) {
                 totalCnt    = 1;

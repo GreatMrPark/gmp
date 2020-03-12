@@ -7,7 +7,10 @@ $("#apiAction").prop("disabled", false);
 $("#apiInput").show();
 $("#apiDesc").html("");
 $("#apiDesc").append("<div>- INPUT 항목</div>");
-
+$("#apiDesc").append("<div>http://www.1372.go.kr/search.ccn?nMenuCode=66&isTagSearch=Y&collection=altNews&query=교원&startCount=0</div>");
+$("#apiDesc").append("<div>https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=교원</div>");
+$("#apiDesc").append("<div>https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&q=교원</div>");
+$("#apiDesc").append("<div>https://www.google.com/search?sxsrf=ALeKk003truEdP9EUj3JOIQYWl_GEbeJyQ%3A1583996628017&source=hp&ei=095pXtH6OpOJoASzlZ-ICw&q=%EA%B5%90%EC%9B%90&oq=%EA%B5%90%EC%9B%90&gs_l=psy-ab.3..35i39j0i20i263j0i131i20i263j0l6j0i67.2496.3933..4346...2.0..0.139.787.0j7......0....1..gws-wiz.....10..35i362i39j0i131.SeKQLj5oE8k&ved=0ahUKEwiRsNeir5ToAhWTBIgKHbPKB7EQ4dUDCAY&uact=5</div>");
 $("#apiPlan").html("");
 
 gSearchUrl = "http://google.com/";
@@ -29,27 +32,22 @@ function setIFrameInspect(html) {
 }
 </script>
 <TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
-<input type="hidden" name="input" id="input" value="parser" />
+<input type="hidden" name="input" id="input" value="scraping" />
 <tr>
     <th width="120">&nbsp;</th>
     <th width="120">속성명</th>
     <th width="120">KEY</th>
-    <th width="*"  >VALUE</th>
-    <th width="450">DESCRIPTION</th>
+    <th width="*" colspan="2">VALUE</th>
 </tr>
 <tr>
     <td>Parameters</td>
     <td>크롤러</td>
     <td>SEARCH_URL</td>
-    <td><select style="width:98%;"  name="crawlerName" id="crawlerName">
-    <option value="1372altnews" >소비자상담센터 > 알림뉴스(1372altnews)</option>
-    <option value="1372counsel" >1372counsel(소비자상담센터 > 상담조회)</option>
-    <option value="1372infodata" >1372infodata(소비자상담센터 > 정보자료)</option>
-    <option value="kcareport" >kcareport(한국소비자원 > 보도자료)</option>
-    <option value="kcaboard" >kcaboard(한국소비자원 > 게시글)</option>
-    <option value="consumernews" >consumernews(소비자가만드는신문 > 뉴스)</option>
-    </select></td>
-    <td>&nbsp;</td>
+    <td colspan="2"><input style="width:98%;" 
+        name="searchUrl" 
+        id="searchUrl" 
+        onFocus="this.select();"
+        value="http://www.1372.go.kr/search.ccn?nMenuCode=66&isTagSearch=Y&collection=altNews&query=교원&startCount=0" /></td>
 </tr>
 </TABLE>
 <TABLE  width="100%" border="0" cellpadding="5" cellspacing="0"><TR align="center"><th >SCRAPING</th></TR></TABLE>

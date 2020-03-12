@@ -25,16 +25,13 @@ function setWindow() {
 function setIFrame() {
 	//find the height of the internal page
 
-	 var the_height=
-	 document.getElementById('the_iframe').contentWindow.
-	 document.body.scrollHeight;
+	 var the_height=document.getElementById('iFrameInspect').contentWindow.document.body.scrollHeight;
 
 	 //change the height of the iframe
-	 document.getElementById('the_iframe').height=
-	 the_height;
+	 document.getElementById('iFrameInspect').height = the_height;
 
-	 //document.getElementById('the_iframe').scrolling = "no";
-	 document.getElementById('the_iframe').style.overflow = "hidden";
+	 //document.getElementById('iFrameInspect').scrolling = "no";
+	 document.getElementById('iFrameInspect').style.overflow = "hidden";
 }
 </script>
 </head>
@@ -71,11 +68,13 @@ function setIFrame() {
             <td id="pagesLoaded"></td>
         </tr>
     </table>
+    <div><input type="button" id="btnInspect" name="btnInspect" value="DOM" /></div>
 </div>
 <iframe onload="setIFrame();" 
-	id="the_iframe" 
+	id="iFrameInspect" 
     name="WrittenPublic" 
     title="게시판뷰" 
     frameborder="1" 
     scrolling="no" 
     style="overflow-x:hidden; overflow:auto; width:100%; min-height:500px;"></iframe>
+<script src="../js/inspector.js"></script>    

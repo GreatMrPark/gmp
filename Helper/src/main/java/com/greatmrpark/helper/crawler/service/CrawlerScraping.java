@@ -24,6 +24,8 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Connection;
+import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -40,6 +42,7 @@ import com.greatmrpark.helper.common.model.error.ApiErrCode;
 import com.greatmrpark.helper.common.repository.CrawlerRepository;
 import com.greatmrpark.helper.common.utils.CrawlerUtil;
 import com.greatmrpark.helper.crawler.client.CrawlerClient;
+import com.greatmrpark.helper.crawler.model.CrawlerRequest;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -77,12 +80,33 @@ public class CrawlerScraping {
     @Autowired CrawlerRepository crawlerRepository;
 
     @Autowired CrawlerClient crawlerClient;
-    
-    public String scrapingHtml(String crawlerName) throws ApiCheckedException {
 
-        if (StringUtils.isBlank(crawlerName)) {
-            throw new ApiCheckedException(ApiErrCode.API_ERR_0001, "crawlerName");
+    public String scraping(CrawlerRequest params) throws ApiCheckedException {
+
+        String crawlerName = params.getCrawlerName();
+        String searchUrl = params.getSearchUrl();
+        
+        if (
+                StringUtils.isNoneBlank(crawlerName) 
+                &&
+                StringUtils.isNoneBlank(searchUrl) 
+         ) {
+            throw new ApiCheckedException(ApiErrCode.API_ERR_0008, "crawlerName,searchUrl");
         }
+
+        String html = null;
+        if (!"".contentEquals(params.getSearchUrl())) {
+            html = scrapingUrl(params.getSearchUrl());
+        }
+        else {
+            html = scrapingHtml(params.getCrawlerName());
+        }
+        
+        return html;
+        
+    }
+
+    public String scrapingHtml(String crawlerName) throws ApiCheckedException {
         
         /**
          * 3. DATA 처리
@@ -97,7 +121,7 @@ public class CrawlerScraping {
         return scrapingHtml(crawler);
     }
 
-    public String scrapingHtml(TbCrawler crawler) {
+    public String scrapingHtml(TbCrawler crawler) throws ApiCheckedException {
         
         LocalDateTime startDateTime = LocalDateTime.now();
 
@@ -130,11 +154,49 @@ public class CrawlerScraping {
         urlMap.put("page", "1");
         url  = CrawlerUtil.messageTemplate(searchUrl, urlMap);
         
+        html = scrapingUrl(url);
+        
+        return html;
+    }
+
+    public String scrapingUrl(String searchUrl) throws ApiCheckedException {
+        
+        LocalDateTime startDateTime = LocalDateTime.now();
+
+        String html = null;
+        
         try {            
-            Document doc = Jsoup.parse(
-                    new URL(url).openConnection().getInputStream(),
-                    "UTF-8",
-                    defaultUrl);
+            URL url = new URL(searchUrl); 
+            String protocol = url.getProtocol();
+            String host = url.getHost(); 
+            String authority = url.getAuthority(); 
+            String defaultUrl = protocol + "://" +authority;
+
+            log.debug("url : {}" , url);
+            log.debug("protocol : {}" , protocol);
+            log.debug("host : {}" , host);
+            log.debug("authority : {}" , authority);
+            log.debug("defaultUrl : {}" , defaultUrl);
+            
+            String userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36";        
+//            Response jsoupResponse = Jsoup.connect(searchUrl)
+//                    .userAgent(userAgent)
+//                    .timeout(3000)
+//                    .header("Origin", defaultUrl)
+//                    .header("Referer", defaultUrl)
+//                    .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
+//                    .header("Content-Type", "application/x-www-form-urlencoded; utf-8")
+//                    .header("Accept-Encoding", "gzip, deflate, br")
+//                    .header("Accept-Language", "ko-KR,ko;q=0.8,en-US;q=0.6,en;q=0.4")
+//                    .method(Connection.Method.POST)
+//                    .execute();
+//            Document doc = jsoupResponse.parse();
+              
+              Document doc = Jsoup.connect(searchUrl).get();
+            
+//                    url.openConnection().getInputStream(),
+//                    "UTF-8",
+//                    defaultUrl);
 
             Elements elems = new Elements();
             // src attribute 가 있는 엘리먼트들을 선택
@@ -165,7 +227,15 @@ public class CrawlerScraping {
                 
             }
             
+            // script 제거
+//            elems = doc.getElementsByTag("script");
+//            for( Element elem : elems ){
+//                elem.remove();
+//            }
+                        
             html = doc.toString();
+            
+            log.debug("html : " , html);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -177,4 +247,5 @@ public class CrawlerScraping {
 
         return html;
     }
+
 }

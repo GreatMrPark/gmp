@@ -7,8 +7,13 @@
 			<script src="../build/inspector.js"></script>
 	</head>
 	<body>
+        <h2>Actions</h2>
+        <button id="attach-inspector">Attach inspector to all editors</button>
+        <button id="detach-inspector-from-editors">Detach inspector from editors</button>
+        <button id="destroy-inspector">Destroy inspector</button>
+	
 		<h2>First editor</h2>
-		<div id="first-editor-content">
+		<div id="first-editor-content">         
 			<h2>The three greatest things you learn from traveling</h2>
 			<p>Like <a href="https://ckeditor.com">all the <b>great things on earth</b> traveling teaches</a> us by example. Here are some of the most precious lessons I’ve
 				learned over the years of traveling.</p>
@@ -41,23 +46,6 @@
 				ridiculous it is to be afraid of something before it happens. The moment you face your fear and see there was
 				nothing to be afraid of, is the moment you discover bliss.</p>
 		</div>
-
-		<h2>Second editor</h2>
-		<div id="second-editor-content">
-			<p>foo</p>
-		</div>
-
-		<h2>RTL editor</h2>
-		<div id="rtl-editor-content">
-			<p>مرحبا</p>
-			<p>مرحبا</p>
-			<p>مرحبا</p>
-		</div>
-
-		<h2>Actions</h2>
-		<button id="attach-inspector">Attach inspector to all editors</button>
-		<button id="detach-inspector-from-editors">Detach inspector from editors</button>
-		<button id="destroy-inspector">Destroy inspector</button>
 
 		<script>
 			class DummyUploadAdapter {

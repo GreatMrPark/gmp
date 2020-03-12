@@ -25,7 +25,8 @@ function setIFrameInspect(html) {
 //	var $body = $('body',doc);
 //	$body.html(html);
 	
-    $('#iFrameInspect').contents().find('body').html(html);
+	$('#iFrameInspect').contents().find('#first-editor-content').html(html);
+
 }
 </script>
 <TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
@@ -56,7 +57,7 @@ function setIFrameInspect(html) {
 <TABLE  width="100%" border="0" cellpadding="1" cellspacing="0">
 <TR align="right">
     <td>
-        <input type="button" id="btnBack"    name="btnBack" value="BACK" />
+        <input type="button" id="btnBack" name="btnBack" value="BACK" />
         <input type="button" id="btnForward" name="btnForward" value="FORWARD" />
         <input type="button" id="btnInspect" name="btnInspect" value="DOM" />
     </td>
@@ -73,7 +74,7 @@ function setIFrameInspect(html) {
         frameboarder="0"
         name="iFrameInspect"
         id="iFrameInspect"
-        src="./item/scraping/scrapingPage.html"></iframe>
+        src="./ckeditor5-inspector/sample/index.html"></iframe>
     </td>
 </tr>
 </TABLE>
