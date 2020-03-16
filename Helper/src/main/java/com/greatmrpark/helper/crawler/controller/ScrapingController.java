@@ -2,6 +2,9 @@ package com.greatmrpark.helper.crawler.controller;
 
 import java.time.format.DateTimeFormatter;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,7 +59,7 @@ public class ScrapingController {
     @Autowired CrawlerScraping crawlerScraping;
     
     @PostMapping("/crawler/scraping")
-    public ResponseEntity<ResponseResult> Scraping(@RequestBody CrawlerRequest params) {
+    public ResponseEntity<ResponseResult> Scraping(@RequestBody CrawlerRequest params, HttpServletRequest request, HttpServletResponse response) {
 
         /**
          * 0. 기능설명
@@ -89,7 +92,7 @@ public class ScrapingController {
          * 3. data 처리
          */
         try {            
-            resultData = crawlerScraping.scraping(params);
+            resultData = crawlerScraping.scraping(params, request, response);
             
             if(resultData!=null) {
                 totalCnt    = 1;

@@ -14,18 +14,22 @@
  */	
 package com.greatmrpark.helper.crawler.service;
 
+import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.Connection;
-import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -77,6 +81,9 @@ public class CrawlerScraping {
     @Value("${gmp.ocr.datapath}")
     private String datapath;
 
+    @Value("${gmp.file.crawler.contents}")
+    private String crawlerContents;
+    
     @Autowired CrawlerRepository crawlerRepository;
 
     @Autowired CrawlerClient crawlerClient;
@@ -97,6 +104,31 @@ public class CrawlerScraping {
         String html = null;
         if (!"".contentEquals(params.getSearchUrl())) {
             html = scrapingUrl(params.getSearchUrl());
+        }
+        else {
+            html = scrapingHtml(params.getCrawlerName());
+        }
+        
+        return html;
+        
+    }
+    
+    public String scraping(CrawlerRequest params, HttpServletRequest request, HttpServletResponse response) throws ApiCheckedException {
+
+        String crawlerName = params.getCrawlerName();
+        String searchUrl = params.getSearchUrl();
+        
+        if (
+                StringUtils.isNoneBlank(crawlerName) 
+                &&
+                StringUtils.isNoneBlank(searchUrl) 
+         ) {
+            throw new ApiCheckedException(ApiErrCode.API_ERR_0008, "crawlerName,searchUrl");
+        }
+
+        String html = null;
+        if (!"".contentEquals(params.getSearchUrl())) {
+            html = scrapingUrl(params.getSearchUrl(), request, response);
         }
         else {
             html = scrapingHtml(params.getCrawlerName());
@@ -198,12 +230,19 @@ public class CrawlerScraping {
 //                    "UTF-8",
 //                    defaultUrl);
 
+              
+            ArrayList<String> links = new ArrayList<String>();
             Elements elems = new Elements();
+            
             // src attribute 가 있는 엘리먼트들을 선택
             elems = doc.select("[src]");
             for( Element elem : elems ){
                 if( !elem.attr("src").equals(elem.attr("abs:src")) ){
                     elem.attr("src", elem.attr("abs:src"));
+
+                    if (StringUtils.isNoneBlank(elem.attr("src"))) {
+                        links.add(elem.attr("src").toString());
+                    }
                 }
             }
              
@@ -212,6 +251,10 @@ public class CrawlerScraping {
             for( Element elem : elems ){
                 if( !elem.attr("href").equals(elem.attr("abs:href")) ){
                     elem.attr("href", elem.attr("abs:href"));
+                    
+                    if (StringUtils.isNoneBlank(elem.attr("href"))) {
+                        links.add(elem.attr("href"));
+                    } 
                 }
             }
             
@@ -232,10 +275,10 @@ public class CrawlerScraping {
 //            for( Element elem : elems ){
 //                elem.remove();
 //            }
+//            scrapingDownload(links);
+            log.debug("links : {}" , gson.toJson(links));
                         
             html = doc.toString();
-            
-            log.debug("html : " , html);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -247,5 +290,182 @@ public class CrawlerScraping {
 
         return html;
     }
+    
+    public String scrapingUrl(String searchUrl, HttpServletRequest request, HttpServletResponse response) throws ApiCheckedException {
+        
+        LocalDateTime startDateTime = LocalDateTime.now();
 
+        String html = null;
+        
+        try {            
+            URL url = new URL(searchUrl); 
+            String protocol = url.getProtocol();
+            String host = url.getHost(); 
+            String authority = url.getAuthority(); 
+            String defaultUrl = protocol + "://" +authority;
+
+            log.debug("url : {}" , url);
+            log.debug("protocol : {}" , protocol);
+            log.debug("host : {}" , host);
+            log.debug("authority : {}" , authority);
+            log.debug("defaultUrl : {}" , defaultUrl);
+            
+            String siteFilePath = scrapingDirectory(host, request, response);
+
+            String downloadFilePath =  crawlerContents + "/";
+            String webFilePath = "/gmp/crawler/contents/";
+            
+            downloadFilePath = downloadFilePath + siteFilePath;
+            webFilePath = webFilePath + siteFilePath;
+            
+            String userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36";        
+            Document doc = Jsoup.connect(searchUrl).get();
+              
+            String link = "";
+            ArrayList<String> links = new ArrayList<String>();
+            Elements elems = new Elements();
+            
+            // src attribute 가 있는 엘리먼트들을 선택
+            elems = doc.select("[src]");
+            for( Element elem : elems ){
+                if( !elem.attr("src").equals(elem.attr("abs:src")) ){
+                    elem.attr("src", elem.attr("abs:src"));
+
+                    if (StringUtils.isNoneBlank(elem.attr("src"))) {
+                        
+                        links.add(elem.attr("src").toString());
+                        link = scrapingDownload(downloadFilePath, elem.attr("src").toString());
+                        
+                        if (!"".contentEquals(link)) {
+                            elem.attr("src", scrapingWebUrlPath(webFilePath, link));
+                        }
+                        
+                    }
+                }
+            }
+             
+            // href attribute 가 있는 엘리먼트들을 선택
+            elems = doc.select("[href]");
+            for( Element elem : elems ){
+                if( !elem.attr("href").equals(elem.attr("abs:href")) ){
+                    elem.attr("href", elem.attr("abs:href"));
+                    
+                    if (StringUtils.isNoneBlank(elem.attr("href"))) {
+                        links.add(elem.attr("href").toString());
+                        link = scrapingDownload(downloadFilePath, elem.attr("href").toString());
+                        
+                        if (!"".contentEquals(link)) {
+                            elem.attr("href", scrapingWebUrlPath(webFilePath, link));
+                        }
+                    } 
+                }
+            }
+            
+            // a target _self
+            elems = doc.getElementsByTag("a");
+            for( Element elem : elems ){
+                if( !elem.attr("target").equals("_blank") ){
+                    elem.attr("target", "_self");
+                }
+                if( !elem.attr("target").equals("_new") ){
+                    elem.attr("target", "_self");
+                }
+                
+            }
+
+//            links = scrapingDownload(downloadFilePath, links);
+//            log.debug("links : {}" , gson.toJson(links));
+                        
+            html = doc.toString();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        LocalDateTime endDateTime = LocalDateTime.now();
+        Duration duration = Duration.between(startDateTime, endDateTime);
+        log.debug("수행시간 : {} Seconds({}~{})" ,duration.getSeconds(), startDateTime, endDateTime);
+
+        return html;
+    }
+    
+    public String scrapingDirectory(String host, HttpServletRequest request, HttpServletResponse response) {
+
+        log.debug("host : {}" , host);
+        String formatDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String downloadFilePath =  crawlerContents + "/";
+        String siteFilePath = "";
+        String webFilePath = "/crawler/contents";
+        
+        host = host.replaceAll("\\.", "");
+        siteFilePath = siteFilePath + host + "/";
+        siteFilePath = siteFilePath + formatDate + "/";
+        
+        downloadFilePath = downloadFilePath + siteFilePath;
+        webFilePath = webFilePath + siteFilePath;
+
+        log.debug("downloadFilePath : {}" , downloadFilePath);
+        
+        File file = new File(downloadFilePath);
+        if(!file.exists()) file.mkdirs();
+        
+        return siteFilePath;
+        
+    }
+    
+    public String scrapingWebUrlPath(String webFilePath, String filePath) {
+        String webUrlPath = "";
+        String fileName = filePath.substring( filePath.lastIndexOf('/')+1, filePath.length() );
+        webUrlPath = webFilePath + fileName;
+        log.debug("webUrlPath : {}" , webUrlPath);
+        return webUrlPath;
+    }
+    
+    public String scrapingDownload(String downloadFilePath, String link) {
+
+        int pos = link.lastIndexOf(".");
+        String ext = link.substring( pos + 1 );
+
+        String fileFullPath = "";
+        if ("gif".contentEquals(ext)
+                || "jpg".contentEquals(ext)
+                || "png".contentEquals(ext)
+            ) {
+            fileFullPath = CrawlerUtil.downloadImage(downloadFilePath, link);
+        }
+        else if ("js".contentEquals(ext) 
+                || "css".contentEquals(ext)
+                || "woff2".contentEquals(ext)) {
+            fileFullPath = CrawlerUtil.download(downloadFilePath, link);
+        }
+        
+        log.debug("fileFullPath : {}" , fileFullPath);
+        
+        return fileFullPath;
+    }
+    
+    public ArrayList<String> scrapingDownload(String downloadFilePath, ArrayList<String> links) {
+        
+        if (links != null && !links.isEmpty() && links.size() > 0) {
+            for(String link : links) {
+
+                int pos = link.lastIndexOf(".");
+                String ext = link.substring( pos + 1 );
+                
+                String fileFullPath = "";
+                if ( "gif".contentEquals(ext)
+                        || "jpg".contentEquals(ext)
+                        || "png".contentEquals(ext) 
+                   ) {
+                    fileFullPath = CrawlerUtil.downloadImage(downloadFilePath, link);
+                    link = fileFullPath;
+                }
+                else if ("js".contentEquals(ext) || "css".contentEquals(ext)) {
+                    fileFullPath = CrawlerUtil.download(downloadFilePath, link);
+                    link = fileFullPath;
+                }
+            }
+        }
+        return links;
+    }
 }

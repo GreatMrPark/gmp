@@ -94,5 +94,7 @@ gmp:
     images:
       download: /project/file/images/download
       upload: /project/file/images/upload
+    crawler:
+      contents: /project/file/crawler/contents
     
 

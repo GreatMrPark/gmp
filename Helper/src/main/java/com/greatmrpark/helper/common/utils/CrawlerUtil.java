@@ -2,9 +2,14 @@ package com.greatmrpark.helper.common.utils;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -70,6 +75,33 @@ public class CrawlerUtil {
             
         } catch (Exception e) {
             log.error("downloadImage : {}", e.getMessage());
+        }
+        
+        return fileFullPath;
+    }
+
+    public static String download(String filePath, String path) {
+        String fileName = "";
+        String fileFullPath = "";
+        try {
+            URL url = new URL(path);
+            URLConnection con = url.openConnection();
+            HttpURLConnection exitCode = (HttpURLConnection)con;
+            OutputStream outStream = null;
+            InputStream is = null;
+            int byteWritten = 0;
+            if (exitCode.getResponseCode() == 200) {
+                fileName = path.substring( path.lastIndexOf('/')+1, path.length() ); 
+                String ext = path.substring( path.lastIndexOf('.')+1, path.length() );  
+                InputStream in = new URL(path).openStream();
+                
+                fileFullPath = filePath + "/" + fileName;
+                Files.copy(in, Paths.get(fileFullPath));
+                                
+            }
+            
+        } catch (Exception e) {
+            log.error("download : {}", e.getMessage());
         }
         
         return fileFullPath;
