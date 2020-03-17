@@ -134,7 +134,7 @@ public class ScrapingController {
 
         responseResult.setData(responseData);
         responseResult.setResultMsg(resultMsg);
-        
+                
         return new ResponseEntity<ResponseResult>(responseResult, HttpStatus.OK);
     }
 }

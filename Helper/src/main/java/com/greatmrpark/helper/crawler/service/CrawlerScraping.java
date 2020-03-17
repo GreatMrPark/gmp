@@ -14,8 +14,10 @@
  */	
 package com.greatmrpark.helper.crawler.service;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStream;
+import java.io.FileReader;
+import java.io.StringReader;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +40,11 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.w3c.css.sac.InputSource;
+import org.w3c.dom.css.CSSRule;
+import org.w3c.dom.css.CSSRuleList;
+import org.w3c.dom.css.CSSStyleDeclaration;
+import org.w3c.dom.css.CSSStyleRule;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -47,6 +55,9 @@ import com.greatmrpark.helper.common.repository.CrawlerRepository;
 import com.greatmrpark.helper.common.utils.CrawlerUtil;
 import com.greatmrpark.helper.crawler.client.CrawlerClient;
 import com.greatmrpark.helper.crawler.model.CrawlerRequest;
+import com.steadystate.css.dom.CSSStyleSheetImpl;
+import com.steadystate.css.parser.CSSOMParser;
+import com.steadystate.css.parser.SACParserCSS3;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -355,7 +366,45 @@ public class CrawlerScraping {
                         link = scrapingDownload(downloadFilePath, elem.attr("href").toString());
                         
                         if (!"".contentEquals(link)) {
-                            elem.attr("href", scrapingWebUrlPath(webFilePath, link));
+                            String href = scrapingWebUrlPath(webFilePath, link);
+                            elem.attr("href", href);
+                            
+                            log.debug("link : {}" , link);
+                            if (link.contains(".css")) {
+                                File file = new File(link);
+                                FileReader filereader = new FileReader(file);
+                                BufferedReader bufReader = new BufferedReader(filereader);
+                                String line = null;
+                                String css = new String();
+                                while ((line = bufReader.readLine()) != null) {
+                                    css += line;
+                                }
+                                InputSource source = new InputSource(new StringReader(css));
+                                CSSOMParser parser = new CSSOMParser(new SACParserCSS3());
+                                CSSStyleSheetImpl sheet = (CSSStyleSheetImpl) parser.parseStyleSheet(source, null, null);
+                                CSSRuleList ruleList = sheet.getCssRules(); 
+                                Pattern URL_PATTERN = Pattern.compile("/.*?jpg|jpeg|png|gif|woff2|woff|ttf");
+                                for (int i = 0; i < ruleList.getLength(); i++) { 
+                                    CSSRule rule = ruleList.item(i); 
+                                    if (rule instanceof CSSStyleRule) { 
+                                        CSSStyleRule styleRule=(CSSStyleRule)rule; 
+                                        CSSStyleDeclaration styleDeclaration = styleRule.getStyle(); 
+
+                                        for (int j = 0; j < styleDeclaration.getLength(); j++) {
+                                            String property = styleDeclaration.item(j); 
+                                            String value = styleDeclaration.getPropertyCSSValue(property).getCssText();
+//                                            log.debug("property : {}", property); 
+//                                            log.debug("value : {}", value);
+                                            
+                                            Matcher m = URL_PATTERN.matcher(value);
+                                            while(m.find()) {
+                                                String originalUrl = m.group(0);
+                                                log.debug("originalUrl : {}", originalUrl);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     } 
                 }
@@ -417,7 +466,6 @@ public class CrawlerScraping {
         String webUrlPath = "";
         String fileName = filePath.substring( filePath.lastIndexOf('/')+1, filePath.length() );
         webUrlPath = webFilePath + fileName;
-        log.debug("webUrlPath : {}" , webUrlPath);
         return webUrlPath;
     }
     
@@ -435,7 +483,10 @@ public class CrawlerScraping {
         }
         else if ("js".contentEquals(ext) 
                 || "css".contentEquals(ext)
-                || "woff2".contentEquals(ext)) {
+                || "woff2".contentEquals(ext)
+                || "woff".contentEquals(ext)
+                || "ttf".contentEquals(ext)
+                ) {
             fileFullPath = CrawlerUtil.download(downloadFilePath, link);
         }
         

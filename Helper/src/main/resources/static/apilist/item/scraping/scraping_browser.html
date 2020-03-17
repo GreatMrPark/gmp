@@ -27,8 +27,9 @@ function setIFrameInspect(html) {
 //	var doc = $frame.contentWindow.document;
 //	var $body = $('body',doc);
 //	$body.html(html);
-	
+
     $('#iFrameInspect').contents().find('body').html(html);
+//    $('#divInspect').html(html);
 }
 </script>
 <TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
@@ -72,6 +73,19 @@ function setIFrameInspect(html) {
         name="iFrameInspect"
         id="iFrameInspect"
         src="./item/scraping/scrapingPage.html"></iframe>
+    </td>
+</tr>
+<tr align="center">
+    <td>
+    <div  
+        width="100%"
+        height="300px"
+        scrolling="auto"
+        border="0"
+        frameboarder="0"
+        name="divInspect"
+        id="divInspect"
+        src="./item/scraping/scrapingPage.html" >Page Load</div>
     </td>
 </tr>
 </TABLE>

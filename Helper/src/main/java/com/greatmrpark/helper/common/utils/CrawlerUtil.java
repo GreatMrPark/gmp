@@ -69,7 +69,7 @@ public class CrawlerUtil {
                 fileName = imgUrl.substring( imgUrl.lastIndexOf('/')+1, imgUrl.length() ); // 이미지 파일명 추출
                 String ext = imgUrl.substring( imgUrl.lastIndexOf('.')+1, imgUrl.length() );  // 이미지 확장자 추출
                 BufferedImage img = ImageIO.read(url);                
-                fileFullPath = filePath + "/" + fileName;
+                fileFullPath = filePath + fileName;
                 ImageIO.write(img, ext, new File(fileFullPath));
             }
             
@@ -95,7 +95,7 @@ public class CrawlerUtil {
                 String ext = path.substring( path.lastIndexOf('.')+1, path.length() );  
                 InputStream in = new URL(path).openStream();
                 
-                fileFullPath = filePath + "/" + fileName;
+                fileFullPath = filePath + fileName;
                 Files.copy(in, Paths.get(fileFullPath));
                                 
             }
