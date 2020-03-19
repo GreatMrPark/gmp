@@ -1,0 +1,14 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.greatmrpark</groupId>
+  <artifactId>GMPHelper</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>GMPHelper</name>
+  <packaging>pom</packaging>
+  <description>Dev Helper of Great Mr. Park.</description>
+  <modules>
+      <module>gmp-common</module>
+      <module>gmp-web</module>
+      <module>gmp-app</module>
+  </modules>
+</project>
