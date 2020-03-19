@@ -16,7 +16,6 @@
   
     <properties>
         <start-class>com.greatmrpark.help.GwaWebApplication</start-class>
-        <log4j.version>2.7</log4j.version>
     </properties>
   
     <dependencies>
