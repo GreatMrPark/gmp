@@ -353,7 +353,41 @@
             <artifactId>cssparser</artifactId>
             <version>0.9.27</version>
         </dependency>
-                
+        
+        <!-- JAVA FX -->
+        <dependency>
+            <groupId>com.github.yoep</groupId>
+            <artifactId>spring-boot-starter-javafx</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/com.zenjava/javafx-basic-archetype -->
+        <dependency>
+            <groupId>com.zenjava</groupId>
+            <artifactId>javafx-basic-archetype</artifactId>
+            <version>8.1.5</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>11.0.2</version>
+        </dependency>
     </dependencies>
 
 	<build>
@@ -362,7 +396,16 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-		</plugins>
+            
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>com.greatmrpark.MainApplication</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
 	</build>
 
 </project>

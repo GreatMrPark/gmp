@@ -7,16 +7,11 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@SpringBootApplication
 @EnableTransactionManagement
 @EnableScheduling
+@SpringBootApplication
 public class HelperApplication extends SpringBootServletInitializer {
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(HelperApplication.class);
-    }
-    
 	public static void main(String[] args) {
         new SpringApplicationBuilder()
         .bannerMode(Banner.Mode.CONSOLE)
@@ -24,4 +19,9 @@ public class HelperApplication extends SpringBootServletInitializer {
         .run(args);
 	}
 
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(HelperApplication.class);
+    }
+    
 }

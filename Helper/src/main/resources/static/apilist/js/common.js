@@ -5,7 +5,7 @@ var host = "http://" + $(location).attr('host')+"/gwaapi";
 var host = "http://" + $(location).attr('host') + "/gmp/v1.0";
 var token = "";
 var actionUrl = "";
-var projectName = "Dev Helper Of Great Mr. Park";
+var projectName = "Dev Helper Of Great Mr. Park.";
 var projectMenu = "<li>"+projectName+"</li>";
 var projectLink = "<li>"+projectName+"</li>";
         
