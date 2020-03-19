@@ -44,7 +44,7 @@ public class GmpAppApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("Dev Helper Of Great Mr. Park.");
+        stage.setTitle("APP Dev Helper of Great Mr. Park.");
         stage.setScene(new Scene(rootNode));
         stage.setResizable(false);
         stage.show();

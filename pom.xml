@@ -51,6 +51,7 @@
             <id>gmpWeb</id>
             <modules>
                 <module>gmp-common</module>
+                <module>gmp-app</module>
                 <module>gmp-web</module>
             </modules>
         </profile>
