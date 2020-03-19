@@ -1,0 +1,80 @@
+<script>
+$("#apiName").text("크롤러 > 스크래핑");
+$("#apiMehtod").val("POST");
+$("#ContentType").val("application/json; charset=uft-8;");
+$("#apiUrl").val(host+"/crawler/scraping");
+$("#apiAction").prop("disabled", false);
+$("#apiInput").show();
+$("#apiDesc").html("");
+$("#apiDesc").append("<div>- INPUT 항목</div>");
+
+$("#apiPlan").html("");
+
+gSearchUrl = "http://google.com/";
+$( document ).ready(function() {
+	setUiEvent();
+});
+
+function setUiEvent() {
+
+}
+
+function setIFrameInspect(html) {
+//	var $frame = document.getElementById('iFrameInspect');
+//	var doc = $frame.contentWindow.document;
+//	var $body = $('body',doc);
+//	$body.html(html);
+	
+    $('#iFrameInspect').contents().find('body').html(html);
+}
+</script>
+<TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+<input type="hidden" name="input" id="input" value="parser" />
+<tr>
+    <th width="120">&nbsp;</th>
+    <th width="120">속성명</th>
+    <th width="120">KEY</th>
+    <th width="*"  >VALUE</th>
+    <th width="450">DESCRIPTION</th>
+</tr>
+<tr>
+    <td>Parameters</td>
+    <td>크롤러</td>
+    <td>SEARCH_URL</td>
+    <td><select style="width:98%;"  name="crawlerName" id="crawlerName">
+    <option value="1372altnews" >소비자상담센터 > 알림뉴스(1372altnews)</option>
+    <option value="1372counsel" >1372counsel(소비자상담센터 > 상담조회)</option>
+    <option value="1372infodata" >1372infodata(소비자상담센터 > 정보자료)</option>
+    <option value="kcareport" >kcareport(한국소비자원 > 보도자료)</option>
+    <option value="kcaboard" >kcaboard(한국소비자원 > 게시글)</option>
+    <option value="consumernews" >consumernews(소비자가만드는신문 > 뉴스)</option>
+    </select></td>
+    <td>&nbsp;</td>
+</tr>
+</TABLE>
+<TABLE  width="100%" border="0" cellpadding="5" cellspacing="0"><TR align="center"><th >SCRAPING</th></TR></TABLE>
+<TABLE  width="100%" border="0" cellpadding="1" cellspacing="0">
+<TR align="right">
+    <td>
+        <input type="button" id="btnBack"    name="btnBack" value="BACK" />
+        <input type="button" id="btnForward" name="btnForward" value="FORWARD" />
+        <input type="button" id="btnInspect" name="btnInspect" value="DOM" />
+    </td>
+</TR>
+</TABLE>
+<TABLE  width="100%" border="1" cellpadding="5" cellspacing="0">
+<tr align="center">
+    <td>
+    <iframe 
+        width="100%"
+        height="300px"
+        scrolling="auto"
+        border="0"
+        frameboarder="0"
+        name="iFrameInspect"
+        id="iFrameInspect"
+        src="./item/scraping/scrapingPage.html"></iframe>
+    </td>
+</tr>
+</TABLE>
+<script src="./js/inspector.js"></script>

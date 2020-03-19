@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+<script src="./js/jquery.dom-outline-1.0.js"></script>
+<script>
+var myExampleClickHandler = function (element) { console.log('Clicked element:', element); }
+var myDomOutline = DomOutline({ onClick: myExampleClickHandler, filter: 'div' });
+
+// Start outline:
+myDomOutline.start();
+
+// Stop outline (also stopped on escape/backspace/delete keys):
+myDomOutline.stop();
+</script>
+</head>
+
+<body>
+<div id="asd" class="test as adqwe qwe qw zxf as asd qwe dfg ert ghj t jk yui jkl uio kl wer cv rty cvb rty x qwe fb rt g df hf grt">
+        <div>
+            <div>
+                <div>123</div>
+            </div>
+        </div>
+    </div>
+    <code>asd</code>
+    <code>asd</code>
+    <code>asd</code>
+    <code>asd</code>
+    <code>asd</code>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div class="test111">
+        <p>123</p>
+        <span>this one will be exclude</span>
+    </div>
+
+    <div class="exclude">
+        <div>exclude child</div>
+        <div>exclude child</div>
+        <div>exclude child</div>
+        <div class="another">exclude child but new another inspector</div>
+    </div>
+</body>
+</html>

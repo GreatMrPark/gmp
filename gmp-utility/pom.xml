@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.greatmrpark</groupId>
+        <artifactId>GMPHelper</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>gmp-utility</artifactId>
+    <packaging>jar</packaging>
+    <name>GmpUtility</name>
+    
+    <description>UTILITY Dev Helper of Great Mr. Park.</description>
+  
+    <properties>
+        <start-class>com.greatmrpark.app.GmpUtilityApplication</start-class>
+        <log4j.version>2.7</log4j.version>
+    </properties>
+  
+    <dependencies>
+        <dependency>
+            <groupId>com.greatmrpark</groupId>
+            <artifactId>gmp-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+</project>

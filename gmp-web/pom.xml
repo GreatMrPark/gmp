@@ -10,14 +10,23 @@
     </parent>
     <artifactId>gmp-web</artifactId>
     <packaging>war</packaging>
-    <name>gmp-web</name>
+    <name>GwaWeb</name>
+    
     <description>WEB Dev Helper of Great Mr. Park.</description>
   
     <properties>
-        <start-class>com.greatmrpark.help.HelperApplication</start-class>
+        <start-class>com.greatmrpark.help.GwaWebApplication</start-class>
         <log4j.version>2.7</log4j.version>
     </properties>
   
+    <dependencies>
+        <dependency>
+            <groupId>com.greatmrpark</groupId>
+            <artifactId>gmp-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+    
     <build>
         <finalName>gmpWeb</finalName>
         <plugins>

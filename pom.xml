@@ -44,7 +44,8 @@
         <module>gmp-common</module>
         <module>gmp-web</module>
         <module>gmp-app</module>
-    </modules>
+        <module>gmp-utility</module>
+</modules>
     
     <profiles>
         <profile>
@@ -58,13 +59,22 @@
         <profile>
             <id>gmpApp</id>
             <modules>
-                <module>gmp-commo</module>
+                <module>gmp-common</module>
                 <module>gmp-app</module>
+            </modules>
+        </profile>
+        
+        <profile>
+            <id>gmpApp</id>
+            <modules>
+                <module>gmp-common</module>
+                <module>gmp-utility</module>
             </modules>
         </profile>
     </profiles>
     
     <dependencies>
+    
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -378,6 +388,35 @@
             <groupId>net.sourceforge.cssparser</groupId>
             <artifactId>cssparser</artifactId>
             <version>0.9.27</version>
+        </dependency>
+        
+        <!-- JAVA FX -->
+        <dependency>
+            <groupId>com.github.yoep</groupId>
+            <artifactId>spring-boot-starter-javafx</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/com.zenjava/javafx-basic-archetype -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>11.0.2</version>
         </dependency>
     </dependencies>
 
