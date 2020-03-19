@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html>
+	<head>
+			<meta charset="utf-8">
+			<title>Inspector sample</title>
+			<script src="../node_modules/@ckeditor/ckeditor5-build-decoupled-document/build/ckeditor.js"></script>
+			<script src="../build/inspector.js"></script>
+	</head>
+	<body>
+        <h2>Actions</h2>
+        <button id="attach-inspector">Attach inspector to all editors</button>
+        <button id="detach-inspector-from-editors">Detach inspector from editors</button>
+        <button id="destroy-inspector">Destroy inspector</button>
+	
+		<h2>First editor</h2>
+		<div id="first-editor-content">
+  <title>소비자상담센터</title> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge"> 
+  <meta name="ROBOTS" content="NOINDEX, NOFOLLOW"> 
+  <meta name="ROBOTS" content="NOFOLLOW"> 
+  <meta name="ROBOTS" content="NOIMAGEINDEX"> 
+  <script type="text/javascript" src="http://www.1372.go.kr/js/jquery-1.9.1.min.js"></script> 
+  <script type="text/javascript" src="http://www.1372.go.kr/js/jquery-ui.min.js"></script> 
+  <script type="text/javascript" src="http://www.1372.go.kr/js/slick.min.js"></script> 
+  <script type="text/javascript" src="http://www.1372.go.kr/js/style.js"></script> 
+  <script type="text/javascript" src="http://www.1372.go.kr/js/placeholders.min.js"></script> 
+  <link rel="stylesheet" href="http://www.1372.go.kr/css/jquery-ui.min.css"> 
+  <link rel="stylesheet" href="http://www.1372.go.kr/css/jquery-ui.theme.css"> 
+  <link rel="stylesheet" href="http://www.1372.go.kr/css/2/new2016/slick.css"> 
+  <link rel="stylesheet" href="http://www.1372.go.kr/css/2/new2016/slick-theme.css"> 
+  <link rel="stylesheet" href="http://www.1372.go.kr/css/2/new2016/common.css"> 
+  <link rel="stylesheet" href="http://www.1372.go.kr/css/2/new2016/board.css"> 
+  <link rel="stylesheet" href="http://www.1372.go.kr/css/2/new2016/sub_temp.css"> 
+  <link rel="stylesheet" href="http://www.1372.go.kr/css/2/new2016/temp_question_inquiry.css"> 
+  <link rel="stylesheet" href="http://www.1372.go.kr/css/2/new2016/sub_content.css"> 
+  <link rel="stylesheet" href="http://www.1372.go.kr/css/2/new2016/kcaNotice.css"> 
+  <link rel="stylesheet" href="http://www.1372.go.kr/css/2/new2016/style.css"> 
+  <link rel="stylesheet" href="http://www.1372.go.kr/css/2/purchase.css"> 
+  <link rel="shortcut icon" href="http://www.1372.go.kr/images/2/ccn.ico"> 
+  <script type="text/javascript" src="http://www.1372.go.kr/js/common.js"></script> 
+  
+  
+  <!-- 로딩바 --> 
+  <div id="loding_wrap" style="display: none;"> 
+   <img src="http://www.1372.go.kr/images/new2016/loading.gif" alt="로딩중" class="img_loading"> 
+  </div> 
+  <!-- //로딩바 --> 
+  <div id="wrap"> 
+   <div id="header"> 
+    <script type="text/javascript">
+
+String.prototype.trim = function() {
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+}
+
+function doEnter(evt) {
+    if ( evt.keyCode == '13' ) {
+        var searchForm = document.getElementById("topSearch");
+        doSearch();
+    }
+}
+
+function doSearch() {
+    var fm = document.getElementById("topSearch");
+    var tQuery = document.getElementById("tQuery");
+    
+    if ( tQuery.value.trim() == '' ) {
+        alert('검색어를 입력해주세요.');
+        tQuery.focus();
+        return false;
+    }
+    
+    return true;
+    //fm.submit();
+}
+
+/* topSearch.jsp 디렉토리 검색했을 때 */
+function searchSubmit2(c, cvalue) {
+
+   var searchForm = document.getElementById("topSearch");
+   
+   document.getElementById("totalSearchSelectColl").innerHTML = cvalue;
+
+   searchForm.collection.value=c;
+
+   totalSearchClose();
+
+   //doSearch(c);
+
+}
+</script> 
+    <div id="skipNavi">
+     <a href="http://www.1372.go.kr#content" tabindex="10" target="_self">본문바로가기</a>
+    </div> 
+    <div class="header_inner"> 
+     <h1><a href="http://www.1372.go.kr/" title="메인페이지로 이동" tabindex="11" target="_self"><img src="http://www.1372.go.kr/images/new2016/logo.gif" alt="정부와 소비자단체가 함께하는 1372소비자상담센터"></a></h1> 
+     <div class="top_sch"> 
+      <div class="total_sch"> 
+       <form name="topSearch" id="topSearch" method="post" action="/search.ccn?nMenuCode=66" onsubmit="return doSearch();"> 
+        <input type="hidden" name="collection" id="collection" value="altNews"> 
+        <!--    기존 이벤트
+                <fieldset>
+                    <legend>검색</legend>
+                    <a href="javascript:" class="curr" tabindex="12" onmouseover="totalSearchOpen();" onfocus="totalSearchOpen();" onmouseout="totalSearchClose();" id="totalSearchSelectColl">통합검색</a>
+                    <ul id="totalSearchSelect_over" onmouseover="totalSearchOpen();" onmouseout="totalSearchClose();" onfocus="totalSearchOpen();" onblur="totalSearchClose();">
+                        <li tabindex="13"><a href="#totalSearchSelect_over" onclick="searchSubmit2('ALL', '통합검색');" onkeypress="return false;">통합검색</a></li>
+                        <li tabindex="14"><a href="#totalSearchSelect_over" onclick="searchSubmit2('counsel', '상담조회');" onkeypress="return false;">상담조회</a></li>
+                        <li tabindex="15"><a href="#totalSearchSelect_over" onclick="searchSubmit2('altNews', '알림뉴스');" onkeypress="return false;">알림뉴스</a></li>
+                        <li tabindex="16"><a href="#totalSearchSelect_over" onclick="searchSubmit2('infoData', '정보자료');" onkeypress="return false;">정보자료</a></li>
+                    </ul>
+                    <input type="text" title="검색어" name="query" id="tQuery" class="keyword" tabindex="17" onfocus="totalSearchClose()"/>
+                    <button type="submit" class="btn_submit">검색</button>
+                </fieldset>
+                --> 
+        <fieldset> 
+         <legend>검색</legend> 
+         <a href="" class="curr lnk_srh" tabindex="12" id="totalSearchSelectColl" target="_self">통합검색</a> 
+         <ul id="totalSearchSelect_over"> 
+          <li><a href="http://www.1372.go.kr#totalSearchSelect_over" tabindex="13" class="lnk_srh" onclick="searchSubmit2('ALL', '통합검색');" onkeypress="return false;" title="통합검색" target="_self">통합검색</a></li> 
+          <li><a href="http://www.1372.go.kr#totalSearchSelect_over" tabindex="14" class="lnk_srh" onclick="searchSubmit2('counsel', '상담조회');" onkeypress="return false;" title="상담조회" target="_self">상담조회</a></li> 
+          <li><a href="http://www.1372.go.kr#totalSearchSelect_over" tabindex="15" class="lnk_srh" onclick="searchSubmit2('altNews', '알림뉴스');" onkeypress="return false;" title="알림뉴스" target="_self">알림뉴스</a></li> 
+          <li><a href="http://www.1372.go.kr#totalSearchSelect_over" tabindex="16" class="lnk_srh" onclick="searchSubmit2('infoData', '정보자료');" onkeypress="return false;" title="정보자료" target="_self">정보자료</a></li> 
+         </ul> 
+         <input type="text" title="검색어" name="query" class="keyword" id="tQuery" tabindex="17"> 
+         <button type="submit" class="btn_submit">검색</button> 
+        </fieldset> 
+       </form> 
+      </div> 
+      <div class="top_links"> 
+       <ul> 
+        <li><a href="http://www.1372.go.kr/" title="메인페이지로 이동" target="_self">Home</a></li> 
+        <li><a href="http://www.1372.go.kr/contents/include.ccn?nMenuCode=67" target="_self">나의 이용 내역</a></li> 
+        <li><a href="http://www.1372.go.kr/contents/redirect.ccn?gSiteCode=2&amp;gMenuCode=119&amp;nMenuCode=119" target="_self">센터소개</a></li> 
+        <li><a href="http://www.1372.go.kr/contents/view.ccn?nMenuCode=38" target="_self">이용안내</a></li> 
+       </ul> 
+      </div> 
+     </div>
+     <!-- top_sch --> 
+     <div id="gnb" class="gnb"> 
+      <ul> 
+       <li class="m1"> <a href="http://www.1372.go.kr/contents/redirect.ccn?gSiteCode=2&amp;gMenuCode=4&amp;nMenuCode=4" target="_self">상담조회</a> 
+        <ul> 
+         <li><a href="http://www.1372.go.kr/contents/include.ccn?gSiteCode=2&amp;gMenuCode=4&amp;nMenuCode=6" target="_self">모범상담 조회</a></li> 
+         <li><a href="http://www.1372.go.kr/contents/include.ccn?gSiteCode=2&amp;gMenuCode=4&amp;nMenuCode=7" target="_self">자동상담 조회</a></li> 
+         <li><a href="http://www.1372.go.kr/contents/include.ccn?gSiteCode=2&amp;gMenuCode=4&amp;nMenuCode=44" target="_self">판례/조정례 조회</a></li> 
+         <li><a href="http://www.1372.go.kr/contents/include.ccn?gSiteCode=2&amp;gMenuCode=4&amp;nMenuCode=13" target="_self">상담현황 조회</a></li> 
+        </ul> </li> 
+       <!--// 중메뉴 끝(1) --> 
+       <li class="m2"> <a href="http://www.1372.go.kr/contents/redirect.ccn?gSiteCode=2&amp;gMenuCode=3&amp;nMenuCode=3" target="_self">상담신청</a> 
+        <ul> 
+         <li><a href="http://www.1372.go.kr/contents/redirect.ccn?gSiteCode=2&amp;gMenuCode=3&amp;nMenuCode=9" target="_self">인터넷상담</a></li> 
+         <li><a href="http://www.1372.go.kr/contents/redirect.ccn?gSiteCode=2&amp;gMenuCode=3&amp;nMenuCode=10" target="_self">내용증명</a></li> 
+         <li><a href="http://www.1372.go.kr/contents/view.ccn?gSiteCode=2&amp;gMenuCode=3&amp;nMenuCode=56" target="_self">상담 이후 안내</a></li> 
+        </ul> </li> 
+       <!--// 중메뉴 끝(2) --> 
+       <li class="m3"> <a href="http://www.1372.go.kr/contents/redirect.ccn?gSiteCode=2&amp;gMenuCode=5&amp;nMenuCode=5" target="_self">정보자료</a> 
+        <ul> 
+         <li><a href="http://www.1372.go.kr/board2/board.ccn?mode=list&amp;boardCode=372&amp;gSiteCode=2&amp;gMenuCode=5&amp;nMenuCode=63" target="_self">소비자분쟁 해결기준</a></li> 
+         <li><a href="http://www.1372.go.kr/lawlist/lawlist.ccn?gSiteCode=2&amp;gMenuCode=5&amp;nMenuCode=19" target="_self">소비자관련 법령</a></li> 
+         <li><a href="http://www.1372.go.kr/contents/redirect.ccn?gSiteCode=2&amp;gMenuCode=5&amp;nMenuCode=16" target="_self">구매전 소비자정보</a></li> 
+         <li><a href="http://www.1372.go.kr/contents/redirect.ccn?gSiteCode=2&amp;gMenuCode=5&amp;nMenuCode=17" target="_self">구매후 소비자정보</a></li> 
+         <li><a href="http://www.1372.go.kr/board2/board.ccn?mode=list&amp;boardCode=220&amp;gSiteCode=2&amp;gMenuCode=5&amp;nMenuCode=18" target="_self">소비생활 안전정보</a></li> 
+         <li><a href="http://www.1372.go.kr/contents/view.ccn?gSiteCode=2&amp;gMenuCode=5&amp;nMenuCode=124" target="_self">소비자교육</a></li> 
+        </ul> </li> 
+       <!--// 중메뉴 끝(3) --> 
+       <li class="m4"> <a href="http://www.1372.go.kr/contents/redirect.ccn?gSiteCode=2&amp;gMenuCode=21&amp;nMenuCode=21" target="_self">통계자료</a> 
+        <ul> 
+         <li><a href="http://www.1372.go.kr/statics/staticsList.ccn?olapCode=08&amp;midGubun=Y&amp;bCode=10&amp;gSiteCode=2&amp;gMenuCode=21&amp;nMenuCode=23" target="_self">품목(중분류)</a></li> 
+         <li><a href="http://www.1372.go.kr/statics/staticsList.ccn?olapCode=08&amp;bCode=10&amp;gSiteCode=2&amp;gMenuCode=21&amp;nMenuCode=24" target="_self">품목(소분류)</a></li> 
+         <li><a href="http://www.1372.go.kr/statics/staticsList.ccn?olapCode=01&amp;gSiteCode=2&amp;gMenuCode=21&amp;nMenuCode=64" target="_self">신청이유</a></li> 
+         <li><a href="http://www.1372.go.kr/statics/staticsList.ccn?olapCode=10&amp;gSiteCode=2&amp;gMenuCode=21&amp;nMenuCode=114" target="_self">처리결과</a></li> 
+         <li><a href="http://www.1372.go.kr/statics/staticsList.ccn?olapCode=11&amp;gSiteCode=2&amp;gMenuCode=21&amp;nMenuCode=115" target="_self">악덕상술유형</a></li> 
+         <li><a href="http://www.1372.go.kr/statics/staticsList.ccn?olapCode=09&amp;gSiteCode=2&amp;gMenuCode=21&amp;nMenuCode=116" target="_self">판매유형</a></li> 
+        </ul> </li> 
+       <!--// 중메뉴 끝(4) --> 
+       <li class="m5"> <a href="http://www.1372.go.kr/contents/redirect.ccn?gSiteCode=2&amp;gMenuCode=2&amp;nMenuCode=2" target="_self">알림뉴스</a> 
+        <ul> 
+         <li><a href="http://www.1372.go.kr/board2/board.ccn?mode=list&amp;boardCode=217&amp;gSiteCode=2&amp;gMenuCode=2&amp;nMenuCode=46" target="_self">상담속보</a></li> 
+         <li><a href="http://www.1372.go.kr/board2/board.ccn?mode=list&amp;boardCode=3034&amp;gSiteCode=2&amp;gMenuCode=2&amp;nMenuCode=15" target="_self">상담동향</a></li> 
+         <li><a href="http://www.1372.go.kr/board2/board.ccn?mode=list&amp;boardCode=216&amp;gSiteCode=2&amp;gMenuCode=2&amp;nMenuCode=45" target="_self">공지사항</a></li> 
+        </ul> </li> 
+       <!--// 중메뉴 끝(5) --> 
+       <li class="m6"> <a href="http://www.1372.go.kr/contents/redirect.ccn?gSiteCode=2&amp;gMenuCode=22&amp;nMenuCode=22" target="_self">소비자의소리</a> 
+        <ul> 
+         <li><a href="http://www.1372.go.kr/contents/view.ccn?gSiteCode=2&amp;gMenuCode=22&amp;nMenuCode=47" target="_self">이용불편신고</a></li> 
+         <li><a href="http://www.1372.go.kr/contents/include.ccn?ass_c_cd=02&amp;gSiteCode=2&amp;gMenuCode=22&amp;nMenuCode=48" target="_self">소비자제안</a></li> 
+         <li><a href="http://www.1372.go.kr/contents/include.ccn?ass_c_cd=03&amp;gSiteCode=2&amp;gMenuCode=22&amp;nMenuCode=49" target="_self">홈페이지개선의견</a></li> 
+         <li><a href="http://www.1372.go.kr/contents/include.ccn?ass_c_cd=04&amp;gSiteCode=2&amp;gMenuCode=22&amp;nMenuCode=139" target="_self">칭찬합시다</a></li> 
+         <li><a href="http://www.1372.go.kr/board2/board.ccn?mode=list&amp;boardCode=4339&amp;gSiteCode=2&amp;gMenuCode=22&amp;nMenuCode=127" target="_self">FAQ</a></li> 
+        </ul> </li> 
+      </ul> 
+      <!--// 탑메뉴 끝 --> 
+     </div> 
+    </div> 
+   </div>
+   <!-- header --> 
+   <hr> 
+   <div id="container">
+     &#65279; 
+    <!-- <link rel="stylesheet" type="text/css" href="/html/search/portal/ark/css/ark.css" media="screen" /> --> 
+    <script type="text/javascript" src="http://www.1372.go.kr/js/search/search.js"></script> 
+    <script type="text/javascript" src="http://www.1372.go.kr/js/search/common.js"></script> 
+    <script type="text/javascript" src="http://www.1372.go.kr/js/search/items.js"></script> 
+    <script>
+   function init_search(){
+      initSelectBox('', '', '');
+
+      var searchForm = document.search;
+
+      check_detail_search = true; //Y 닫힌상태
+      check_item_search = true; //Y 닫힌상태
+
+      if(check_detail_search){//닫힌상태로 로딩되었을때...
+         //검색범위 초기화
+         searchForm.search_range[0].checked = true;
+         searchForm.search_range[1].checked = false;
+         searchForm.search_range[2].checked = false;
+         searchForm.search_range[3].checked = false;
+         //날짜 초기화
+         searchForm.startD.value = "";
+         searchForm.endD.value = "";
+         //범위 초기화
+         searchForm.checkbox_col[0].checked = true;
+         searchForm.checkbox_col[1].checked = false;
+         searchForm.checkbox_col[2].checked = false;
+         searchForm.checkbox_col[3].checked = false;
+//          searchForm.checkbox_col[4].checked = false;     // 2016.10-24 회의 후 포털검색은 빼기로 함(with 전예은) by 황인환 2016-10-25
+      }
+
+      if(check_item_search){//닫힌상태로 로딩되었을때...
+         //분류 초기화
+         searchForm.impbcd[0].selected = true;
+         searchForm.impmcd[0].selected = true;
+         searchForm.impscd[0].selected = true;
+      }
+
+      detail_search_check();
+      item_search_check();
+   }
+
+   function doTagSearch( tagValue ) {
+      var fm = document.getElementById("tagSearch");
+      var query = document.getElementById("tagQuery");
+
+      query.value = tagValue;
+      fm.submit();
+   }
+
+   function doPopkeywordSearch( keyword ) {
+      var fm = document.getElementById("popSearch");
+      var query = document.getElementById("popQuery");
+
+      query.value = keyword;
+
+      fm.submit();
+   }
+
+   if (window.addEventListener)
+      window.addEventListener("load", init_search, false);
+   else if (window.attachEvent)
+      window.attachEvent("onload", init_search);
+   else
+      window.onload=init_search;
+
+</script> 
+    <div id="content_search"> 
+     <div class="page_location"> 
+      <div class="page_location_inner"> 
+       <a href="http://www.1372.go.kr/" class="home" title="메인페이지로 이동" target="_self">홈</a> 
+       <strong>통합검색</strong> 
+      </div> 
+     </div> 
+     <div class="page_title"> 
+      <h3>통합검색</h3> 
+      <span class="btn"> <a href="http://www.1372.go.kr#printBtn" onkeypress="if (event.keyCode == 13) {printPop();}" onclick="printPop();" title="새창열림" target="_self"><img src="http://www.1372.go.kr/images/new2016/btn_print.gif" alt="프린트" id="printBtn"></a> 
+       <div class="btn_font_bx"> 
+        <a href="http://www.1372.go.kr#" class="btn_font_plus" onclick="zoom_it(-1);" title="글자크기 작게하기" target="_self"><span class="blind">글자크기 작게하기</span></a> 
+        <a href="http://www.1372.go.kr#" class="btn_font_minus" onclick="zoom_it(1);" title="글자크기 크게하기" target="_self"><span class="blind">글자크기 크게하기</span></a> 
+       </div> </span> 
+     </div> 
+     <form name="search" id="search" method="post" action="/search.ccn?nMenuCode=66"> 
+      <input type="hidden" id="xDetail" name="xDetail" value="N"> 
+      <input type="hidden" id="xItem" name="xItem" value="N"> 
+      <input type="hidden" name="startCount" value="0"> 
+      <input type="hidden" name="temp"> 
+      <fieldset> 
+       <legend>상세검섹</legend> 
+       <div id="content_areaSearch"> 
+        <div class="total_search_top"> 
+         <select name="collection" id="total_search01" onchange="changeCol(this.value)" title="검색분류"> <option value="ALL">통합검색</option> <option value="altNews" selected="">알림뉴스</option> <option value="counsel">상담조회</option> <option value="infoData">정보자료</option> </select> 
+         <div class="search_form" id="search_form"> 
+          <input type="text" name="query" id="iquery" class="last" value="교원" onkeypress="onKeyPress(event, '0');"> 
+          <label for="iquery" class="labelnone">키워드</label> 
+          <a href="http://www.1372.go.kr#" class="set_sugicnUP" id="set_sugicnUP" onclick="return false;" target="_self"><img src="http://www.1372.go.kr/images/new2016/icon_up2.gif" id="sugicnUP" alt="위로"></a> 
+          <a href="http://www.1372.go.kr#" class="set_sugicn" id="set_sugicn" onclick="return false;" target="_self"><img src="http://www.1372.go.kr/images/new2016/icon_down2.gif" id="sugicn" alt="아래로"></a> 
+         </div> 
+         <button type="button" class="btn01 c3" onclick="javascript:searchSubmit1(); return false;">검색</button> 
+         <button type="button" class="btn01 c1 src1" onclick="javascript:detailSearchLayer(); return false;">상세검색</button> 
+         <button type="button" class="btn01 c1 src2" onclick="javascript:itemSearchLayer(); return false;">품목검색</button> 
+         <span class="txt_research"><input type="checkbox" class="inputCheck" name="addsearch" id="detail_search00" onclick="addSearch()"> <label for="detail_search00">결과내 재검색</label></span> 
+        </div> 
+        <div id="detailSearchWrap" class="total_search_middle src1_c" style="display:none;"> 
+         <ul> 
+          <li> <strong>검색범위 :</strong> <input type="checkbox" class="inputCheck" name="search_range" id="detail_search01" value="ALL" onclick="chkRange(this.value)" checked=""> <label for="detail_search01">전체</label> <input type="checkbox" class="inputCheck" name="search_range" id="detail_search02" value="title" onclick="chkRange(this.value)"> <label for="detail_search02">제목</label> <input type="checkbox" class="inputCheck" name="search_range" id="detail_search03" value="content" onclick="chkRange(this.value)"> <label for="detail_search03">본문</label> <input type="checkbox" class="inputCheck" name="search_range" id="detail_search04" value="attach" onclick="chkRange(this.value)"> <label for="detail_search04">첨부파일내용</label> </li> 
+          <li> <label for="startD"><strong>검색기간 :</strong></label> <input type="text" style="width: 114px;" class="inputText datepicker" value="" readonly="" size="100" name="startD" id="startD" title="시작일자"> 일 부터 ~ <input type="text" style="width: 114px;" class="inputText datepicker" value="" readonly="" size="100" name="endD" id="endD" title="마지막일자"> 일 까지 </li> 
+          <li> <strong>디렉토리 :</strong> <input type="checkbox" class="inputCheck" name="checkbox_col" id="detail_search05" value="ALL" onclick="chkDirectory(this.value)" checked=""> <label for="detail_search05">통합검색</label> <input type="checkbox" class="inputCheck" name="checkbox_col" id="detail_search06" value="altNews" onclick="chkDirectory(this.value)"> <label for="detail_search06">알림뉴스</label> <input type="checkbox" class="inputCheck" name="checkbox_col" id="detail_search07" value="counsel" onclick="chkDirectory(this.value)"> <label for="detail_search07">상담조회</label> <input type="checkbox" class="inputCheck" name="checkbox_col" id="detail_search08" value="infoData" onclick="chkDirectory(this.value)"> <label for="detail_search08">정보자료</label> 
+           <!--                         <label for="detail_search09">포털검색</label> --> </li> 
+         </ul> 
+        </div> 
+        <div id="itemSearchWrap" class="total_search_middle  src2_c" style="display:none;"> 
+         <ul> 
+          <li> <strong>품목검색 :</strong> <select id="impbcd" name="impbcd" class="mgL10" onchange="doChangeBcd(this.value);"> <option value="">전체</option> </select> <select id="impmcd" name="impmcd" class="mgL10" onchange="doChangeMcd(this.value);"> <option value="">전체</option> </select> <select id="impscd" name="impscd" class="mgL10"> <option value="">전체</option> </select> </li> 
+         </ul> 
+        </div> 
+        <div class="total_search_bottom"></div> 
+        <div class="content_Wrap"> 
+         <div class="content_Tab"> 
+          <ul id="searchNav"> 
+           <li> <a href="" target="_self"><img src="http://www.1372.go.kr/images/new2016/tab_totalSearch01.gif" alt="통합검색"></a> </li> 
+           <li> <a href="" target="_self"><img src="http://www.1372.go.kr/images/new2016/tab_totalSearch02.gif" alt="알림뉴스"></a> </li> 
+           <li> <a href="" target="_self"><img src="http://www.1372.go.kr/images/new2016/tab_totalSearch03.gif" alt="상담조회"></a> </li> 
+           <li> <a href="" target="_self"><img src="http://www.1372.go.kr/images/new2016/tab_totalSearch04.gif" alt="정보자료"></a> </li> 
+           <!--                         <li> --> 
+           <!--                             <a href="javascript:searchSubmit('portal');"><img src="/images/new2016/tab_totalSearch05.gif" alt="포털검색"/></a> --> 
+           <!--                         </li> --> 
+          </ul> 
+          <script type="text/javascript">searchNavigation(2);</script> 
+         </div> 
+         <div class="searchResultWrap" id="search_tab01">
+          <!-- 위의 ontent_Tab의 활성화시 a태그가 클릭할떄마다 a태그의 #값과 .searchResultWrap div의 id값과 매칭시켜줌 --> 
+          <h4 class="blind">통합검색</h4>
+          <!-- 위의 class명 content_Tab의 활성화시 a태그의 타이틀명과 h4값이 클릭될떄마다 매칭시켜줌 --> 
+          <div class="searchContent"> 
+           <div class="titleBar_top"> 
+            <img src="http://www.1372.go.kr/images/new2016/img_search_result_zoom.gif" alt=""> 검색어 
+            <span class="S_orange"> '교원'</span>에 대한 
+            <span class="S_black"> 5개</span>의 결과를 찾았습니다. 
+           </div> 
+           <div class="titleBar"> 
+            <strong class="title_Bbg">알림뉴스</strong> | 
+            <span class="t_orange">5</span>
+            <span class="txt_s">건 검색</span> 
+            <div class="btn_more"> 
+            </div> 
+           </div> 
+           <ul> 
+            <li> 
+             <dl> 
+              <dt> 
+               <strong><a href="http://www.1372.go.kr/board2/board.ccn?nMenuCode=46&amp;gSiteCode=2&amp;boardCode=217&amp;mode=view&amp;boardSeq=1964409&amp;mpart=" target="_self">정수기 렌탈 서비스, '설치기사' 만족도 높고 '렌탈비·부가혜택' 만족도 낮아</a></strong> 
+               <span class="search_percent">정확도 70%</span> 
+              </dt> 
+              <dd> 
+               <a href="http://www.1372.go.kr/board2/board.ccn?nMenuCode=46&amp;gSiteCode=2&amp;boardCode=217&amp;mode=view&amp;boardSeq=1964409&amp;mpart=" target="_self"></a> 
+              </dd> 
+              <dd class="S_txt03">
+                상담속보 | 2019.01.07 
+              </dd> 
+             </dl> </li> 
+            <li> 
+             <dl> 
+              <dt> 
+               <strong><a href="http://www.1372.go.kr/board2/board.ccn?nMenuCode=46&amp;gSiteCode=2&amp;boardCode=217&amp;mode=view&amp;boardSeq=1224411&amp;mpart=" target="_self">이물 등이 발생하는 정수기 14개사 무상 점검 및 세척 실시</a></strong> 
+               <span class="search_percent">정확도 68%</span> 
+              </dt> 
+              <dd> 
+               <a href="http://www.1372.go.kr/board2/board.ccn?nMenuCode=46&amp;gSiteCode=2&amp;boardCode=217&amp;mode=view&amp;boardSeq=1224411&amp;mpart=" target="_self">...및 세척 등을 실시해줄 것을 권고하였다. * ㈜<font color="red">교원</font>, ㈜동양매직, 앨트웰(주), LG전자(주), ㈜원봉, ㈜위닉스, ㈜제이앤지, ㈜제일아쿠아, 청호나이스(주), ㈜코웨이, 쿠쿠전자(주), ㈜한경희생활과학, 한일월드(주), ㈜현대위가드로 14개 업체 시장점유율은 약 80% 이상으로 업계는 추산함. 해당 14개 정수기 업체는 한국소비자원의 권고를...</a> 
+              </dd> 
+              <dd class="S_txt03">
+                상담속보 | 2015.05.12 
+              </dd> 
+             </dl> </li> 
+            <li> 
+             <dl> 
+              <dt> 
+               <strong><a href="http://www.1372.go.kr/board2/board.ccn?nMenuCode=46&amp;gSiteCode=2&amp;boardCode=217&amp;mode=view&amp;boardSeq=1475405&amp;mpart=" target="_self">정수기 관리서비스에 대한 소비자 불만 많아</a></strong> 
+               <span class="search_percent">정확도 65%</span> 
+              </dt> 
+              <dd> 
+               <a href="http://www.1372.go.kr/board2/board.ccn?nMenuCode=46&amp;gSiteCode=2&amp;boardCode=217&amp;mode=view&amp;boardSeq=1475405&amp;mpart=" target="_self"> 정수기 관리서비스에 대한 소비자 불만 많아 -정수기 계약내용 꼼꼼히 확인하고 관리상태 주기적으로 점검해야- 마시는 물에 대한 관심이 높아지면서 정수기 관련 소비자 피해가 매년 지속적으로 증가하고 있는 것으로 나타나 제품 선택에 소비자들의 주의가 요구된다. 한국소비자원(원장 한견표)에 따르면 2013년 1월부터 올해 9월까지 정수기 관련 피해구제...</a> 
+              </dd> 
+              <dd class="S_txt03">
+                상담속보 | 2016.12.23 
+              </dd> 
+             </dl> </li> 
+            <li> 
+             <dl> 
+              <dt> 
+               <strong><a href="http://www.1372.go.kr/board2/board.ccn?nMenuCode=46&amp;gSiteCode=2&amp;boardCode=217&amp;mode=view&amp;boardSeq=1122317&amp;mpart=" target="_self">렌탈정수기 업체, 관리는 뒷전이면서 렌탈료만 꼬박꼬박 챙겨</a></strong> 
+               <span class="search_percent">정확도 62%</span> 
+              </dt> 
+              <dd> 
+               <a href="http://www.1372.go.kr/board2/board.ccn?nMenuCode=46&amp;gSiteCode=2&amp;boardCode=217&amp;mode=view&amp;boardSeq=1122317&amp;mpart=" target="_self"> 렌탈정수기 업체, 관리는 뒷전이면서 렌탈료만 꼬박꼬박 챙겨 건강이나 편의성을 고려해 렌탈 정수기를 사용하는 가정이 점차 늘고 있으나 업체의 허술한 정수기 관리 등으로 위생상 피해를 겪는 사례가 빈번한 것으로 나타났다. 한국소비자원( www.kca.go.kr )에 따르면 최근 3년간(2010년~2012년) 접수된 렌탈 정수기 소비자피해는 총...</a> 
+              </dd> 
+              <dd class="S_txt03">
+                상담속보 | 2013.07.09 
+              </dd> 
+             </dl> </li> 
+            <li> 
+             <dl> 
+              <dt> 
+               <strong><a href="http://www.1372.go.kr/board2/board.ccn?nMenuCode=15&amp;gSiteCode=2&amp;boardCode=3034&amp;mode=view&amp;boardSeq=1165353&amp;mpart=" target="_self">2013년 12월 상담동향</a></strong> 
+               <span class="search_percent">정확도 59%</span> 
+              </dt> 
+              <dd> 
+               <a href="http://www.1372.go.kr/board2/board.ccn?nMenuCode=15&amp;gSiteCode=2&amp;boardCode=3034&amp;mode=view&amp;boardSeq=1165353&amp;mpart=" target="_self"> 상담속보 상세내용 제공 2013년 12월 월간상담동향 ◈ 소비자불만 및 피해가 다발하는 ‘소비생활 유의품목’ 및 상담현장에서 소비자가 법.제도개선을 제안한 ‘현장의 소리’ 등의 상담분석정보를 담은 ‘1372 소비자상담센터 2013년 12월 상담동향’입니다. 첨부파일: 1372...</a> 
+              </dd> 
+              <dd class="S_txt03">
+                소비자상담동향통계 | 2014.01.22 
+              </dd> 
+             </dl> </li> 
+           </ul> 
+          </div> 
+         </div> 
+         <!-- resultWrap --> 
+         <div class="boardNavigation"> 
+          <div class="pagination"> 
+           <img src="http://www.1372.go.kr/images/2/common/btn/btn_first.gif" alt="맨 처음으로"> 
+           <img src="http://www.1372.go.kr/images/2/common/btn/btn_prev.gif" alt="이전 페이지" class="prev"> 
+           <strong>1</strong> &nbsp;
+           <img src="http://www.1372.go.kr/images/2/common/btn/btn_next.gif" alt="다음 페이지" class="next"> 
+           <img src="http://www.1372.go.kr/images/2/common/btn/btn_last.gif" alt="맨 끝으로"> 
+          </div> 
+         </div> 
+        </div> 
+        <!-- End of content_Wrap --> 
+       </div> 
+       <!--// End of content_areaSearch --> 
+       <div class="search_sidebar_bgbox"> 
+        <!--
+PROJ : 공정거래위원회 소비자상담센터 구축
+NAME : popKeyword.jsp
+DESC : 통합검색 결과 페이지의 인기검색어 구현
+Author : 장진우
+Copyright 2009 WISEnut All rights reserved
+============================================================================================
+                              변    경    사    항
+============================================================================================
+VERSION       DATE         AUTHOR        DESCRIPTION
+============================================================================================
+1.0        2009.10.22      장진우        최초 개발
+-->  
+        <script language="Javascript">
+function onSearchKeyword(query) {
+    var frm = document.search;
+    document.search.query.value = query;
+    onSubmit(frm,'');
+}
+</script> 
+        <div class="SearchSide01_top"> 
+         <div class="searchside01"> 
+          <img src="http://www.1372.go.kr/images/7/search/tit_right_keyword.gif" alt="인기검색어"> 
+         </div> 
+        </div> 
+        <div class="SearchSide01_middle"> 
+         <ul> 
+          <li class="number1 first"><a href="" target="_self">양식</a></li> 
+          <li class="number2"><a href="" target="_self">수선</a></li> 
+          <li class="number3"><a href="" target="_self">근저당설정비</a></li> 
+          <li class="number4"><a href="" target="_self">컴퓨터</a></li> 
+          <li class="number5"><a href="" target="_self">휴대폰</a></li> 
+          <li class="number6"><a href="" target="_self">소비자피해구제신청서</a></li> 
+          <li class="number7"><a href="" target="_self">주택자금대출</a></li> 
+          <li class="number8"><a href="" target="_self">핸드폰</a></li> 
+          <li class="number9"><a href="" target="_self">돌잔치</a></li> 
+          <li class="number10 last"><a href="" target="_self">부동산담보대출</a></li> 
+         </ul> 
+         <!--div class="date_count">date. 2009-09-28</div--> 
+        </div> 
+        <div class="SearchSide01_bottom"></div> 
+        <!--
+PROJ : 공정거래위원회 소비자상담센터 구축
+NAME : tag.jsp
+DESC : 통합검색 결과 페이지의 인기 태그 구현
+Author : 장진우
+Copyright 2009 WISEnut All rights reserved
+============================================================================================
+                              변    경    사    항
+============================================================================================
+VERSION       DATE         AUTHOR        DESCRIPTION
+============================================================================================
+1.0        2009.10.22      장진우        최초 개발
+2.0        2016.10.25      황인환        대민개편
+--> 
+        <div class="SearchSide02">
+         <img src="http://www.1372.go.kr/images/2/search/tlt_searchresult_sidebar_tag.gif" alt="소비자상담센터 인기태그">
+        </div> 
+        <div class="SearchSide02_middle"> 
+         <div class="tagcloud" style="width:180px;"> 
+          <a href="" target="_self"><strong><em>소비자</em></strong></a>&nbsp;| 
+          <a href="" target="_self"><em>학습지</em></a>&nbsp;| 
+          <a href="" target="_self"><strong><em>1</em></strong></a>&nbsp;| 
+          <a href="" target="_self"><strong><em>가전제품</em></strong></a>&nbsp;| 
+         </div> 
+        </div> 
+        <div class="SearchSide03">
+         <img src="http://www.1372.go.kr/images/2/search/tlt_searchresult_sidebar_category.gif" alt="품목별검색">
+        </div> 
+        <div class="SearchSide03_middle"> 
+         <ul> 
+          <li><a href="" target="_self">주방용품·설비&nbsp;<span>(42)</span></a></li> 
+          <li><a href="" target="_self">가사용품&nbsp;<span>(3)</span></a></li> 
+          <li><a href="" target="_self">보건·위생용품&nbsp;<span>(1)</span></a></li> 
+          <li><a href="" target="_self">도서·음반&nbsp;<span>(58)</span></a></li> 
+          <li><a href="" target="_self">토지·건물·설비&nbsp;<span>(5)</span></a></li> 
+          <li><a href="" target="_self">정보통신서비스&nbsp;<span>(1)</span></a></li> 
+          <li><a href="" target="_self">문화·오락서비스&nbsp;<span>(2)</span></a></li> 
+          <li><a href="" target="_self">의료서비스&nbsp;<span>(1)</span></a></li> 
+          <li><a href="" target="_self">보건·위생서비스&nbsp;<span>(1)</span></a></li> 
+          <li><a href="" target="_self">교육서비스&nbsp;<span>(18)</span></a></li> 
+          <li><a href="" target="_self">기타서비스&nbsp;<span>(5)</span></a></li> 
+          <li><a href="" target="_self">금융&nbsp;<span>(3)</span></a></li> 
+          <li><a href="" target="_self">보험&nbsp;<span>(21)</span></a></li> 
+         </ul> 
+        </div> 
+        <img src="http://www.1372.go.kr/images/2/search/img_searchresult_sidebanner01.gif" class="mgL7 mgB10" alt="소비자안전  소비자의 안전과 행복을 책임집니다."> 
+       </div> 
+      </fieldset> 
+     </form> 
+    </div> 
+    <form name="tagSearch" id="tagSearch" method="post" action="/search.ccn?nMenuCode=66"> 
+     <input type="hidden" name="collection" value="ALL"> 
+     <input type="hidden" name="startCount" value="0"> 
+     <input type="hidden" name="query" id="tagQuery" value=""> 
+     <input type="hidden" name="isTagSearch" value="Y"> 
+    </form> 
+    <form name="popSearch" id="popSearch" method="post" action="/search.ccn?nMenuCode=66"> 
+     <input type="hidden" name="collection" value="ALL"> 
+     <input type="hidden" name="startCount" value="0"> 
+     <input type="hidden" name="query" id="popQuery" value=""> 
+    </form> 
+   </div>
+   <!-- container --> 
+   <hr> 
+   <div id="footer"> 
+    <!-- LOGGER TRACKING SCRIPT V.31 FOR www.ccn.go.kr / 1033 : FAIL-SAFE TYPE / DO NOT ALTER THIS SCRIPT. --> 
+    <!-- COPYRIGHT (C) 2002-2016 BIZSPRING INC. LOGGER(TM) ALL RIGHTS RESERVED. --> 
+    <script language="JavaScript">/* LOGGER TRACKING SCRIPT V.31 : 1033 *//*X*//* COPYRIGHT 2002-2016 BIZSPRING INC. *//*X*//* DO NOT MODIFY THIS SCRIPT. *//*X*/var _TRK_LID="1033";var _L_TD="210.90.31.15"; var _TRK_DOMAIN="210.90.31.15";var _trk_bMSIE=(document.all)?true:false;var _trk_bJS12=(window.screen)?true:false;function _trk_escape(_str) { var str, ch; var bEncURI = "N"; eval("try{bEncURI=encodeURI('Y');}catch(_e){ }" ); if( bEncURI == "Y" ) str=encodeURI(_str); else str = escape(_str); str=str.split("+").join("%2B"); str=str.split("/").join("%2F"); str=str.split("&").join("%26"); str=str.split("?").join("%3F"); str=str.split(":").join("%3A"); str=str.split("#").join("%23"); return str;}function _trk_setCookie(name,value,expire) { var today=new Date(); today.setTime(today.getTime()+ expire ); document.cookie=name+"="+value+"; path=/; expires="+today.toGMTString()+";"; }function _trk_getCookie(name) { var cookieName=name+"="; var x=0; while(x<=document.cookie.length) { var y=(x+cookieName.length); if(document.cookie.substring(x,y)==cookieName) {  if((endOfCookie=document.cookie.indexOf(";",y))==-1) endOfCookie=document.cookie.length;  return unescape(document.cookie.substring(y,endOfCookie)); } x=document.cookie.indexOf(" ",x)+1; if(x == 0) break; } return "";}function _trk_getParameter(name) { var paraName=name+"="; var URL=""+self.document.location.search; var tURL=""; eval("try{ tURL=top.document.location.search; }catch(_e){}"); URL=URL+"&"+tURL; if(URL.indexOf(paraName)!=-1) { var x=URL.indexOf(paraName)+paraName.length; var y=URL.substr(x).indexOf("&"); if(y!=-1) return URL.substring(x,x+y); else return URL.substr(x); } return "";}function getNewSID(len) { var str="01234567890abcdef"; var ret=""; for(var i=0; i<len; i++) { ret=ret+(str.substr(Math.floor(Math.random()*str.length),1)); } return ret;}function _trk_make_code(_TRK_SERVER,_TRK_U) { var dt=document.title.toString(); dt=dt.substr(0,128); var dr=self.document.referrer; var tdr=""; eval("try{ tdr=top.document.referrer; }catch(_e){}"); var tdu=""; eval("try{ tdu=top.document.location.href; }catch(_e){}"); var bFrm=false; if(dr==tdu) { dr=tdr; bFrm=true; } if(dr=="undefined") dr=""; var du=self.document.location.href; if(du.substr(0,4)=="file") return ""; var adKeyVal = ""; if(bFrm) { adKeyVal=_trk_getParameter("OVKEY"); if(adKeyVal!="" && du.indexOf("OVKEY=")<0) {  if(du.indexOf("?")!=-1) du=du+"&OVKEY="+adKeyVal; else du=du+"?OVKEY="+adKeyVal;  adKeyVal=_trk_getParameter("OVRAW");  if(adKeyVal!="" && du.indexOf("OVRAW=")<0 )  if(du.indexOf("?")!=-1) du=du+"&OVRAW="+adKeyVal; else du=du+"?OVRAW="+adKeyVal; } else {  adKeyVal=_trk_getParameter("netpia");  if(adKeyVal!="" && du.indexOf("netpia=")<0 )  if(du.indexOf("?")!=-1) du=du+"&netpia="+adKeyVal; else du=du+"?netpia="+adKeyVal; } adKeyVal=_trk_getParameter("logger_kw"); if(adKeyVal!="" && du.indexOf("logger_kw=")<0 )  if(du.indexOf("?")!=-1) du=du+"&logger_kw="+adKeyVal; else du=du+"?logger_kw="+adKeyVal; adKeyVal=_trk_getParameter("source"); if(adKeyVal!="" && du.indexOf("source=")<0 )  if(du.indexOf("?")!=-1) du=du+"&source="+adKeyVal; else du=du+"?source="+adKeyVal; adKeyVal=_trk_getParameter("keywd"); if(adKeyVal!="" && du.indexOf("keywd=")<0 )  if(du.indexOf("?")!=-1) du=du+"&keywd="+adKeyVal; else du=du+"?keywd="+adKeyVal; adKeyVal=_trk_getParameter("NVADID"); if(adKeyVal!="" && du.indexOf("NVADID=")<0 )  if(du.indexOf("?")!=-1) du=du+"&NVADID="+adKeyVal; else du=du+"?NVADID="+adKeyVal; adKeyVal=_trk_getParameter("NVAR"); if(adKeyVal!="" && du.indexOf("NVAR=")<0 )  if(du.indexOf("?")!=-1) du=du+"&NVAR="+adKeyVal; else du=du+"?NVAR="+adKeyVal; adKeyVal=_trk_getParameter("NVADKWD"); if(adKeyVal!="" && du.indexOf("NVADKWD=")<0)  if(du.indexOf("?")!=-1) du=du+"&NVADKWD="+adKeyVal; else du=du+"?NVADKWD="+adKeyVal; adKeyVal=_trk_getParameter("NVKWD"); if(adKeyVal!="" && du.indexOf("NVKWD=")<0 )  if(du.indexOf("?")!=-1) du=du+"&NVKWD="+adKeyVal; else du=du+"?NVKWD="+adKeyVal; adKeyVal=_trk_getParameter("DMCOL"); if(adKeyVal!="" && du.indexOf("DMCOL=")<0 )  if(du.indexOf("?")!=-1) du=du+"&DMCOL="+adKeyVal; else du=du+"?DMCOL="+adKeyVal; adKeyVal=_trk_getParameter("DMKW"); if(adKeyVal!="" && du.indexOf("DMKW=")<0 )  if(du.indexOf("?")!=-1) du=du+"&DMKW="+adKeyVal; else du=du+"?DMKW="+adKeyVal; adKeyVal=_trk_getParameter("DMSKW"); if(adKeyVal!="" && du.indexOf("DMSKW=")<0 )  if(du.indexOf("?")!=-1) du=du+"&DMSKW="+adKeyVal; else du=du+"?DMSKW="+adKeyVal; adKeyVal=_trk_getParameter("DWIT"); if(adKeyVal!="" && du.indexOf("DWIT=")<0)  if(du.indexOf("?")!=-1) du=du+"&DWIT="+adKeyVal; else du=du+"?DWIT="+adKeyVal; adKeyVal=_trk_getParameter("DWIC"); if(adKeyVal!="" && du.indexOf("DWIC=")<0 )  if(du.indexOf("?")!=-1) du=du+"&DWIC="+adKeyVal; else du=du+"?DWIC="+adKeyVal; adKeyVal=_trk_getParameter("gad"); if(adKeyVal!="" && du.indexOf("gad=")<0 )  if(du.indexOf("?")!=-1) du=du+"&gad="+adKeyVal; else du=du+"?gad="+adKeyVal; adKeyVal=_trk_getParameter("gclid"); if(adKeyVal!="" && du.indexOf("gclid=")<0 )  if(du.indexOf("?")!=-1) du=du+"&gclid="+adKeyVal; else du=du+"?gclid="+adKeyVal; adKeyVal=_trk_getParameter("gkw"); if(adKeyVal!="" && du.indexOf("gkw=")<0 )  if(du.indexOf("?")!=-1) du=du+"&gkw="+adKeyVal; else du=du+"?gkw="+adKeyVal; adKeyVal=_trk_getParameter("rcsite"); if(adKeyVal!="" && du.indexOf("rcsite=")<0 )  if(du.indexOf("?")!=-1) du=du+"&rcsite="+adKeyVal; else du=du+"?rcsite="+adKeyVal; adKeyVal=_trk_getParameter("rctype"); if(adKeyVal!="" && du.indexOf("rctype=")<0 )  if(du.indexOf("?")!=-1) du=du+"&rctype="+adKeyVal; else du=du+"?rctype="+adKeyVal; adKeyVal=_trk_getParameter("rc_code"); if(adKeyVal!="" && du.indexOf("rc_code=")<0 )  if(du.indexOf("?")!=-1) du=du+"&rc_code="+adKeyVal; else du=du+"?rc_code="+adKeyVal; adKeyVal=_trk_getParameter("_C_"); if(adKeyVal!="" && du.indexOf("_C_=")<0 )  if(du.indexOf("?")!=-1) du=du+"&_C_="+adKeyVal; else du=du+"?_C_="+adKeyVal; } var ce=navigator.cookieEnabled?"Y":"N"; var je=navigator.javaEnabled()?"Y":"N"; var ss=""; var cd = ""; if(_trk_bJS12) { ss=screen.width+"x"+screen.height; cd=screen.colorDepth; } if(!dt) dt=""; if(!dr) dr=""; if(!du) du=""; if(!ce) ce=""; if(!je) je=""; var t = new Date; var tye=(_trk_bMSIE)?(t.getYear()):(t.getFullYear()); var tmo=t.getMonth()+1; var tda=t.getDate(); var tho=t.getHours(); var tmi=t.getMinutes(); var tse=t.getSeconds(); var tzo=t.getTimezoneOffset(); var tc = ""; var prtcl=document.location.protocol.indexOf("https")!=-1?"https://":"http://"; if(prtcl=="https://") _TRK_SERVER=_TRK_DOMAIN; tc=tc+prtcl+_TRK_SERVER; var bPNF=((typeof _TRK_PI)!="undefined" && _TRK_PI=="PNF")?true:false; if(bPNF) tc=tc+"/tracker_click.tsp"; else tc=tc+"/tracker.1.tsp"; tc=tc+"?u="+_TRK_U+"&XU=&TREX="+_TRK_EX; tc=tc+"&UID="+_TRK_UID+"&SID="+_TRK_SID; if(bPNF) { tc=tc+"&rnd="+Math.random()+"&CKFL="+_TRK_PI+"&CKDATA="+_trk_escape(du); } else { tc=tc+"&dr="+_trk_escape(dr)+"&XDR="+"&dt="+_trk_escape(dt)+"&du="+_trk_escape(du); if((typeof _TRK_CP)!="undefined" && _TRK_CP!="") tc=tc+"&CP="+_trk_escape(_TRK_CP)+"&XCP="; if((typeof _TRK_PI)!="undefined" && _TRK_PI!="") tc=tc+"&PI="+_TRK_PI; if((typeof _TRK_PN)!="undefined" && _TRK_PN!="") tc=tc+"&PN="+_trk_escape(_TRK_PN); if((typeof _TRK_MF)!="undefined" && _TRK_MF!="") tc=tc+"&MF="+_trk_escape(_TRK_MF); if((typeof _TRK_OA)!="undefined" && _TRK_OA!="") tc=tc+"&OA="+_TRK_OA; if((typeof _TRK_OP)!="undefined" && _TRK_OP!="") tc=tc+"&OP="+_trk_escape(_TRK_OP); if((typeof _TRK_OE)!="undefined" && _TRK_OE!="") tc=tc+"&OE="+_TRK_OE; if((typeof _TRK_CC)!="undefined" && _TRK_CC!="") tc=tc+"&CC="+_TRK_CC; if((typeof _TRK_RK)!="undefined" && _TRK_RK!="") tc=tc+"&RK="+_trk_escape(_TRK_RK); if((typeof _TRK_SX)!="undefined" && _TRK_SX!="") tc=tc+"&SX="+_TRK_SX; if((typeof _TRK_AG)!="undefined" && _TRK_AG!="") tc=tc+"&AG="+_TRK_AG; if((typeof _TRK_IK)!="undefined" && _TRK_IK!="") tc=tc+"&IK="+_trk_escape(_TRK_IK); if((typeof _TRK_CN)!="undefined" && _TRK_CN!="") tc=tc+"&CN="+_trk_escape(_TRK_CN); tc=tc+"&js=Y"+"&ss="+escape(ss)+"&cd="+cd+"&ce="+ce+"&je="+je+"&tzo="+tzo+"&tye="+tye+"&tmo="+tmo+"&tda="+tda+"&tho="+tho+"&tmi="+tmi+"&tse="+tse; if((typeof _TRK_VN)!="undefined" && _TRK_VN>=0) tc=tc+"&VN="+_TRK_VN; if((typeof _TRK_CR)!="undefined" && _TRK_CR!="") tc=tc+"&CR="+_trk_escape(_TRK_CR)+"&XCR=1"; if((typeof _TRK_CQ)!="undefined" && _TRK_CQ!="") tc=tc+"&CQ="+_trk_escape(_TRK_CQ)+"&XCQ=1"; } return tc;}var _TRK_LIFE=_trk_getParameter("_L_");if(_TRK_LIFE=="") _TRK_LIFE=14;_TRK_LIFE = parseInt(_TRK_LIFE)*24*60*60*1000;if ((typeof _TRK_U) != "undefined" && _TRK_U != "") { _TRK_U = _TRK_U; } else { var _TRK_U = ""; }var _TRK_U_P=_trk_getParameter("_U_");var _TRK_U_C= _trk_getCookie("_TRK_U");if(_TRK_U_C!="") _TRK_U=_TRK_U_C;if(_TRK_U_P!="") _TRK_U=_TRK_U_P;if(_TRK_U!="" && _TRK_U_P!="") _trk_setCookie("_TRK_U",_TRK_U,_TRK_LIFE);var _TRK_CC_C=_trk_getCookie("_TRK_CC");var _TRK_CC_P=_trk_getParameter("_C_");if((typeof _TRK_CC)!="undefined" && _TRK_CC!="") _TRK_CC_P=_TRK_CC;if(_TRK_CC_C!="") _TRK_CC=_TRK_CC_C;if(_TRK_CC_P!="") _TRK_CC=_TRK_CC_P;if((typeof _TRK_CC)!="undefined" && _TRK_CC!="" && _TRK_CC_P!="") _trk_setCookie("_TRK_CC",_TRK_CC,_TRK_LIFE);var _TRK_RK_C=_trk_getCookie("_TRK_RK");var _TRK_RK_P=_trk_getParameter("_R_");if((typeof _TRK_RK)!="undefined" && _TRK_RK!="") _TRK_RK_P=_TRK_RK;if(_TRK_RK_C!="") _TRK_RK=_TRK_RK_C;if(_TRK_RK_P!="") _TRK_RK=_TRK_RK_P;if((typeof _TRK_RK)!="undefined" && _TRK_RK!="" && _TRK_RK_P!="") _trk_setCookie("_TRK_RK",_TRK_RK,_TRK_LIFE);var _SS_LIFE = 30*60*1000;var _TRK_EX = _trk_getCookie("_TRK_EX");if( _TRK_EX == "" ) _TRK_EX = 0; _TRK_EX ++;_trk_setCookie("_TRK_EX",_TRK_EX,_SS_LIFE);var _TRK_UID=_trk_getCookie("_TRK_UID").split(":")[0];var _TRK_VN=_trk_getCookie("_TRK_UID").split(":")[1];var _TRK_SID=_trk_getCookie("_TRK_SID");if(_TRK_UID=="") _TRK_UID=getNewSID(32);if(_TRK_VN=="" || _TRK_VN=="NaN" || typeof(_TRK_VN)=="undefined") _TRK_VN=0; else _TRK_VN=parseInt(_TRK_VN);if(_TRK_SID=="") { _TRK_SID=getNewSID(32); _TRK_VN++;}_trk_setCookie("_TRK_UID",_TRK_UID+":"+_TRK_VN.toString(),30*365*24*60*60*1000);_trk_setCookie("_TRK_SID",_TRK_SID,_SS_LIFE);var _TRK_CR=_trk_getCookie("_TRK_CR");var _TRK_CQ=_trk_getCookie("_TRK_CQ");if(_TRK_EX==1) { var dr = self.document.referrer; var tdu = ""; eval("try{ tdu=top.document.location.href; }catch(_e){}"); var _TRK_CR_S = (dr==tdu ? top.document.referrer : self.document.referrer); if(_TRK_CR_S!="") _TRK_CR=_TRK_CR_S; if((typeof _TRK_CR)!="undefined" && _TRK_CR!="" && _TRK_CR_S!="") _trk_setCookie("_TRK_CR",_trk_escape(_TRK_CR),_TRK_LIFE); var _TRK_CQ_S = (dr==tdu ? top.document.location.search : self.document.location.search); if(_TRK_CQ_S!="") _TRK_CQ=_TRK_CQ_S; if((typeof _TRK_CQ)!="undefined" && _TRK_CQ!="" && _TRK_CQ_S!="") _trk_setCookie("_TRK_CQ",_trk_escape(_TRK_CQ),_TRK_LIFE);}var _trk_code_base=_trk_make_code(_L_TD,_TRK_LID);var _trk_code_chan="";if(_TRK_U!="") _trk_code_chan=_trk_code_base.replace(/\?u=[0-9A-z]+&XU=/g,"?u="+_TRK_U+"&XU=");var _trk_img_base=new Image();var _trk_img_chan=new Image();var _trk_img_base_click=new Image();var _trk_img_chan_click=new Image();if(_trk_bJS12==true) { if(_trk_bMSIE) { _trk_img_base.src=_trk_code_base; if(_TRK_U!="") _trk_img_chan.src=_trk_code_chan; } else { setTimeout("_trk_img_base.src=_trk_code_base;",1); if(_TRK_U!="") setTimeout("_trk_img_chan.src=_trk_code_chan;",1); }} else { if(_trk_bMSIE) document.write('<div style=\"display: none\">'); document.write('<img src=\"'+_trk_code_base+'\" height=\"0\" width=\"0\">'); if(_TRK_U!="") document.write('<img src=\"'+_trk_code_chan+'\" height=\"0\" width=\"0\">'); if(_trk_bMSIE) document.write('<\/div>');}function _trk_flashEnvView(env1,env2,env3,env4,env5,env6,env7,env8,env9,env10,env11,env12){ var _trk_code_flash=_trk_code_base; for (var envCnt=1; envCnt< 13; envCnt++){ if((eval("env"+envCnt) != "") && (typeof eval("env"+envCnt) != "undefined" )){  var trk_str  = eval("env"+envCnt) ;  if(trk_str.indexOf("_TRK_CP")>=0){   var trk_cp = trk_str.split('=');   var _TRK_CP = trk_cp[1];   _trk_code_flash=_trk_code_flash.replace(/&CP=.*&XCP=/g,"&XCP=");   _trk_code_flash=_trk_code_flash.replace(/&dr=.*&XDR=/g,"&XDR=");   _trk_code_flash=_trk_code_flash+"&dr=&CP="+_trk_escape(_TRK_CP)+"&rnd="+Math.random();   if(_TRK_U!="") {    _trk_code_flash=_trk_code_flash.replace(/\?u=[0-9A-z]+&XU=/g,"?u="+_TRK_U+"&XU=");   }  }  if((trk_str.indexOf("_TRK_PN")>=0) || (trk_str.indexOf("_TRK_MF")>=0) || (trk_str.indexOf("_TRK_RK")>=0) || (trk_str.indexOf("_TRK_OP")>=0) || (trk_str.indexOf("_TRK_IK")>=0) || (trk_str.indexOf("_TRK_CN")>=0)){   var trk_env = trk_str.split('=');   var _TRK_ENV = _trk_escape(trk_env[1]);   var tkr_env_name = trk_str.substring(trk_str.indexOf('_',1)+1,trk_str.lastIndexOf('='));   var _trk_envs = "&"+tkr_env_name+"="+ _TRK_ENV;   if( _trk_code_flash.indexOf("&"+tkr_env_name+"=") > 0) {    var regVal = "\&"+tkr_env_name+"\=(.*)(\&PN\=|\&MF\=|\&OA\=|\&OP\=|\&OE\=|\&CC\=|\&RK\=|\&SX\=|\&AG\=|\&IK\=|\&js\=|\&CN\=)";    var envReg = new RegExp(regVal, 'gi');    var envRst = _trk_code_flash.match(envReg);    var envRst = envRst.toString();    var envArr = envRst.split('&');    var envVar = envArr[1];    _trk_code_flash=_trk_code_flash.replace("&"+envVar+"&", _trk_envs);   }else{    _trk_code_flash = _trk_code_flash+"&"+tkr_env_name+"="+_TRK_ENV;   }  }  if((trk_str.indexOf("_TRK_PI")>=0) || (trk_str.indexOf("_TRK_OA")>=0) || (trk_str.indexOf("_TRK_OE")>=0) || (trk_str.indexOf("_TRK_CC")>=0) || (trk_str.indexOf("_TRK_SX")>=0) || (trk_str.indexOf("_TRK_AG")>=0)){   var trk_env = trk_str.split('=');   var _TRK_ENV = trk_env[1];   var tkr_env_name = trk_str.substring(trk_str.indexOf('_',1)+1,trk_str.lastIndexOf('='));   var _trk_envs = "&"+tkr_env_name+"="+_TRK_ENV+"&";   if( _trk_code_flash.indexOf("&"+tkr_env_name+"=") > 0) {    var regVal = "\&"+tkr_env_name+"\=(.*)(\&PN\=|\&MF\=|\&OA\=|\&OP\=|\&OE\=|\&CC\=|\&RK\=|\&SX\=|\&AG\=|\&IK\=|\&js\=|\&CN\=)";    var envReg = new RegExp(regVal, 'gi');    var envRst = _trk_code_flash.match(envReg);    var envRst = envRst.toString();    var envArr = envRst.split('&');    var envVar = envArr[1];    _trk_code_flash=_trk_code_flash.replace("&"+envVar+"&", _trk_envs);   }else{    _trk_code_flash = _trk_code_flash+"&"+tkr_env_name+"="+_TRK_ENV;   }  } } } _trk_img_base_click.src=_trk_code_flash ;}function _trk_flashContentsView(_TRK_PI, _TRK_CP) { var _trk_code_flash=_trk_code_base; var _trk_piv = "&PI="+_TRK_PI+"&"; _trk_code_flash=_trk_code_flash.replace(/&CP=.*&XCP=/g,"&XCP="); _trk_code_flash=_trk_code_flash.replace(/&dr=.*&XDR=/g,"&XDR="); if( _trk_code_flash.indexOf("&PI=") > 0) { var regVal = "\&PI\=(.*)(\&PN\=|\&MF\=|\&OA\=|\&OP\=|\&OE\=|\&CC\=|\&RK\=|\&SX\=|\&AG\=|\&IK\=|\&js\=)"; var envReg = new RegExp(regVal, 'gi'); var envRst = _trk_code_flash.match(envReg); var envRst = envRst.toString(); var envArr = envRst.split('&'); var envVar = envArr[1]; _trk_code_flash=_trk_code_flash.replace("&"+envVar+"&", _trk_piv ); }else{ _trk_code_flash = _trk_code_flash+"&PI="+_TRK_PI; } _trk_img_base_click.src=_trk_code_flash+"&dr=&CP="+_trk_escape(_TRK_CP)+"&rnd="+Math.random(); if(_TRK_U!="") { _trk_code_flash=_trk_code_flash.replace(/\?u=[0-9A-z]+&XU=/g,"?u="+_TRK_U+"&XU="); _trk_img_chan_click.src=_trk_code_flash+"&dr=&CP="+_trk_escape(_TRK_CP)+"&rnd="+Math.random(); }}function _trk_clickTrace(_TRK_CKFL,_TRK_CKDATA) { var _trk_code_click=_trk_code_base.substr(0,_trk_code_base.indexOf("tracker.1.tsp")); _trk_code_click=_trk_code_click+"tracker_click.tsp?rnd="+Math.random()+"&CKFL="+_TRK_CKFL+"&CKDATA="+_trk_escape(_TRK_CKDATA)+"&UID="+_trk_getCookie("_TRK_UID").split(":")[0]+"&SID="+_trk_getCookie("_TRK_SID"); _trk_img_base_click.src=_trk_code_click+"&u="+_TRK_LID; if(_TRK_U!="") _trk_img_chan_click.src=_trk_code_click+"&u="+_TRK_U;}function _trk_adClick( adSvr, svcCode, adCode ) { var ac = ""; var prtcl=document.location.protocol.indexOf("https")!=-1?"https://":"http://"; if(prtcl=="https://") adSvr="ssl."+_TRK_DOMAIN; ac=ac+prtcl+adSvr; _trk_img_base_click.src=ac+"/tracker_ad.tsp?u="+svcCode+"&mode=C&adCode="+adCode;}function _trk_adClickImpress( adSvr, svcCode, adCode ) { var ac = ""; var prtcl=document.location.protocol.indexOf("https")!=-1?"https://":"http://"; if(prtcl=="https://") adSvr=_TRK_DOMAIN; ac=ac+prtcl+adSvr; _trk_img_base_click.src=ac+"/tracker_ad.tsp?u="+svcCode+"&mode=I&adCode="+adCode;}</script> 
+    <noscript>
+     <img src="http://210.90.31.15/tracker.1.tsp?u=1033&amp;js=N" width="0" height="0" alt="LOGGER TRACKING">
+    </noscript> 
+    <!-- END OF LOGGER TRACKING SCRIPT --> 
+    <div class="footer_inner"> 
+     <div class="foot_links"> 
+      <ul> 
+       <li class="lst01"><a href="http://www.ftc.go.kr/" target="_self" title="공정거래위원회">공정거래위원회</a></li> 
+       <li class="lst02"><a href="http://www.1372.go.kr/contents/view.ccn?nMenuCode=123" target="_self" title="소비자단체">소비자단체</a></li> 
+       <li class="lst03"><a href="http://www.kca.go.kr/" target="_self" title="한국소비자원">한국소비자원</a></li> 
+       <li class="lst04"><a href="http://www.1372.go.kr/contents/view.ccn?nMenuCode=123" target="_self" title="광역자치단체">광역자치단체</a></li> 
+       <li class="lst05"><a href="http://www.donotcall.go.kr/" target="_self" title="전화권유 판매 수신거부의사 등록시스템">전화권유 판매<br>수신거부의사 등록시스템</a></li> 
+       <li class="lst06"><a href="http://www.ciss.go.kr/" target="_self" title="소비자위해감시시스템">소비자위해감시시스템</a></li> 
+       <li class="lst07"><a href="http://www.consumer.go.kr/" target="_self" title="행복드림">행복드림</a></li> 
+       <li class="lst08"><a href="https://www.relaycall.or.kr/" target="_self" title="손말이음센터">손말이음센터</a></li> 
+       <!--             <li class="lst08"><a href="#" target="_blank" title="새창으로 열기">자율처리사업자<br />가입 신청</a></li> --> 
+      </ul> 
+     </div>
+     <!-- foot_links --> 
+     <div class="bottom"> 
+      <div class="logo">
+       <img src="http://www.1372.go.kr/images/new2016/foot_logo.gif" alt="공정거래위원회">
+      </div> 
+      <div class="info_wrap"> 
+       <ul class="foot_menu"> 
+        <li><a href="http://www.1372.go.kr/contents/view.ccn?nMenuCode=120" target="_self">소비자상담센터 소개</a></li> 
+        <li><a href="http://www.ftc.go.kr/www/contents.do?key=449" class="bold" target="_self">개인정보처리방침</a></li> 
+        <!--                <li><a href="/contents/view.ccn?nMenuCode=40">저작권정책</a></li> --> 
+        <li><a href="http://www.1372.go.kr/contents/view.ccn?nMenuCode=41" title="파일 다운로드" target="_self">뷰어다운로드</a></li> 
+        <!-- <li><a href="/contents/view.ccn?nMenuCode=42">RSS</a></li>--> 
+        <!-- <li><a href="https://giup.ccn.go.kr">소비텔</a></li> --> 
+       </ul> 
+       <p class="copy">Copyright © 2016 By Fair Trade Commission All Rights Reserved.</p> 
+       <p class="addr">세종특별자치시 다솜3로 95 공정거래위원회</p> 
+      </div>
+      <!-- info_wrap --> 
+      <div class="support"> 
+       <ul> 
+        <li class="remote"> <a href="http://113366.com/agent" target="_self" title="새창으로 열기"><img src="http://www.1372.go.kr/images/new2016/foot_remote.gif" alt="시스템 원격지원"></a> </li> 
+        <li class="mark"> <a title="새창" href="http://wa.or.kr/board/list.asp?BoardID=0006" target="_self"><img class="wa" alt="(사)한국장애인단체총연합회 한국웹접근성인증평가원 웹 접근성 우수사이트 인증마크(WA인증마크)" src="http://www.1372.go.kr/images/new2016/web2017.gif"></a> </li> 
+       </ul> 
+      </div> 
+     </div> 
+    </div> 
+   </div>
+   <!-- footer --> 
+  </div>  
+		</div>
+
+		<script>
+			class DummyUploadAdapter {
+				constructor( loader ) {
+					this.loader = loader;
+				}
+
+				upload() {
+					return this.loader.file
+						.then( file => {
+							return {
+								default: 'umbrellas.jpg',
+								160: 'umbrellas.jpg',
+								500: 'umbrellas.jpg',
+							};
+						} );
+				}
+
+				abort() {
+				}
+			}
+
+			function UploadAdapter( editor ) {
+				editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+					return new DummyUploadAdapter( loader );
+				};
+			}
+
+			let editorNames = [];
+
+			document.querySelector( '#destroy-inspector' ).addEventListener( 'click', () => {
+				CKEditorInspector.destroy();
+				editorNames = [];
+			} );
+
+			document.querySelector( '#attach-inspector' ).addEventListener( 'click', () => {
+				const names = CKEditorInspector.attachToAll();
+
+				editorNames.push( ...names );
+			} );
+
+			document.querySelector( '#detach-inspector-from-editors' ).addEventListener( 'click', () => {
+				editorNames.forEach( name => CKEditorInspector.detach( name ) );
+				editorNames = [];
+			} );
+
+			DecoupledEditor
+				.create( document.querySelector( '#first-editor-content' ), {
+					extraPlugins: [ UploadAdapter ]
+				} )
+				.then( editor => {
+					window.firstEditor = editor;
+					document.body.insertBefore( editor.ui.view.toolbar.element, editor.ui.getEditableElement() );
+					CKEditorInspector.attach( { 'first-editor': editor } );
+					editorNames.push( 'first-editor' );
+				} )
+				.catch( error => {
+					console.error( error );
+				} );
+
+			DecoupledEditor
+				.create( document.querySelector( '#second-editor-content' ), {
+					extraPlugins: [ UploadAdapter ]
+				} )
+				.then( editor => {
+					window.secondEditor = editor;
+					document.body.insertBefore( editor.ui.view.toolbar.element, editor.ui.getEditableElement() );
+					const [ name ] = CKEditorInspector.attach( editor );
+					editorNames.push( name );
+				} )
+				.catch( error => {
+					console.error( error );
+				} );
+
+			DecoupledEditor
+				.create( document.querySelector( '#rtl-editor-content' ), {
+					extraPlugins: [ UploadAdapter ],
+					language: 'ar'
+				} )
+				.then( editor => {
+					window.secondEditor = editor;
+					document.body.insertBefore( editor.ui.view.toolbar.element, editor.ui.getEditableElement() );
+					const [ name ] = CKEditorInspector.attach( { 'rtl': editor } );
+					editorNames.push( name );
+				} )
+				.catch( error => {
+					console.error( error );
+				} );
+		</script>
+	</body>
+	<style>
+		body {
+			width: 960px;
+			margin: 0 auto;
+			padding: 2em;
+		}
+
+		.ck.ck-editor__editable {
+			border: 1px solid rgba(0, 0, 0, 0.15);
+		}
+	</style>
+</html>
