@@ -1,4 +1,4 @@
-# GmpHelper
+# GMPHelper
     1. GMP DynamicScheduler
         - scheduling.Trigger
         - scheduling.support.CronTrigger
