@@ -13,7 +13,7 @@ logging:
 server:
   port: 9999
   servlet:
-      context-path: /gmp
+      context-path: /
   error:
     whitelabel:
       enabled: false
@@ -58,12 +58,12 @@ spring:
   jackson:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
-#  output:
-#    ansi:
-#      enabled:always
+  output:
+    ansi:
+      enabled:always
 
   application:
-    name: gmp
+    name: GMPHelper
 
 management:
   endpoints:

@@ -1,26 +1,3 @@
-logging:
-  config: classpath:logback.xml
-  level:
-    ROOT: INFO
-    org.springframework.web: INFO
-    org.springframework: INFO
-    org.hibernate.SQL: INFO
-    org.hibernate.type.descriptor.sql: DEBUG
-#    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-#    org.hibernate.type.descriptor.sql.BasicExtractor: INFO
-    com.greatmrpark: DEBUG
-
-server:
-  port: 9999
-  servlet:
-      context-path: /gmp
-  error:
-    whitelabel:
-      enabled: false
-  tomcat:
-    max-connections: 5
-    max-threads: 10
-
 spring:
   resources:
     static-locations: classpath:/static/
@@ -58,29 +35,12 @@ spring:
   jackson:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
-#  output:
-#    ansi:
-#      enabled:always
+  output:
+    ansi:
+      enabled:always
 
   application:
     name: gmp
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-      cors:
-        allowed-origins: "*"
-        allowed-methods: GET
-  endpoint:
-    health:
-      show-details: ALWAYS
-    shutdown:
-      enabled: false
-  health:
-    diskspace:
-      enabled: true
 
 gmp:
   ocr:

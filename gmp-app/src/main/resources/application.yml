@@ -10,20 +10,7 @@ logging:
 #    org.hibernate.type.descriptor.sql.BasicExtractor: INFO
     com.greatmrpark: DEBUG
 
-server:
-  port: 9999
-  servlet:
-      context-path: /gmpApp
-  error:
-    whitelabel:
-      enabled: false
-  tomcat:
-    max-connections: 5
-    max-threads: 10
-
 spring:
-  resources:
-    static-locations: classpath:/static/
   datasource:
     url: jdbc:mariadb://localhost:3306/gmp?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf8&autoReconnect=true
     driverClassName: org.mariadb.jdbc.Driver
@@ -58,30 +45,9 @@ spring:
   jackson:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
-#  output:
-#    ansi:
-#      enabled:always
-
-  application:
-    name: gmp
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-      cors:
-        allowed-origins: "*"
-        allowed-methods: GET
-  endpoint:
-    health:
-      show-details: ALWAYS
-    shutdown:
-      enabled: false
-  health:
-    diskspace:
-      enabled: true
-
+  output:
+    ansi:
+      enabled:always
 gmp:
   ocr:
     datapath: /project/Tesseract-OCR/tessdata
