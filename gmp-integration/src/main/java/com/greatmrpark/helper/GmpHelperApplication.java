@@ -24,6 +24,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.greatmrpark.helper.app.controller.LoginController;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -40,7 +42,8 @@ import javafx.stage.Stage;
 public class GmpHelperApplication extends Application {
     
     private ConfigurableApplicationContext springContext;
-    private Parent rootNode;
+    private LoginController controller;
+    private Parent root;
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -48,18 +51,22 @@ public class GmpHelperApplication extends Application {
 
     @Override
     public void init() throws Exception {
-        springContext = SpringApplication.run(GmpHelperApplication.class);
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/app/main.fxml"));
+        springContext = SpringApplication.run(GmpHelperApplication.class);      
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/LoginView.fxml"));  
         fxmlLoader.setControllerFactory(springContext::getBean);
-        rootNode = fxmlLoader.load();
+        root = fxmlLoader.load();
+//        controller = fxmlLoader.getController();
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
-        stage.setTitle("GMPHelper For Dev Of Great Mr. Park.");
-        stage.setScene(new Scene(rootNode));
-        stage.setResizable(true);
-        stage.show();
+    public void start(Stage primaryStage) throws Exception {
+
+//        controller.setPrimaryStage(primaryStage);
+        
+        primaryStage.setTitle("GMPHelper For Dev Of Great Mr. Park.");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(true);
+        primaryStage.show();
     }
     
     @Override
