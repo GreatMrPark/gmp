@@ -52,9 +52,9 @@ public class GmpAppApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("APP Dev Helper of Great Mr. Park.");
+        stage.setTitle("GMPHelper For APP Of Great Mr. Park.");
         stage.setScene(new Scene(rootNode));
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.show();
     }
     

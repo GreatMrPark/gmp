@@ -49,7 +49,7 @@ public class GmpHelperApplication extends Application {
     @Override
     public void init() throws Exception {
         springContext = SpringApplication.run(GmpHelperApplication.class);
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/app/main.fxml"));
         fxmlLoader.setControllerFactory(springContext::getBean);
         rootNode = fxmlLoader.load();
     }
@@ -58,7 +58,7 @@ public class GmpHelperApplication extends Application {
     public void start(Stage stage) throws Exception {
         stage.setTitle("GMPHelper For Dev Of Great Mr. Park.");
         stage.setScene(new Scene(rootNode));
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.show();
     }
     
