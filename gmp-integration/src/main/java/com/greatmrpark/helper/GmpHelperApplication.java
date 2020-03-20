@@ -16,9 +16,11 @@ package com.greatmrpark.helper;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -28,6 +30,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+@EnableJpaRepositories("com.greatmrpark.common.repository")
+@EntityScan("com.greatmrpark.common.model")
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
 @EnableScheduling
@@ -52,7 +56,7 @@ public class GmpHelperApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("APP Dev Helper of Great Mr. Park.");
+        stage.setTitle("GMPHelper For Dev Of Great Mr. Park.");
         stage.setScene(new Scene(rootNode));
         stage.setResizable(false);
         stage.show();
