@@ -9,8 +9,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.greatmrpark.app.GmpAppApplication;
-
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
 @EnableScheduling
@@ -20,13 +18,13 @@ public class GmpWebApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
         new SpringApplicationBuilder().bannerMode(Banner.Mode.CONSOLE)
-        .sources(GmpAppApplication.class, GmpWebApplication.class)
+        .sources(GmpWebApplication.class)
         .run(args);
 	}
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(GmpAppApplication.class, GmpWebApplication.class);
+        return application.sources(GmpWebApplication.class);
     }
     
 }

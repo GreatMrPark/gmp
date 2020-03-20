@@ -12,7 +12,7 @@
     <packaging>jar</packaging>
     <name>GmpApp</name>
   
-    <description>APP Dev Helper of Great Mr. Park.</description>
+    <description>GMPHelper For App Of Great Mr. Park.</description>
   
     <properties>
         <start-class>com.greatmrpark.app.GmpAppApplication</start-class>

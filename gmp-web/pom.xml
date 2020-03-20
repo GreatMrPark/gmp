@@ -15,19 +15,13 @@
     <description>GMPHelper For Web Of Great Mr. Park.</description>
   
     <properties>
-        <start-class>com.greatmrpark.help.GwaWebApplication</start-class>
+        <start-class>com.greatmrpark.web.GwaWebApplication</start-class>
     </properties>
   
     <dependencies>
         <dependency>
             <groupId>com.greatmrpark</groupId>
             <artifactId>gmp-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.greatmrpark</groupId>
-            <artifactId>gmp-app</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         

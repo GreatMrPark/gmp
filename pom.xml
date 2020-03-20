@@ -16,7 +16,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>GMPHelper</name>
     <packaging>pom</packaging>
-    <description>Dev Helper of Great Mr. Park.</description>
+    
+    <description>GMPHelper For Dev Of Great Mr. Park.</description>
     
     <properties>
         <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
@@ -42,16 +43,24 @@
     
     <modules>
         <module>gmp-common</module>
+        <module>gmp-integration</module>
         <module>gmp-web</module>
         <module>gmp-app</module>
     </modules>
     
     <profiles>
         <profile>
+            <id>gmpIntegration</id>
+            <modules>
+                <module>gmp-common</module>
+                <module>gmp-integration</module>
+            </modules>
+        </profile>
+        
+        <profile>
             <id>gmpWeb</id>
             <modules>
                 <module>gmp-common</module>
-                <module>gmp-app</module>
                 <module>gmp-web</module>
             </modules>
         </profile>
@@ -59,7 +68,7 @@
         <profile>
             <id>gmpApp</id>
             <modules>
-                <module>gmp-commo</module>
+                <module>gmp-common</module>
                 <module>gmp-app</module>
             </modules>
         </profile>
