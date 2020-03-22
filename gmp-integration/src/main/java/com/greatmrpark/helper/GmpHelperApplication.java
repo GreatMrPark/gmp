@@ -51,18 +51,21 @@ public class GmpHelperApplication extends Application {
 
     @Override
     public void init() throws Exception {
-        springContext = SpringApplication.run(GmpHelperApplication.class);      
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/LoginView.fxml"));  
+
+        springContext = SpringApplication.run(GmpHelperApplication.class);
+        controller = springContext.getBean(LoginController.class);
+        
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/LoginView.fxml"));
         fxmlLoader.setControllerFactory(springContext::getBean);
+        
         root = fxmlLoader.load();
-//        controller = fxmlLoader.getController();
+        
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-//        controller.setPrimaryStage(primaryStage);
-        
         primaryStage.setTitle("GMPHelper For Dev Of Great Mr. Park.");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(true);
