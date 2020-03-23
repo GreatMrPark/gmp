@@ -42,7 +42,6 @@ import javafx.stage.Stage;
 public class GmpHelperApplication extends Application {
     
     private ConfigurableApplicationContext springContext;
-    private LoginController controller;
     private Parent root;
 
     public static void main(String[] args) {
@@ -53,27 +52,34 @@ public class GmpHelperApplication extends Application {
     public void init() throws Exception {
 
         springContext = SpringApplication.run(GmpHelperApplication.class);
-        controller = springContext.getBean(LoginController.class);
-        
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/fxml/LoginView.fxml"));
-        fxmlLoader.setControllerFactory(springContext::getBean);
-        
-        root = fxmlLoader.load();
         
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/app/LoginView.fxml"));
+        fxmlLoader.setControllerFactory(springContext::getBean);
+        Parent root = fxmlLoader.load();
+        
+        Scene scene = new Scene(root);
+        
         primaryStage.setTitle("GMPHelper For Dev Of Great Mr. Park.");
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setScene(scene);
         primaryStage.setResizable(true);
+
+        LoginController controller = fxmlLoader.getController();
+        controller.setPrimaryStage(primaryStage);
+        
         primaryStage.show();
     }
     
     @Override
     public void stop() throws Exception {
-        springContext.close();
+//        springContext.stop();
+//        springContext.close();
+        
+        System.exit(0);
     }
 }

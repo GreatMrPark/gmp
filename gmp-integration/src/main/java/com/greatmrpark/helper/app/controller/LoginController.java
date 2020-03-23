@@ -53,6 +53,10 @@ public class LoginController {
     @FXML
     private Button btnCancel;
 
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+    
     @FXML
     public void clickLogin(ActionEvent event) throws IOException {
         
@@ -63,7 +67,8 @@ public class LoginController {
         log.debug("비밀번호 : {}", pwd);
         
         // FXML에 의한 Pane 생성
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/DialogView.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/app/DialogView.fxml"));
         AnchorPane page = (AnchorPane) loader.load();
 
         // Scene 생성
@@ -74,7 +79,6 @@ public class LoginController {
         dialogStage.setTitle("Login Person");
         dialogStage.initModality(Modality.WINDOW_MODAL);
         dialogStage.initOwner(primaryStage);
-        dialogStage.setScene(new Scene(page));
         
         dialogStage.setScene(scene);
         
@@ -89,9 +93,5 @@ public class LoginController {
     @FXML
     public void clickCancel(ActionEvent event) {
         System.exit(0);
-    }
-    
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
     }
 }
