@@ -77,9 +77,6 @@ public class GmpHelperApplication extends Application {
     
     @Override
     public void stop() throws Exception {
-//        springContext.stop();
-//        springContext.close();
-        
         System.exit(0);
     }
 }
