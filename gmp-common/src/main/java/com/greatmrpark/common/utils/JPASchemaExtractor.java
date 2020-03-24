@@ -53,7 +53,7 @@ public class JPASchemaExtractor {
         String d = sdf.format(time);
 
         export.setDelimiter(";");
-        export.setOutputFile("database/gelix_"+d+"_create.sql");
+        export.setOutputFile("database/gmp_"+d+"_create.sql");
         export.setFormat(true);
         export.execute(targetTypes, SchemaExport.Action.BOTH, metadata.buildMetadata());
     }

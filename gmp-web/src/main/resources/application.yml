@@ -64,7 +64,8 @@ spring:
 
   application:
     name: GMPHelper
-
+    
+#Spring boot Actuator
 management:
   endpoints:
     web:
