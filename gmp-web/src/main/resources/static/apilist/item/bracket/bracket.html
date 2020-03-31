@@ -2,6 +2,7 @@
 <script>
 var NUMBER_OF_PARTICIPANTS = 9; // Set the number of participants
 
+/**
 if (!String.prototype.format) {
   String.prototype.format = function() {
     var args = arguments;
@@ -10,8 +11,9 @@ if (!String.prototype.format) {
     });
   };
 }
-
 var participants = Array.from({length: NUMBER_OF_PARTICIPANTS}, (v, k) => k + 1) ;
+**/
+var participants = [1,2,3,4,5,6,7,8,9,10];
 var bracket = getBracket(participants);
 
 console.log(bracket);
@@ -22,10 +24,10 @@ function getBracket(participants) {
   var bracketSize = Math.pow(2, rounds);
   var requiredByes = bracketSize - participantsCount;
     
-  console.log("Number of participants: {0}".format(participantsCount));
+/*   console.log("Number of participants: {0}".format(participantsCount));
   console.log("Number of rounds: {0}".format(rounds));
   console.log("Bracket size: {0}".format(bracketSize));
-  console.log("Required number of byes: {0}".format(requiredByes));    
+  console.log("Required number of byes: {0}".format(requiredByes));    */ 
     
   if(participantsCount < 2) {
     return [];
