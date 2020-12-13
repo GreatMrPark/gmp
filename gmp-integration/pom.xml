@@ -25,6 +25,31 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         
+        <!-- https://mvnrepository.com/artifact/com.zenjava/javafx-basic-archetype -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+        
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -48,7 +73,7 @@
     </dependencies>
     
     <build>
-        <finalName>GMPHelper</finalName>
+        <finalName>gmp-helper</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

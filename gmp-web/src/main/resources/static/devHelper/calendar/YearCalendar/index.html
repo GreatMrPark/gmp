@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Year Calendar</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+/**
+ * 날짜
+ * @param date
+ * @param y
+ * @param m
+ * @param d
+ * @param separator
+ * @returns
+ */
+function shiftDate(date, y, m, d, separator) {
+    
+    date.setFullYear(date.getFullYear() + y);
+    date.setMonth(date.getMonth() + m);
+    date.setDate(date.getDate() + d);
+
+    var year  = date.getFullYear();
+    var month = ("0" + parseInt(date.getMonth() + 1)).slice(-2);
+    var day   = ("0" + parseInt(date.getDate())).slice(-2);;
+    
+    return year + separator + month + separator + day;    
+}
+
+/**
+ * 오늘
+ * @returns
+ */
+function getToday() {
+    return shiftDate(new Date(), 0, 0, 0, "-");
+}
+
+/**
+ * 이번달
+ * @returns
+ */
+function getThisMonth() {
+    return shiftDate(new Date(), 0, 0, 0, "-").substring(0,7);
+}
+
+var date = new Date();
+var gYear = date.getFullYear();
+var gMonth = date.getMonth()+1;
+var gDay = date.getDate(date);
+var gThisMonth = getThisMonth(date);
+var gToday = getToday();
+var gThisDay = gYear+"-01-01";
+
+console.log("gYear : ", gYear);
+console.log("gMonth : ", gMonth);
+console.log("gDay : ", gDay);
+console.log("gThisMonth : ", gThisMonth);
+console.log("gToday : ", gToday);
+console.log("gThisDay : ", gThisDay);
+
+</script>
+</head>
+<body>
+ <div id="datepicker"></div>
+</body>
+<script>
+$(function() {
+    $( "#datepicker" ).datepicker({
+        dateFormat: 'yy-mm-dd',
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        showMonthAfterYear: true,
+        yearSuffix: '년',
+        showOn: "both",
+//        buttonImage: "../img/icon_calendar02.png",
+        buttonImageOnly: true,
+        showButtonPanel: false,
+        changeYear: false ,
+        changeMonth: false ,
+        prevText: "이전",
+        nextText: "다음",
+        numberOfMonths: [3,4],
+        stepMonths: 12,
+        currentText: "오늘",
+        closeText: "닫기",
+        onSelect: function(d) {fnSelDate(d);}
+    });
+
+    var x = new Date(gYear, 0, 1, 0, 0, 0);
+    $("#datepicker").datepicker("setDate", x); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+});
+
+/**
+ * 날싸 선택시 발생하는 이벤트 함수
+ */
+var fnSelDate = function(d) {
+    var json = {};
+    json.date = d;
+    console.log(json);
+    alert(JSON.stringify(json));
+}
+</script>
+</html>

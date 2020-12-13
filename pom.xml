@@ -42,18 +42,29 @@
     </properties>
     
     <modules>
+        <module>gmp-doc</module>
         <module>gmp-common</module>
+        <module>gmp-utility</module>
         <module>gmp-integration</module>
         <module>gmp-web</module>
         <module>gmp-app</module>
     </modules>
     
     <profiles>
+        
         <profile>
-            <id>gmpIntegration</id>
+            <id>gmpDoc</id>
             <modules>
                 <module>gmp-common</module>
-                <module>gmp-integration</module>
+                <module>gmp-doc</module>
+            </modules>
+        </profile>
+        
+        <profile>
+            <id>gmpUtility</id>
+            <modules>
+                <module>gmp-common</module>
+                <module>gmp-utility</module>
             </modules>
         </profile>
         
@@ -70,6 +81,14 @@
             <modules>
                 <module>gmp-common</module>
                 <module>gmp-app</module>
+            </modules>
+        </profile>
+        
+        <profile>
+            <id>gmpIntegration</id>
+            <modules>
+                <module>gmp-common</module>
+                <module>gmp-integration</module>
             </modules>
         </profile>
     </profiles>

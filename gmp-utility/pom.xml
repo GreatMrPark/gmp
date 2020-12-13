@@ -10,7 +10,7 @@
     </parent>
     <artifactId>gmp-utility</artifactId>
     <packaging>jar</packaging>
-    <name>GmpUtility</name>
+    <name>GMPUtility</name>
     
     <description>UTILITY Dev Helper of Great Mr. Park.</description>
   
@@ -25,4 +25,14 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
+    
+    <build>
+        <finalName>gmp-utility</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

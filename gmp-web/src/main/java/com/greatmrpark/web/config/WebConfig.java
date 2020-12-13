@@ -21,7 +21,7 @@ public class WebConfig extends WebMvcConfigurationSupport{
     
     @Override
     public void addViewControllers(ViewControllerRegistry registry ) {
-        registry.addViewController( "/" ).setViewName( "redirect:/html/dashboard.html" );
+        registry.addViewController( "/" ).setViewName( "redirect:/index.html" );
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
         super.addViewControllers( registry );
     }

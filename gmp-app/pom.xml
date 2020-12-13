@@ -10,7 +10,7 @@
     </parent>
     <artifactId>gmp-app</artifactId>
     <packaging>jar</packaging>
-    <name>GmpApp</name>
+    <name>GMPApp</name>
   
     <description>GMPHelper For App Of Great Mr. Park.</description>
   
@@ -53,7 +53,7 @@
     </dependencies>
     
     <build>
-        <finalName>gmpWeb</finalName>
+        <finalName>gmp-app</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
