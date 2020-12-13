@@ -10,7 +10,7 @@
     </parent>
     <artifactId>gmp-common</artifactId>
     <packaging>jar</packaging>
-    <name>GmpCommon</name>
+    <name>GMPCommon</name>
     
     <description>COMMON Dev Helper of Great Mr. Park.</description>
   
@@ -19,7 +19,7 @@
     </properties>
   
     <build>
-        <finalName>gmpWeb</finalName>
+        <finalName>gmp-common</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -10,7 +10,7 @@
     </parent>
     <artifactId>gmp-web</artifactId>
     <packaging>war</packaging>
-    <name>GwaWeb</name>
+    <name>GMPWeb</name>
     
     <description>GMPHelper For Web Of Great Mr. Park.</description>
   
@@ -48,7 +48,7 @@
     </dependencies>
     
     <build>
-        <finalName>GMPHelper</finalName>
+        <finalName>gmp-web</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
