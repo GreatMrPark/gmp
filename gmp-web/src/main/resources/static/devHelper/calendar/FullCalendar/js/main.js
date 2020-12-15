@@ -3,7 +3,7 @@ var gYear = date.getFullYear();
 var gMonth = date.getMonth()+1;
 var gDay = date.getDate();
 var gThisMonth = getThisMonth();
-var gToday = getToday();;
+var gToday = getToday();
 
 //console.log("gYear : ", gYear);
 //console.log("gMonth : ", gMonth);
@@ -16,7 +16,7 @@ var activeInactiveWeekends = true;
 var activeInactiveYears = true;
 
 var calendar = $('#calendar').fullCalendar({
-
+    
  /** ******************
    *  OPTIONS
    * *******************/

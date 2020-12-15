@@ -1,0 +1,11 @@
+body {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.event-tooltip-content {
+  padding: 5px;
+}
+
+.event-tooltip-content:not(:last-child) {
+  border-bottom: 1px solid #ccc;
+}
