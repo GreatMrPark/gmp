@@ -1,0 +1,411 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<link rel="stylesheet" type="text/css" href="./bootstrap-year-calendar/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="./bootstrap-year-calendar/bootstrap-datepicker.min.css">
+<link rel="stylesheet" type="text/css" href="./bootstrap-year-calendar/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="./bootstrap-year-calendar/bootstrap-year-calendar.min.css">
+<link rel="stylesheet" type="text/css" href="./bootstrap-year-calendar/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="./bootstrap-year-calendar/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="Content-Type" content="text/html; charset=utf-8">
+<meta name="title" content="Bootstrap year calendar">
+<meta name="description" content="The fully customizable year calendar widget, for bootstrap !">
+<meta name="keywords" content="bootstrap, jquery, javascript, widget, calendar, year, component, library, framework, html, css, api">
+<meta name="author" content="Paul DAVID-SIVELLE">
+<title>bootstrap-year-calendar</title>
+<style>
+#news {
+    background-color: #FFC107;
+    text-align: center;
+	padding: 15px;
+}
+
+#news .big {
+	font-size: 16px;
+	font-weight: bold;
+}
+</style>
+</head>
+<body style="" data-new-gr-c-s-check-loaded="14.987.0" data-gr-ext-installed="">
+<div id="main">
+    <div class="sub-content-container">
+       <div class="sub-content"><div class="panel panel-default" style="margin:10px;">
+       <div class="panel-heading">Calendar</div>
+        <div class="panel-body">
+            <div id="calendar" class="calendar">
+                <div class="calendar-header panel panel-default">
+                    <table>
+                        <th class="prev"><span class="glyphicon glyphicon-chevron-left"></span></th>
+                        <th class="year-title year-neighbor2 hidden-sm hidden-xs">2018</th>
+                        <th class="year-title year-neighbor hidden-xs">2019</th>
+                        <th class="year-title">2020</th><th class="year-title year-neighbor hidden-xs">2021</th>
+                        <th class="year-title year-neighbor2 hidden-sm hidden-xs">2022</th>
+                        <th class="next"><span class="glyphicon glyphicon-chevron-right"></span></th>
+                    </table>
+                </div>
+                <div class="months-container" style="display: block;">
+                    <div class="month-container col-xs-4">
+                        <table class="month">
+                        <thead>
+                            <tr><th class="month-title" colspan="7">January</th></tr>
+                            <tr>
+                                <th class="day-header">Su</th>
+                                <th class="day-header">Mo</th>
+                                <th class="day-header">Tu</th>
+                                <th class="day-header">We</th>
+                                <th class="day-header">Th</th>
+                                <th class="day-header">Fr</th>
+                                <th class="day-header">Sa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="day old"></td>
+                                <td class="day old"></td>
+                                <td class="day old"></td>
+                                <td class="day"><div class="day-content">1</div></td>
+                                <td class="day"><div class="day-content">2</div></td>
+                                <td class="day"><div class="day-content">3</div></td>
+                                <td class="day"><div class="day-content">4</div></td>
+                            </tr>
+                            <tr>
+                                <td class="day"><div class="day-content">5</div></td>
+                                <td class="day"><div class="day-content">6</div></td>
+                                <td class="day"><div class="day-content">7</div></td>
+                                <td class="day"><div class="day-content">8</div></td>
+                                <td class="day"><div class="day-content">9</div></td>
+                                <td class="day"><div class="day-content">10</div></td>
+                                <td class="day"><div class="day-content">11</div></td>
+                            </tr>
+                            <tr>
+                                <td class="day"><div class="day-content">12</div></td>
+                                <td class="day"><div class="day-content">13</div></td>
+                                <td class="day"><div class="day-content">14</div></td>
+                                <td class="day"><div class="day-content">15</div></td>
+                                <td class="day"><div class="day-content">16</div></td>
+                                <td class="day"><div class="day-content">17</div></td>
+                                <td class="day"><div class="day-content">18</div></td>
+                            </tr>
+                            <tr><td class="day"><div class="day-content">19</div></td><td class="day"><div class="day-content">20</div></td><td class="day"><div class="day-content">21</div></td><td class="day"><div class="day-content">22</div></td><td class="day"><div class="day-content">23</div></td><td class="day"><div class="day-content">24</div></td><td class="day"><div class="day-content">25</div></td></tr>
+                            <tr><td class="day"><div class="day-content">26</div></td><td class="day"><div class="day-content">27</div></td><td class="day"><div class="day-content">28</div></td><td class="day"><div class="day-content">29</div></td><td class="day"><div class="day-content">30</div></td><td class="day"><div class="day-content">31</div></td><td class="day new"></td></tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    <div class="month-container col-xs-4">
+                        <table class="month"><thead><tr><th class="month-title" colspan="7">February</th></tr><tr><th class="day-header">Su</th><th class="day-header">Mo</th><th class="day-header">Tu</th><th class="day-header">We</th><th class="day-header">Th</th><th class="day-header">Fr</th><th class="day-header">Sa</th></tr></thead><tbody><tr><td class="day old"></td><td class="day old"></td><td class="day old"></td><td class="day old"></td><td class="day old"></td><td class="day old"></td><td class="day"><div class="day-content">1</div></td></tr><tr><td class="day"><div class="day-content">2</div></td><td class="day"><div class="day-content">3</div></td><td class="day"><div class="day-content">4</div></td><td class="day"><div class="day-content">5</div></td><td class="day"><div class="day-content">6</div></td><td class="day"><div class="day-content">7</div></td><td class="day"><div class="day-content">8</div></td></tr><tr><td class="day"><div class="day-content">9</div></td><td class="day"><div class="day-content">10</div></td><td class="day"><div class="day-content">11</div></td><td class="day"><div class="day-content">12</div></td><td class="day"><div class="day-content">13</div></td><td class="day"><div class="day-content">14</div></td><td class="day"><div class="day-content">15</div></td></tr><tr><td class="day"><div class="day-content">16</div></td><td class="day"><div class="day-content">17</div></td><td class="day"><div class="day-content">18</div></td><td class="day"><div class="day-content">19</div></td><td class="day"><div class="day-content">20</div></td><td class="day"><div class="day-content">21</div></td><td class="day"><div class="day-content">22</div></td></tr><tr><td class="day"><div class="day-content">23</div></td><td class="day"><div class="day-content">24</div></td><td class="day"><div class="day-content">25</div></td><td class="day"><div class="day-content">26</div></td><td class="day"><div class="day-content">27</div></td><td class="day"><div class="day-content">28</div></td><td class="day"><div class="day-content">29</div></td></tr></tbody></table>
+                    </div>
+                    <div class="month-container col-xs-4">
+                        <table class="month"><thead><tr><th class="month-title" colspan="7">March</th></tr><tr><th class="day-header">Su</th><th class="day-header">Mo</th><th class="day-header">Tu</th><th class="day-header">We</th><th class="day-header">Th</th><th class="day-header">Fr</th><th class="day-header">Sa</th></tr></thead><tbody><tr><td class="day"><div class="day-content">1</div></td><td class="day"><div class="day-content">2</div></td><td class="day"><div class="day-content">3</div></td><td class="day"><div class="day-content">4</div></td><td class="day"><div class="day-content">5</div></td><td class="day"><div class="day-content">6</div></td><td class="day"><div class="day-content">7</div></td></tr><tr><td class="day"><div class="day-content">8</div></td><td class="day"><div class="day-content">9</div></td><td class="day"><div class="day-content">10</div></td><td class="day"><div class="day-content">11</div></td><td class="day"><div class="day-content">12</div></td><td class="day"><div class="day-content">13</div></td><td class="day"><div class="day-content">14</div></td></tr><tr><td class="day"><div class="day-content">15</div></td><td class="day" style="box-shadow: rgb(156, 183, 3) 0px -4px 0px 0px inset;"><div class="day-content">16</div></td><td class="day" style="box-shadow: rgb(156, 183, 3) 0px -4px 0px 0px inset;"><div class="day-content">17</div></td><td class="day" style="box-shadow: rgb(156, 183, 3) 0px -4px 0px 0px inset;"><div class="day-content">18</div></td><td class="day" style="box-shadow: rgb(156, 183, 3) 0px -4px 0px 0px inset;"><div class="day-content">19</div></td><td class="day"><div class="day-content">20</div></td><td class="day"><div class="day-content">21</div></td></tr><tr><td class="day"><div class="day-content">22</div></td><td class="day"><div class="day-content">23</div></td><td class="day"><div class="day-content">24</div></td><td class="day" style="box-shadow: rgb(44, 143, 201) 0px -4px 0px 0px inset;"><div class="day-content">25</div></td><td class="day" style="box-shadow: rgb(44, 143, 201) 0px -4px 0px 0px inset;"><div class="day-content">26</div></td><td class="day"><div class="day-content">27</div></td><td class="day"><div class="day-content">28</div></td></tr><tr><td class="day"><div class="day-content">29</div></td><td class="day"><div class="day-content">30</div></td><td class="day"><div class="day-content">31</div></td><td class="day new"></td><td class="day new"></td><td class="day new"></td><td class="day new"></td></tr></tbody></table>
+                    </div>
+                    <div class="month-container col-xs-4">
+                        <table class="month"><thead><tr><th class="month-title" colspan="7">April</th></tr><tr><th class="day-header">Su</th><th class="day-header">Mo</th><th class="day-header">Tu</th><th class="day-header">We</th><th class="day-header">Th</th><th class="day-header">Fr</th><th class="day-header">Sa</th></tr></thead><tbody><tr><td class="day old"></td><td class="day old"></td><td class="day old"></td><td class="day"><div class="day-content">1</div></td><td class="day"><div class="day-content">2</div></td><td class="day"><div class="day-content">3</div></td><td class="day"><div class="day-content">4</div></td></tr><tr><td class="day"><div class="day-content">5</div></td><td class="day"><div class="day-content">6</div></td><td class="day"><div class="day-content">7</div></td><td class="day"><div class="day-content">8</div></td><td class="day"><div class="day-content">9</div></td><td class="day"><div class="day-content">10</div></td><td class="day"><div class="day-content">11</div></td></tr><tr><td class="day"><div class="day-content">12</div></td><td class="day"><div class="day-content">13</div></td><td class="day"><div class="day-content">14</div></td><td class="day"><div class="day-content">15</div></td><td class="day"><div class="day-content">16</div></td><td class="day"><div class="day-content">17</div></td><td class="day"><div class="day-content">18</div></td></tr><tr><td class="day"><div class="day-content">19</div></td><td class="day"><div class="day-content">20</div></td><td class="day"><div class="day-content">21</div></td><td class="day"><div class="day-content">22</div></td><td class="day"><div class="day-content">23</div></td><td class="day"><div class="day-content">24</div></td><td class="day"><div class="day-content">25</div></td></tr><tr><td class="day"><div class="day-content">26</div></td><td class="day"><div class="day-content">27</div></td><td class="day"><div class="day-content">28</div></td><td class="day" style="box-shadow: rgb(245, 187, 0) 0px -4px 0px 0px inset;"><div class="day-content">29</div></td><td class="day" style="box-shadow: rgb(245, 187, 0) 0px -4px 0px 0px inset;"><div class="day-content">30</div></td><td class="day new"></td><td class="day new"></td></tr></tbody></table>
+                    </div>
+                    <div class="month-container col-xs-4">
+                        <table class="month"><thead><tr><th class="month-title" colspan="7">May</th></tr><tr><th class="day-header">Su</th><th class="day-header">Mo</th><th class="day-header">Tu</th><th class="day-header">We</th><th class="day-header">Th</th><th class="day-header">Fr</th><th class="day-header">Sa</th></tr></thead><tbody><tr><td class="day old"></td><td class="day old"></td><td class="day old"></td><td class="day old"></td><td class="day old"></td><td class="day" style="box-shadow: rgb(245, 187, 0) 0px -4px 0px 0px inset;"><div class="day-content">1</div></td><td class="day"><div class="day-content">2</div></td></tr><tr><td class="day"><div class="day-content">3</div></td><td class="day"><div class="day-content">4</div></td><td class="day"><div class="day-content">5</div></td><td class="day"><div class="day-content">6</div></td><td class="day"><div class="day-content">7</div></td><td class="day"><div class="day-content">8</div></td><td class="day"><div class="day-content">9</div></td></tr><tr><td class="day"><div class="day-content">10</div></td><td class="day"><div class="day-content">11</div></td><td class="day"><div class="day-content">12</div></td><td class="day"><div class="day-content">13</div></td><td class="day"><div class="day-content">14</div></td><td class="day"><div class="day-content">15</div></td><td class="day"><div class="day-content">16</div></td></tr><tr><td class="day"><div class="day-content">17</div></td><td class="day"><div class="day-content">18</div></td><td class="day"><div class="day-content">19</div></td><td class="day"><div class="day-content">20</div></td><td class="day"><div class="day-content">21</div></td><td class="day"><div class="day-content">22</div></td><td class="day"><div class="day-content">23</div></td></tr><tr><td class="day"><div class="day-content">24</div></td><td class="day"><div class="day-content">25</div></td><td class="day"><div class="day-content">26</div></td><td class="day"><div class="day-content">27</div></td><td class="day" style="box-shadow: rgb(44, 143, 201) 0px -4px 0px 0px inset;"><div class="day-content">28</div></td><td class="day" style="box-shadow: rgb(44, 143, 201) 0px -4px 0px 0px inset;"><div class="day-content">29</div></td><td class="day"><div class="day-content">30</div></td></tr><tr><td class="day"><div class="day-content">31</div></td><td class="day new"></td><td class="day new"></td><td class="day new"></td><td class="day new"></td><td class="day new"></td><td class="day new"></td></tr></tbody></table>
+                    </div>
+                    <div class="month-container col-xs-4">
+                        <table class="month"><thead><tr><th class="month-title" colspan="7">June</th></tr><tr><th class="day-header">Su</th><th class="day-header">Mo</th><th class="day-header">Tu</th><th class="day-header">We</th><th class="day-header">Th</th><th class="day-header">Fr</th><th class="day-header">Sa</th></tr></thead><tbody><tr><td class="day old"></td><td class="day"><div class="day-content">1</div></td><td class="day"><div class="day-content">2</div></td><td class="day"><div class="day-content">3</div></td><td class="day"><div class="day-content">4</div></td><td class="day"><div class="day-content">5</div></td><td class="day"><div class="day-content">6</div></td></tr><tr><td class="day"><div class="day-content">7</div></td><td class="day"><div class="day-content">8</div></td><td class="day"><div class="day-content">9</div></td><td class="day"><div class="day-content">10</div></td><td class="day"><div class="day-content">11</div></td><td class="day"><div class="day-content">12</div></td><td class="day"><div class="day-content">13</div></td></tr><tr><td class="day"><div class="day-content">14</div></td><td class="day"><div class="day-content">15</div></td><td class="day"><div class="day-content">16</div></td><td class="day"><div class="day-content">17</div></td><td class="day"><div class="day-content">18</div></td><td class="day"><div class="day-content">19</div></td><td class="day"><div class="day-content">20</div></td></tr><tr><td class="day"><div class="day-content">21</div></td><td class="day"><div class="day-content">22</div></td><td class="day"><div class="day-content">23</div></td><td class="day"><div class="day-content">24</div></td><td class="day"><div class="day-content">25</div></td><td class="day"><div class="day-content">26</div></td><td class="day"><div class="day-content">27</div></td></tr><tr><td class="day"><div class="day-content">28</div></td><td class="day"><div class="day-content">29</div></td><td class="day"><div class="day-content">30</div></td><td class="day new"></td><td class="day new"></td><td class="day new"></td><td class="day new"></td></tr></tbody></table>
+                    </div>
+                    <div class="month-container col-xs-4">
+                        <table class="month"><thead><tr><th class="month-title" colspan="7">July</th></tr><tr><th class="day-header">Su</th><th class="day-header">Mo</th><th class="day-header">Tu</th><th class="day-header">We</th><th class="day-header">Th</th><th class="day-header">Fr</th><th class="day-header">Sa</th></tr></thead><tbody><tr><td class="day old"></td><td class="day old"></td><td class="day old"></td><td class="day"><div class="day-content">1</div></td><td class="day"><div class="day-content">2</div></td><td class="day"><div class="day-content">3</div></td><td class="day"><div class="day-content">4</div></td></tr><tr><td class="day"><div class="day-content">5</div></td><td class="day"><div class="day-content">6</div></td><td class="day"><div class="day-content">7</div></td><td class="day"><div class="day-content">8</div></td><td class="day"><div class="day-content">9</div></td><td class="day"><div class="day-content">10</div></td><td class="day"><div class="day-content">11</div></td></tr><tr><td class="day"><div class="day-content">12</div></td><td class="day"><div class="day-content">13</div></td><td class="day"><div class="day-content">14</div></td><td class="day"><div class="day-content">15</div></td><td class="day"><div class="day-content">16</div></td><td class="day"><div class="day-content">17</div></td><td class="day"><div class="day-content">18</div></td></tr><tr><td class="day"><div class="day-content">19</div></td><td class="day"><div class="day-content">20</div></td><td class="day"><div class="day-content">21</div></td><td class="day"><div class="day-content">22</div></td><td class="day"><div class="day-content">23</div></td><td class="day"><div class="day-content">24</div></td><td class="day"><div class="day-content">25</div></td></tr><tr><td class="day"><div class="day-content">26</div></td><td class="day"><div class="day-content">27</div></td><td class="day"><div class="day-content">28</div></td><td class="day"><div class="day-content">29</div></td><td class="day"><div class="day-content">30</div></td><td class="day"><div class="day-content">31</div></td><td class="day new"></td></tr></tbody></table>
+                    </div>
+                    <div class="month-container col-xs-4">
+                        <table class="month"><thead><tr><th class="month-title" colspan="7">August</th></tr><tr><th class="day-header">Su</th><th class="day-header">Mo</th><th class="day-header">Tu</th><th class="day-header">We</th><th class="day-header">Th</th><th class="day-header">Fr</th><th class="day-header">Sa</th></tr></thead><tbody><tr><td class="day old"></td><td class="day old"></td><td class="day old"></td><td class="day old"></td><td class="day old"></td><td class="day old"></td><td class="day"><div class="day-content">1</div></td></tr><tr><td class="day"><div class="day-content">2</div></td><td class="day"><div class="day-content">3</div></td><td class="day"><div class="day-content">4</div></td><td class="day"><div class="day-content">5</div></td><td class="day"><div class="day-content">6</div></td><td class="day"><div class="day-content">7</div></td><td class="day"><div class="day-content">8</div></td></tr><tr><td class="day"><div class="day-content">9</div></td><td class="day"><div class="day-content">10</div></td><td class="day"><div class="day-content">11</div></td><td class="day"><div class="day-content">12</div></td><td class="day"><div class="day-content">13</div></td><td class="day"><div class="day-content">14</div></td><td class="day"><div class="day-content">15</div></td></tr><tr><td class="day"><div class="day-content">16</div></td><td class="day"><div class="day-content">17</div></td><td class="day"><div class="day-content">18</div></td><td class="day"><div class="day-content">19</div></td><td class="day"><div class="day-content">20</div></td><td class="day"><div class="day-content">21</div></td><td class="day"><div class="day-content">22</div></td></tr><tr><td class="day"><div class="day-content">23</div></td><td class="day"><div class="day-content">24</div></td><td class="day" style="box-shadow: rgb(156, 183, 3) 0px -4px 0px 0px inset;"><div class="day-content">25</div></td><td class="day" style="box-shadow: rgb(156, 183, 3) 0px -4px 0px 0px inset;"><div class="day-content">26</div></td><td class="day"><div class="day-content">27</div></td><td class="day"><div class="day-content">28</div></td><td class="day"><div class="day-content">29</div></td></tr><tr><td class="day"><div class="day-content">30</div></td><td class="day"><div class="day-content">31</div></td><td class="day new"></td><td class="day new"></td><td class="day new"></td><td class="day new"></td><td class="day new"></td></tr></tbody></table>
+                    </div>
+                    <div class="month-container col-xs-4">
+                        <table class="month"><thead><tr><th class="month-title" colspan="7">September</th></tr><tr><th class="day-header">Su</th><th class="day-header">Mo</th><th class="day-header">Tu</th><th class="day-header">We</th><th class="day-header">Th</th><th class="day-header">Fr</th><th class="day-header">Sa</th></tr></thead><tbody><tr><td class="day old"></td><td class="day old"></td><td class="day" style="box-shadow: rgb(255, 74, 50) 0px -4px 0px 0px inset;"><div class="day-content">1</div></td><td class="day"><div class="day-content">2</div></td><td class="day"><div class="day-content">3</div></td><td class="day"><div class="day-content">4</div></td><td class="day"><div class="day-content">5</div></td></tr><tr><td class="day"><div class="day-content">6</div></td><td class="day"><div class="day-content">7</div></td><td class="day"><div class="day-content">8</div></td><td class="day" style="box-shadow: rgb(181, 108, 226) 0px -4px 0px 0px inset;"><div class="day-content">9</div></td><td class="day"><div class="day-content">10</div></td><td class="day"><div class="day-content">11</div></td><td class="day"><div class="day-content">12</div></td></tr><tr><td class="day"><div class="day-content">13</div></td><td class="day"><div class="day-content">14</div></td><td class="day"><div class="day-content">15</div></td><td class="day"><div class="day-content">16</div></td><td class="day"><div class="day-content">17</div></td><td class="day"><div class="day-content">18</div></td><td class="day"><div class="day-content">19</div></td></tr><tr><td class="day"><div class="day-content">20</div></td><td class="day"><div class="day-content">21</div></td><td class="day"><div class="day-content">22</div></td><td class="day"><div class="day-content">23</div></td><td class="day"><div class="day-content">24</div></td><td class="day"><div class="day-content">25</div></td><td class="day"><div class="day-content">26</div></td></tr><tr><td class="day"><div class="day-content">27</div></td><td class="day"><div class="day-content">28</div></td><td class="day"><div class="day-content">29</div></td><td class="day"><div class="day-content">30</div></td><td class="day new"></td><td class="day new"></td><td class="day new"></td></tr></tbody></table>
+                    </div>
+                    <div class="month-container col-xs-4">
+                        <table class="month"><thead><tr><th class="month-title" colspan="7">October</th></tr><tr><th class="day-header">Su</th><th class="day-header">Mo</th><th class="day-header">Tu</th><th class="day-header">We</th><th class="day-header">Th</th><th class="day-header">Fr</th><th class="day-header">Sa</th></tr></thead><tbody><tr><td class="day old"></td><td class="day old"></td><td class="day old"></td><td class="day old"></td><td class="day"><div class="day-content">1</div></td><td class="day"><div class="day-content">2</div></td><td class="day"><div class="day-content">3</div></td></tr><tr><td class="day"><div class="day-content">4</div></td><td class="day"><div class="day-content">5</div></td><td class="day"><div class="day-content">6</div></td><td class="day"><div class="day-content">7</div></td><td class="day"><div class="day-content">8</div></td><td class="day"><div class="day-content">9</div></td><td class="day"><div class="day-content">10</div></td></tr><tr><td class="day"><div class="day-content">11</div></td><td class="day"><div class="day-content">12</div></td><td class="day"><div class="day-content">13</div></td><td class="day"><div class="day-content">14</div></td><td class="day"><div class="day-content">15</div></td><td class="day"><div class="day-content">16</div></td><td class="day"><div class="day-content">17</div></td></tr><tr><td class="day"><div class="day-content">18</div></td><td class="day"><div class="day-content">19</div></td><td class="day"><div class="day-content">20</div></td><td class="day"><div class="day-content">21</div></td><td class="day"><div class="day-content">22</div></td><td class="day"><div class="day-content">23</div></td><td class="day"><div class="day-content">24</div></td></tr><tr><td class="day"><div class="day-content">25</div></td><td class="day"><div class="day-content">26</div></td><td class="day"><div class="day-content">27</div></td><td class="day"><div class="day-content">28</div></td><td class="day"><div class="day-content">29</div></td><td class="day"><div class="day-content">30</div></td><td class="day"><div class="day-content">31</div></td></tr></tbody></table>
+                    </div>
+                    <div class="month-container col-xs-4">
+                        <table class="month"><thead><tr><th class="month-title" colspan="7">November</th></tr><tr><th class="day-header">Su</th><th class="day-header">Mo</th><th class="day-header">Tu</th><th class="day-header">We</th><th class="day-header">Th</th><th class="day-header">Fr</th><th class="day-header">Sa</th></tr></thead><tbody><tr><td class="day"><div class="day-content">1</div></td><td class="day"><div class="day-content">2</div></td><td class="day"><div class="day-content">3</div></td><td class="day"><div class="day-content">4</div></td><td class="day"><div class="day-content">5</div></td><td class="day"><div class="day-content">6</div></td><td class="day"><div class="day-content">7</div></td></tr><tr><td class="day"><div class="day-content">8</div></td><td class="day"><div class="day-content">9</div></td><td class="day"><div class="day-content">10</div></td><td class="day"><div class="day-content">11</div></td><td class="day"><div class="day-content">12</div></td><td class="day"><div class="day-content">13</div></td><td class="day"><div class="day-content">14</div></td></tr><tr><td class="day"><div class="day-content">15</div></td><td class="day"><div class="day-content">16</div></td><td class="day" style="box-shadow: rgb(69, 165, 151) 0px -2px 0px 0px inset, rgb(255, 74, 50) 0px -4px 0px 0px inset;"><div class="day-content">17</div></td><td class="day" style="box-shadow: rgb(69, 165, 151) 0px -4px 0px 0px inset;"><div class="day-content">18</div></td><td class="day"><div class="day-content">19</div></td><td class="day"><div class="day-content">20</div></td><td class="day"><div class="day-content">21</div></td></tr><tr><td class="day"><div class="day-content">22</div></td><td class="day"><div class="day-content">23</div></td><td class="day"><div class="day-content">24</div></td><td class="day"><div class="day-content">25</div></td><td class="day"><div class="day-content">26</div></td><td class="day"><div class="day-content">27</div></td><td class="day"><div class="day-content">28</div></td></tr><tr><td class="day"><div class="day-content">29</div></td><td class="day"><div class="day-content">30</div></td><td class="day new"></td><td class="day new"></td><td class="day new"></td><td class="day new"></td><td class="day new"></td></tr></tbody></table>
+                    </div>
+                    <div class="month-container col-xs-4">
+                        <table class="month">
+                            <thead>
+                                <tr>
+                                    <th class="month-title" colspan="7">December</th></tr><tr><th class="day-header">Su</th><th class="day-header">Mo</th><th class="day-header">Tu</th><th class="day-header">We</th><th class="day-header">Th</th><th class="day-header">Fr</th><th class="day-header">Sa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="day old"></td><td class="day old"></td><td class="day" style="box-shadow: rgb(245, 187, 0) 0px -4px 0px 0px inset;"><div class="day-content">1</div></td><td class="day" style="box-shadow: rgb(245, 187, 0) 0px -4px 0px 0px inset;"><div class="day-content">2</div></td><td class="day" style="box-shadow: rgb(245, 187, 0) 0px -4px 0px 0px inset;"><div class="day-content">3</div></td><td class="day" style="box-shadow: rgb(245, 187, 0) 0px -4px 0px 0px inset;"><div class="day-content">4</div></td><td class="day"><div class="day-content">5</div></td></tr><tr><td class="day"><div class="day-content">6</div></td><td class="day"><div class="day-content">7</div></td><td class="day"><div class="day-content">8</div></td><td class="day"><div class="day-content">9</div></td><td class="day"><div class="day-content">10</div></td><td class="day"><div class="day-content">11</div></td><td class="day"><div class="day-content">12</div></td></tr><tr><td class="day"><div class="day-content">13</div></td><td class="day"><div class="day-content">14</div></td><td class="day"><div class="day-content">15</div></td><td class="day"><div class="day-content">16</div></td><td class="day"><div class="day-content">17</div></td><td class="day"><div class="day-content">18</div></td><td class="day"><div class="day-content">19</div></td></tr><tr><td class="day"><div class="day-content">20</div></td><td class="day"><div class="day-content">21</div></td><td class="day"><div class="day-content">22</div></td><td class="day"><div class="day-content">23</div></td><td class="day"><div class="day-content">24</div></td><td class="day"><div class="day-content">25</div></td><td class="day"><div class="day-content">26</div></td></tr><tr><td class="day"><div class="day-content">27</div></td><td class="day"><div class="day-content">28</div></td><td class="day"><div class="day-content">29</div></td><td class="day"><div class="day-content">30</div></td><td class="day"><div class="day-content">31</div></td><td class="day new"></td><td class="day new"></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-fade" id="event-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title">
+					Event
+				</h4>
+                </div>
+                <div class="modal-body">
+				    <input type="hidden" name="event-index">
+				    <form class="form-horizontal">
+					<div class="form-group">
+						<label for="min-date" class="col-sm-4 control-label">Name</label>
+						<div class="col-sm-7">
+							<input name="event-name" type="text" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="min-date" class="col-sm-4 control-label">Location</label>
+						<div class="col-sm-7">
+							<input name="event-location" type="text" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="min-date" class="col-sm-4 control-label">Dates</label>
+						<div class="col-sm-7">
+							<div class="input-group input-daterange" data-provide="datepicker">
+								<input name="event-start-date" type="text" class="form-control" value="2012-04-05">
+								<span class="input-group-addon">to</span>
+								<input name="event-end-date" type="text" class="form-control" value="2012-04-19">
+							</div>
+						</div>
+                    </div>
+                    </form>
+			        </div>
+                    <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				        <button type="button" class="btn btn-primary" id="save-event">
+					       Save
+				        </button>
+			        </div>
+                </div>
+            </div>
+        </div>
+        <div id="context-menu"></div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <div class="site-content"></div>
+</div>
+		
+<script src="./bootstrap-year-calendar/respond.min.js"></script>
+<script src="./bootstrap-year-calendar/jquery-1.10.2.min.js"></script>
+<script src="./bootstrap-year-calendar/bootstrap.min.js"></script>
+<script src="./bootstrap-year-calendar/bootstrap-datepicker.min.js"></script>
+<script src="./bootstrap-year-calendar/bootstrap-year-calendar.min.js"></script>
+<script src="./bootstrap-year-calendar/bootstrap-popover.js"></script>
+<script src="./bootstrap-year-calendar/scripts.js"></script>
+		
+</body>
+
+<style>
+.event-tooltip-content:not(:last-child) {
+    border-bottom:1px solid #ddd;
+    padding-bottom:5px;
+    margin-bottom:5px;
+}
+
+.event-tooltip-content .event-title {
+    font-size:18px;
+}
+
+.event-tooltip-content .event-location {
+    font-size:12px;
+}
+</style>
+<script type="text/javascript" class="publish">
+function editEvent(event) {
+    $('#event-modal input[name="event-index"]').val(event ? event.id : '');
+    $('#event-modal input[name="event-name"]').val(event ? event.name : '');
+    $('#event-modal input[name="event-location"]').val(event ? event.location : '');
+    $('#event-modal input[name="event-start-date"]').datepicker('update', event ? event.startDate : '');
+    $('#event-modal input[name="event-end-date"]').datepicker('update', event ? event.endDate : '');
+    $('#event-modal').modal();
+}
+
+function deleteEvent(event) {
+    var dataSource = $('#calendar').data('calendar').getDataSource();
+
+    for(var i in dataSource) {
+        if(dataSource[i].id == event.id) {
+            dataSource.splice(i, 1);
+            break;
+        }
+    }
+    
+    $('#calendar').data('calendar').setDataSource(dataSource);
+}
+
+function saveEvent() {
+    var event = {
+        id: $('#event-modal input[name="event-index"]').val(),
+        name: $('#event-modal input[name="event-name"]').val(),
+        location: $('#event-modal input[name="event-location"]').val(),
+        startDate: $('#event-modal input[name="event-start-date"]').datepicker('getDate'),
+        endDate: $('#event-modal input[name="event-end-date"]').datepicker('getDate')
+    }
+    
+    alert(JSON.stringify(event));
+    
+    var dataSource = $('#calendar').data('calendar').getDataSource();
+
+    if(event.id) {
+        for(var i in dataSource) {
+            if(dataSource[i].id == event.id) {
+                dataSource[i].name = event.name;
+                dataSource[i].location = event.location;
+                dataSource[i].startDate = event.startDate;
+                dataSource[i].endDate = event.endDate;
+            }
+        }
+    }
+    else
+    {
+        var newId = 0;
+        for(var i in dataSource) {
+            if(dataSource[i].id > newId) {
+                newId = dataSource[i].id;
+            }
+        }
+        
+        newId++;
+        event.id = newId;
+    
+        dataSource.push(event);
+    }
+
+    $('#calendar').data('calendar').setDataSource(dataSource);
+    $('#event-modal').modal('hide');
+}
+
+$(function() {
+    var currentYear = new Date().getFullYear();
+
+    $('#calendar').calendar({ 
+        enableContextMenu: true,
+        enableRangeSelection: true,
+        contextMenuItems:[
+            {
+                text: 'Update',
+                click: editEvent
+            },
+            {
+                text: 'Delete',
+                click: deleteEvent
+            }
+        ],
+        selectRange: function(e) {
+            editEvent({ startDate: e.startDate, endDate: e.endDate });
+        },
+        mouseOnDay: function(e) {
+            if(e.events.length > 0) {
+                var content = '';
+                
+                for(var i in e.events) {
+                    content += '<div class="event-tooltip-content">'
+                                    + '<div class="event-name" style="color:' + e.events[i].color + '">' + e.events[i].name + '</div>'
+                                    + '<div class="event-location">' + e.events[i].location + '</div>'
+                                + '</div>';
+                }
+            
+                $(e.element).popover({ 
+                    trigger: 'manual',
+                    container: 'body',
+                    html:true,
+                    content: content
+                });
+                
+                $(e.element).popover('show');
+            }
+        },
+        mouseOutDay: function(e) {
+            if(e.events.length > 0) {
+                $(e.element).popover('hide');
+            }
+        },
+        dayContextMenu: function(e) {
+            $(e.element).popover('hide');
+        },
+        dataSource: [
+            {
+                id: 0,
+                name: 'Google I/O',
+                location: 'San Francisco, CA',
+                startDate: new Date(currentYear, 4, 28),
+                endDate: new Date(currentYear, 4, 29)
+            },
+            {
+                id: 1,
+                name: 'Microsoft Convergence',
+                location: 'New Orleans, LA',
+                startDate: new Date(currentYear, 2, 16),
+                endDate: new Date(currentYear, 2, 19)
+            },
+            {
+                id: 2,
+                name: 'Microsoft Build Developer Conference',
+                location: 'San Francisco, CA',
+                startDate: new Date(currentYear, 3, 29),
+                endDate: new Date(currentYear, 4, 1)
+            },
+            {
+                id: 3,
+                name: 'Apple Special Event',
+                location: 'San Francisco, CA',
+                startDate: new Date(currentYear, 8, 1),
+                endDate: new Date(currentYear, 8, 1)
+            },
+            {
+                id: 4,
+                name: 'Apple Keynote',
+                location: 'San Francisco, CA',
+                startDate: new Date(currentYear, 8, 9),
+                endDate: new Date(currentYear, 8, 9)
+            },
+            {
+                id: 5,
+                name: 'Chrome Developer Summit',
+                location: 'Mountain View, CA',
+                startDate: new Date(currentYear, 10, 17),
+                endDate: new Date(currentYear, 10, 18)
+            },
+            {
+                id: 6,
+                name: 'F8 2015',
+                location: 'San Francisco, CA',
+                startDate: new Date(currentYear, 2, 25),
+                endDate: new Date(currentYear, 2, 26)
+            },
+            {
+                id: 7,
+                name: 'Yahoo Mobile Developer Conference',
+                location: 'New York',
+                startDate: new Date(currentYear, 7, 25),
+                endDate: new Date(currentYear, 7, 26)
+            },
+            {
+                id: 8,
+                name: 'Android Developer Conference',
+                location: 'Santa Clara, CA',
+                startDate: new Date(currentYear, 11, 1),
+                endDate: new Date(currentYear, 11, 4)
+            },
+            {
+                id: 9,
+                name: 'LA Tech Summit',
+                location: 'Los Angeles, CA',
+                startDate: new Date(currentYear, 10, 17),
+                endDate: new Date(currentYear, 10, 17)
+            }
+        ]
+    });
+    
+    $('#save-event').click(function() {
+        saveEvent();
+    });
+});
+</script>
+</html>
