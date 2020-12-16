@@ -1,0 +1,40 @@
+<div data-provide="calendar"></div>
+
+<link rel="stylesheet" type="text/css" href="./dist/js-year-calendar.css"/>
+<script src="./dist/js-year-calendar.js"></script>
+<script src="./locales/js-year-calendar.ko.js"></script>
+<script>
+/**
+    import Calendar from 'js-year-calendar';
+    import 'js-year-calendar/dist/js-year-calendar.css';
+**/
+    $( document ).ready(function() {
+        $('#calendar').calendar();
+    });
+
+    $(function() {
+        var currentYear = new Date().getFullYear();
+
+        var redDateTime = new Date(currentYear, 2, 13).getTime();
+        var circleDateTime = new Date(currentYear, 1, 20).getTime();
+        var borderDateTime = new Date(currentYear, 0, 12).getTime();
+
+        new Calendar('#calendar').calendar({
+            customDayRenderer: function(element, date) {
+                if(date.getTime() == redDateTime) {
+                    $(element).css('font-weight', 'bold');
+                    $(element).css('font-size', '15px');
+                    $(element).css('color', 'green');
+                }
+                else if(date.getTime() == circleDateTime) {
+                    $(element).css('background-color', 'red');
+                    $(element).css('color', 'white');
+                    $(element).css('border-radius', '15px');
+                }
+                else if(date.getTime() == borderDateTime) {
+                    $(element).css('border', '2px solid blue');
+                }
+            }
+        });
+    });
+</script>
