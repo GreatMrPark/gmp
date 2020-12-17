@@ -1,0 +1,15 @@
+CALENDAR                      calendar                      일정                            
+      ID                            AS id                         /* 일련번호 */                    
+      YYYY                          AS yyyy                       /* 연도 */                      
+      START_DATE                    AS startDate                  /* 시작일 */                     
+      END_DATE                      AS endDate                    /* 종료일 */                     
+      TITLE                         AS title                      /* 제목 */                      
+      CONTENTS                      AS contents                   /* 내용 */                      
+      LOCATION                      AS location                   /* 위치 */                      
+      REG_NAME                      AS regName                    /* 등록자 */                     
+      REG_ID                        AS regId                      /* 등록자 */                     
+      REG_DATE                      AS regDate                    /* 등록일 */                     
+      UPD_NAME                      AS updName                    /* 수정자 */                     
+      UPD_ID                        AS updId                      /* 수정자 */                     
+      UPD_DATE                      AS updDate                    /* 수정일 */                     
+      --14
