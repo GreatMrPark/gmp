@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>Diagram - flowchart</title>
+<link rel="stylesheet" href="./css/style.css" />
+<style>
+.flowchart {
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+}
+</style>
+</head>
+<body>
+<div id="layout" style="margin-top:10px;">
+    <header><h1>샘플1</h1></header>
+    <div class="flowchart">
+st=>start: User login
+op=>operation: Login operation
+cond=>condition: Login successful Yes or No ?
+e=>end: Into admin panel
+
+st->op->cond
+cond(yes)->e
+cond(no)->op
+    </div>
+    
+    <header><h1>샘플2</h1></header>
+    <div class="flowchart">
+st=>start: Start:>http://www.google.com[blank]
+e=>end:>http://www.google.com
+op1=>operation: My Operation
+sub1=>subroutine: My Subroutine
+cond=>condition: Yes or No?:>http://www.google.com 
+io=>inputoutput: catch something...
+
+st->op1->cond
+cond(yes)->io->e
+cond(no)->sub1(right)->op1
+    </div>
+</div>
+</body>
+</html>
+
+<script src="./js/raphael.min.js"></script>
+<script src="./js/jquery.min.js"></script>
+<script src="./js/flowchart.min.js"></script>
+<script src="./js/jquery.flowchart.js"></script>
+<script type="text/javascript">
+$(function() {
+    $(".flowchart").flowChart({
+        "line-color"    : "#E91E63",
+        "element-color" : "#263238",
+        "symbols"       : {
+            "start"     : {
+                "element-color" : "#E91E63",
+                "fill"          : "#E91E63"
+            }
+        },
+    });
+});
+</script>
