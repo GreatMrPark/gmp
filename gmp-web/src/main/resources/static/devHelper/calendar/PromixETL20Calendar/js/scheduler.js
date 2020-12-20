@@ -8,7 +8,6 @@ var gDayDiff = -10;
 var gDecimalPoint = 1;
 var gDataSource = {};
 
-
 //--------------------------------------------------------------------------------
 //초기화
 //--------------------------------------------------------------------------------
@@ -82,7 +81,7 @@ var fnSetDataSource = function(currentYear) {
 //fnRenderEnd
 //--------------------------------------------------------------------------------
 var fnRenderEnd = function(e) {
-//    console.log(e);
+    console.log(e);
     fnSetYear(e.currentYear);
 //    console.log(e.date);
 }
@@ -91,14 +90,59 @@ var fnRenderEnd = function(e) {
 //fnSelectRange
 //--------------------------------------------------------------------------------
 var fnSelectRange = function(e) {
-    console.log(e);
+//    console.log(e);
+    fnSetBackgroundColor({ startDate: e.startDate, endDate: e.endDate });
 }
 
 //--------------------------------------------------------------------------------
 //fnSelectRange
 //--------------------------------------------------------------------------------
 var fnClickDay = function (e) {
-    console.log(e);
+
+}
+
+//--------------------------------------------------------------------------------
+//fnSetBackgroundColor
+//--------------------------------------------------------------------------------
+var fnSetBackgroundColor = function(e) {
+    var json = {};
+    json.date = e.startDate;
+    var event = {
+        id: '',
+        name: JSON.stringify(json),
+        location: '',
+        startDate: e.startDate,
+        endDate: e.endDate
+    }
+    
+    var dataSource = $('#calendar').data('calendar').getDataSource();
+
+    if(event.id) {
+        for(var i in dataSource) {
+            if(dataSource[i].id == event.id) {
+                dataSource[i].name = event.name;
+                dataSource[i].location = event.location;
+                dataSource[i].startDate = event.startDate;
+                dataSource[i].endDate = event.endDate;
+            }
+        }
+    }
+    else
+    {
+        var newId = 0;
+        for(var i in dataSource) {
+            if(dataSource[i].id > newId) {
+                newId = dataSource[i].id;
+            }
+        }
+        
+        newId++;
+        event.id = newId;
+    
+        dataSource.push(event);
+    }
+    
+    $('#calendar').data('calendar').setDataSource(dataSource);
 }
 
 //--------------------------------------------------------------------------------
@@ -197,21 +241,21 @@ $(function() {
         language: 'ko',
         enableContextMenu: false,
         enableRangeSelection: true,
-        customDayRenderer: function(element, date) {
-            if(date.getTime() == redDateTime) {
-                $(element).css('font-weight', 'bold');
-                $(element).css('font-size', '15px');
-                $(element).css('color', 'green');
-            }
-            else if(date.getTime() == circleDateTime) {
-                $(element).css('background-color', 'red');
-                $(element).css('color', 'white');
-                $(element).css('border-radius', '15px');
-            }
-            else if(date.getTime() == borderDateTime) {
-                $(element).css('border', '2px solid blue');
-            }
-        },
+//        customDayRenderer: function(element, date) {
+//            if(date.getTime() == redDateTime) {
+//                $(element).css('font-weight', 'bold');
+//                $(element).css('font-size', '15px');
+//                $(element).css('color', 'green');
+//            }
+//            else if(date.getTime() == circleDateTime) {
+//                $(element).css('background-color', 'red');
+//                $(element).css('color', 'white');
+//                $(element).css('border-radius', '15px');
+//            }
+//            else if(date.getTime() == borderDateTime) {
+//                $(element).css('border', '2px solid blue');
+//            }
+//        },
 //        contextMenuItems:[
 //            {
 //                text: 'Update',
@@ -233,7 +277,7 @@ $(function() {
                 for(var i in e.events) {
                     content += '<div class="event-tooltip-content">'
                                     + '<div class="event-name" style="color:' + e.events[i].color + '">' + e.events[i].name + '</div>'
-                                    + '<div class="event-location">' + e.events[i].location + '</div>'
+//                                    + '<div class="event-location">' + e.events[i].location + '</div>'
                                 + '</div>';
                 }
             
@@ -339,13 +383,13 @@ $(function() {
     
     /**
      * data get
-    fnGetDataSource();
      */
+    fnGetDataSource();
     
     /**
      * data init
-    fnInitDataSource();
      */
+    fnInitDataSource();
     
     /**
      * data set
