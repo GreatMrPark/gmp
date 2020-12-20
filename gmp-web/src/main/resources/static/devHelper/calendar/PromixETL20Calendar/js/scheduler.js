@@ -91,14 +91,17 @@ var fnRenderEnd = function(e) {
 //--------------------------------------------------------------------------------
 var fnSelectRange = function(e) {
 //    console.log(e);
-    fnSetBackgroundColor({ startDate: e.startDate, endDate: e.endDate });
 }
 
 //--------------------------------------------------------------------------------
 //fnSelectRange
 //--------------------------------------------------------------------------------
 var fnClickDay = function (e) {
-
+    console.log(e);
+    var json = {};
+    json.date = e.date;
+    alert(JSON.stringify(json));
+    fnSetBackgroundColor({ startDate: e.date, endDate: e.date });
 }
 
 //--------------------------------------------------------------------------------
