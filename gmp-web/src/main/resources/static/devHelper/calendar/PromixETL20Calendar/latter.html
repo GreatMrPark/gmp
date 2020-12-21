@@ -22,8 +22,6 @@
     .scriptCalendar > tbody > tr > td { width:50px;height:50px; }
 </style>
 
-<script src="./js/jquery-1.10.2.min.js"></script>
-<script src="./js/common.js"></script>
 <script type="text/javascript">
 var gCalendarData = [];
 var gCalendarDataJson = {};
@@ -239,7 +237,6 @@ function monthCalendar(objectName, month) {
             var year = today.getFullYear();
 
             var columnBgColor = fnColumnBgColor(year, month, day);
-            console.log(columnBgColor);
             
             // @details 현재월과 선택월이 같은경우
             if(today.getMonth() == date.getMonth()) {
@@ -331,7 +328,6 @@ function calendarChoiceDay(column, year, month, day) {
     workMonth = autoLeftPad(workMonth,2);
     workDay   = autoLeftPad(workDay,2);
     var workDate = workYear + '-' + workMonth + '-' + workDay;
-    console.log(workDate);
 
     var selectedYN = "Y";
     if (column.style.backgroundColor == "rgb(255, 255, 255)") {
@@ -389,6 +385,19 @@ function autoLeftPad(num, digit) {
     }
     return num;
 }
+
+//--------------------------------------------------------------------------------
+//fnIsEmpty
+//--------------------------------------------------------------------------------
+var fnIsEmpty = function(value) { 
+ if ( value == "" ) { value += ''; } // 정수 0인 경우 
+ if( value == "" || value == null || value == undefined ||
+   ( value != null && typeof value == "object" && !Object.keys(value).length ) ) {
+     return true 
+ } else {
+     return false 
+ } 
+};
 
 /**
  * 년 달력 생성
