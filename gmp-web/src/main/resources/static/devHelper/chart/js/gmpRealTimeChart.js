@@ -17,7 +17,7 @@ var realtime = {
             data: {
                 x: 'x',
                 columns: this.getInitData(5),
-                type: "bar"
+                type: "area"
             },
             axis: {
                 x: {
