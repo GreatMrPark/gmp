@@ -106,7 +106,6 @@ function socketInit(){
             }
         }
     });
-
 }
 
 //--------------------------------------------------------------------------------
@@ -282,11 +281,7 @@ function fnSetChat(data) {
     config.axis.x.show = true;
     config.axis.y = {show:true, label:"%"};
     config.axis.rotated = false;
-//    config.bar.width = 25;
-//    config.bar.padding = 15;
     config.data.labels = false;
-//    config.data.axes = {"미터수" : "y2"};
-//    config.axis.y2 = {show : true};
 
     GMPBillboardChart.chartDateStr(config, chartCycle);
     chartObjArr.push(bb.generate( config ));
