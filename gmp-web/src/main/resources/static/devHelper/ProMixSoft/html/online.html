@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="keywords" content="">
+<meta name="description" lang="ko" content="">
+<meta name="viewport" content="width=1920">
+<title>ProMixSoft | FW Server</title>
+
+<link rel="stylesheet" type="text/css" href="../css/notosanskr.css">
+<link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+
+<script type="text/javascript" src="../js/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../js/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+<style>
+    .ui-autocomplete { position: absolute; cursor: default;z-index:201 !important;}
+</style>
+</head>
+
+<body class="">
+<!-- header -->
+<div class="header">
+    <div class="inwrap">
+        <h1><a href="dashboard.html" class="logo" alt="ProMixSoft | FW Server">&nbsp;</a></h1>
+        <ul class="nav">
+           <li class="on"><a href="online.html">온라인</a></li>
+           <li><a href="#">배치</a></li>
+           <li><a href="#">분석</a></li>
+           <li><a href="#">시스템</a></li>
+           <li><a href="GMPCalendar.html">스케쥴러</a></li>
+           <li><a href="chart.html">챠트</a></li>
+           <li><a href="flowcharty.html">순서도</a></li>
+           <li><a href="calendar.html">일정</a></li>
+        </ul>
+
+        <div class="top_links">
+            <a href="#" class="btn_logout" title="로그아웃">로그아웃</a>            
+        </div>
+    </div>  
+</div>
+<!-- //header -->
+<!-- 
+<div class="top_title">
+    <h2>온라인</h2>          
+    <div class="top_title">
+            <div class="search_area">
+                <ul class="tabs tabs_basic clearfix" id="tab에너지">
+                    <li class="elec on" data="elec">전기</li>
+                    <li class="gas" data="gas">가스</li>
+                    <li class="water" data="water">수도</li>
+                    <li class="hotw" data="hotw">온수</li>
+                    <li class="heat" data="heat">난방</li>
+                    <li class="etc" data="etc">신재생</li>
+                </ul>
+                <select class="ml_10" id="sel전기" style="display: none;">
+                    <option value="fap">유효전력량</option>
+                    <option value="larap">지상무효전력량</option>
+                    <option value="lerap">진상무효전력량</option>
+                    <option value="ap">피상전력량</option>
+                </select>
+                
+                <select class="ml_10" id="sel난방" style="display:none;">
+                    <option value="flow">적산유량</option>
+                    <option value="kcal">적산열량</option>                                      
+                </select>               
+            </div>
+            <div class="opt_r">
+                <span><span id="today">2021-01-03</span>일 기준</span>
+            </div>
+        </div>
+</div>
+ -->            
+<!-- container -->
+<div class="container"> 
+    
+    <!-- left 영역 -->
+    <button class="btn_tree" title="대상선택 닫기"><span class="blind">닫기</span></button>
+    <div class="device_wrap">
+        <div class="lnb">
+            <ul class="menu">
+                 <li class=""><a href="#"><span class="ico01">서비스 관리</span></a>
+                     <ul class="sub_menu" style="display: none;">
+                         <li class="on"><a href="#">서비스 01</a></li>
+                         <li><a href="#">서비스 02</a></li>
+                     </ul>
+                 </li>
+                 <li class="on"><a href="#"><span class="ico01">캐시 관리</span></a>
+                     <ul class="sub_menu" style="display: ;">
+                         <li class="on"><a href="#">TBD 01</a></li>
+                         <li><a href="#">TBD 02</a></li>
+                         <li><a href="#">TBD 03</a></li>
+                         <li><a href="#">TBD 04</a></li>
+                         <li><a href="#">TBD 05</a></li>
+                     </ul>
+                 </li>
+                 <li class=""><a href="#"><span class="ico01">로그 관리</span></a>
+                     <ul class="sub_menu" style="display: none;">
+                         <li class="on"><a href="#">로그 01</a></li>
+                         <li><a href="#">로그 02</a></li>
+                     </ul>
+                 </li>
+             </ul>
+          </div>
+      </div>
+     <!-- //left 영역 -->
+
+    <!-- content 영역 --> 
+    <div class="content_wrap on_tree">
+        <!-- tree_pane "동" -->
+        <div class="tree_pane pane_dong on">        
+            <div class="top_title">
+                <h2>JOB</h2>          
+            </div>
+            <div class="content">
+                   
+                <div class="panel"> 
+                    <div class="panel_head">
+                        <h3>목록</h3>
+                        <!-- 
+                        <div class="opt_r btn_group">                           
+                            <button class="btn btn_blue" onClick="popup_open('.pop_regist_dong'); emptyRegDong();">등록</button>
+                            <button class="btn btn_blue" id="modDongOpenBtn">수정</button>
+                            <button class="btn btn_blue" id="delDongBtn">삭제</button>
+                        </div> -->
+                    </div>
+                    <div class="panel_body pd_10">
+                        <div class="table_wrap check_grp_wrap">
+                                <table class="table" id="dongTable">
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" class="checkAll" id="chk_dong_all"><label for="chk_dong_all"></label></th>
+                                            <th data="GRID_CUSTORM_SEQ">No</th>
+                                            <th data="dongName">TransID</th>
+                                            <th data="connGIndex">Trans명</th>
+                                            <th data="connMIndex">설명</th>
+                                            <th data="fnum">상세설명</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                          <!-- paging -->
+                          <div class="pagination">
+                              <ul class="clearfix">
+                                  <li class="p_img page-first"><a href="#">처음</a></li>
+                                  <li class="p_img page-prev"><a href="#">이전</a></li>
+                                  <li class="on"><a href="#">1</a></li>                         
+                                  <li class="p_img page-next"><a href="#">다음</a></li>
+                                  <li class="p_img page-last"><a href="#">마지막</a></li>
+                              </ul>
+                          </div>
+                          <!-- //paging -->
+                    </div>
+                </div>      
+            </div>
+        </div>
+        <!-- tree_pane "동" -->
+
+    </div>
+    <!-- //content 영역 -->
+    
+</div>  
+<!-- //container -->
+
+<script type="text/javascript" src="../js/layout.js"></script> 
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../dev/online.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="keywords" content="">
+<meta name="description" lang="ko" content="">
+<meta name="viewport" content="width=1920">
+<title>ProMixSoft | FW Server</title>
+
+<link rel="stylesheet" type="text/css" href="../css/notosanskr.css">
+<link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+
+<!--billboard-->
+<link rel="stylesheet" type="text/css" href="../css/billboard/billboard.css">
+<link rel="stylesheet" type="text/css" href="../css/billboard/insight.css">
+<!--billboard-->
+
+<script type="text/javascript" src="../js/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery-ui.min.js"></script>
+
+<!--billboard-->
+<script type="text/javascript" src="../js/billboard/d3.v5.min.js"></script>
+<script type="text/javascript" src="../js/billboard/billboard.js"></script>
+<!--billboard-->
+
+<script type="text/javascript" src="../js/d3/d3.v3.min.js"></script>
+<script type="text/javascript" src="../js/d3/d3.tip.v0.6.3.js"></script>
+
+<script type="text/javascript" src="../js/handlebars-v4.1.2.js"></script>
+<script type="text/javascript" src="../js/helpers.js"></script>
+
+</head>
+
+<body class="">
+<!-- header -->
+<div class="header">
+    <div class="inwrap">
+        <h1><a href="dashboard.html" class="logo" alt="ProMixSoft | FW Server">&nbsp;</a></h1>
+        <ul class="nav">
+           <li class="on"><a href="online.html">온라인</a></li>
+           <li><a href="#">배치</a></li>
+           <li><a href="#">분석</a></li>
+           <li><a href="#">시스템</a></li>
+           <li><a href="GMPCalendar.html">스케쥴러</a></li>
+           <li><a href="chart.html">챠트</a></li>
+           <li><a href="flowcharty.html">순서도</a></li>
+           <li><a href="calendar.html">일정</a></li>
+        </ul>
+
+        <div class="top_links">
+            <a href="#" class="btn_logout" title="로그아웃">로그아웃</a>            
+        </div>
+    </div>  
+</div>
+<!-- //header -->
+<!-- container -->
+<div class="container"> 
+    <div class="inwrap">
+        <!-- //에너지별 사용현황 (종합) -->
+        <div class="wrap">
+            <div class="row row01">
+                <div class="panel_b">
+                    <!-- 에너지 사용 현황 -->
+                    <div class="div3 w_32p">
+                        <div class="panel_head">
+                            <h3>배치 작업 상태 실시간</h3>
+                        </div>
+                        <div class="panel_body clearfix">
+                            <div class="div2 w_56p">
+                                <div class="graph_wrap" id="todayUsageChartBox" style=""></div>
+                            </div>
+                            <div class="div2 w_44p graph_info" id="todayUsageSumBox">
+                                <dl id="todayUsage_elec"><dt class="txt_elec">성공</dt><dd>-<span class="txt_unit"></span></dd></dl>
+                                <dl id="todayUsage_gas"><dt class="txt_gas">진행</dt><dd>-<span class="txt_unit"></span></dd></dl>
+                                <dl id="todayUsage_water"><dt class="txt_water">실패</dt><dd>-<span class="txt_unit"></span></dd></dl>
+                                <dl id="todayUsage_hotw"><dt class="txt_hotw">로컬</dt><dd>-<span class="txt_unit"></span></dd></dl>
+                                <dl id="todayUsage_heat"><dt class="txt_heat">개발</dt><dd>-<span class="txt_unit"></span></dd></dl>
+                                <dl id="todayUsage_etc"><dt class="txt_etc">검증</dt><dd>-<span class="txt_unit"></span></dd></dl>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // 에너지 사용 현황 -->
+                    <!-- 날씨 -->
+                    <div class="div3 w_31p" id="weatherBox">
+                        <div class="panel_head">
+                            <h3>현재 수행중인 배치</h3>
+                        </div>
+                        <div class="panel_body clearfix">
+                            <div class="div2 w_56p">
+                                <div class="graph_wrap" id="readUsageChartBox" style=""></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // 날씨 -->
+                    <!-- 기기 점검 필요 내역 -->
+                    <div class="div3 w_37p">
+                        <div class="panel_head">
+                            <h3>배치 오류 내역<span class="txt_yellow">0건</span></h3>
+                            <div class="opt_r">
+                                <a href="#">전체보기</a>
+                            </div>
+                        </div>
+                        <div class="panel_body pd_10">
+                            <div class="scroll_y">
+                            <table class="table_home">
+                                <colgroup>
+                                    <col style="">
+                                    <col style="width:120px">
+                                    <col style="width:170px">
+                                    <col style="width:110px">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="4">배치 오류 내역이 없습니다.</td>
+                                    </tr>
+                                </tbody>
+                            </table></div>
+                        </div>                  
+                    </div>
+                    <!-- // 기기 점검 필요 내역 -->
+                </div>
+            </div>
+            
+            <div class="row clearfix">
+                <!-- 로컬 사용 현황 -->
+                <div class="div2">
+                    <div class="panel_b">
+                        <div class="panel_head">
+                            <h3>로컬 현황</h3>
+                        </div>
+                        <div class="panel_body clearfix">
+                            <div class="div3 w_40p">
+                                <div class="graph_wrap" id="chartelecpiebox">차트 영역</div>
+                            </div>
+                            <div class="div3 w_60p">
+                                <div class="graph_wrap" id="chartElecBox">차트 영역</div>
+                            </div>                          
+                        </div>
+                    </div>                  
+                </div>
+                <!-- //로컬 사용 현황 -->
+                <!-- 개발 사용 현황 -->
+                <div class="div2">
+                    <div class="panel_b">
+                        <div class="panel_head">
+                            <h3>개발 사용 현황</h3>
+                        </div>
+                        <div class="panel_body clearfix">
+                            <div class="div3 w_40p">
+                                <div class="graph_wrap" id="chartgaspiebox">차트 영역</div>
+                            </div>
+                            <div class="div3 w_60p">
+                                <div class="graph_wrap" id="chartGasBox">차트 영역</div>
+                            </div>                          
+                        </div>
+                    </div>
+                </div>
+                <!-- //개발 사용 현황 -->
+            </div>
+            
+            <div class="row clearfix">
+                <!-- 검증 사용 현황 -->
+                <div class="div2">
+                    <div class="panel_b">
+                        <div class="panel_head">
+                            <h3>검증 사용 현황</h3>
+                        </div>
+                        <div class="panel_body clearfix">
+                            <div class="div3 w_40p">
+                                <div class="graph_wrap" id="chartwaterpiebox">차트 영역</div>
+                            </div>
+                            <div class="div3 w_60p">
+                                <div class="graph_wrap" id="chartWaterBox">차트 영역</div>
+                            </div>                          
+                        </div>
+                    </div>                  
+                </div>
+                <!-- //검증 사용 현황 -->
+                <!-- 성공 사용 현황 -->
+                <div class="div2">
+                    <div class="panel_b">
+                        <div class="panel_head">
+                            <h3>성공 사용 현황</h3>
+                        </div>
+                        <div class="panel_body clearfix">
+                            <div class="div3 w_40p">
+                                <div class="graph_wrap" id="charthotwpiebox">차트 영역</div>
+                            </div>
+                            <div class="div3 w_60p">
+                                <div class="graph_wrap" id="chartHotwBox">차트 영역</div>
+                            </div>                          
+                        </div>
+                    </div>
+                </div>
+                <!-- //성공 사용 현황 -->
+            </div>
+
+            <div class="row clearfix">
+                <!-- 실패 사용 현황 -->
+                <div class="div2">
+                    <div class="panel_b">
+                        <div class="panel_head">
+                            <h3>실패 사용 현황</h3>
+                        </div>
+                        <div class="panel_body clearfix">
+                            <div class="div3 w_40p">
+                                <div class="graph_wrap" id="chartheatpiebox">차트 영역</div>
+                            </div>
+                            <div class="div3 w_60p">
+                                <div class="graph_wrap" id="chartHeatBox">차트 영역</div>
+                            </div>                          
+                        </div>
+                    </div>                  
+                </div>
+                <!-- //실패 사용 현황 -->
+                <!-- 진행 사용 현황 -->
+                <div class="div2">
+                    <div class="panel_b">
+                        <div class="panel_head">
+                            <h3>진행 사용 현황</h3>
+                        </div>
+                        <div class="panel_body clearfix">
+                            <div class="div3 w_40p">
+                                <div class="graph_wrap" id="chartetcpiebox">차트 영역</div>
+                            </div>
+                            <div class="div3 w_60p">
+                                <div class="graph_wrap" id="chartEtcBox">차트 영역</div>
+                            </div>                          
+                        </div>
+                    </div>
+                </div>
+                <!-- //진행 사용 현황 -->
+            </div>
+        </div>
+        <!-- //에너지별 사용현황 (종합)-->
+    </div>  
+</div>  
+<!-- //container -->
+<script type="text/javascript" src="../js/layout.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script src="../dev/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,1482 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="keywords" content="">
+<meta name="description" lang="ko" content="">
+<meta name="viewport" content="width=1920">
+<title>ProMixSoft FW Server</title>
+
+<link rel="stylesheet" type="text/css" href="../css/notosanskr.css">
+<link rel="stylesheet" type="text/css" href="../css/jquery/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+
+<script type="text/javascript" src="../js/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../js/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+<style>
+    .ui-autocomplete { position: absolute; cursor: default;z-index:201 !important;}
+</style>
+</head>
+
+<body class="">
+<!-- header -->
+<div class="header">
+    <div class="inwrap">
+        <h1><a href="dashboard.html" class="logo" alt="ProMixSoft | FW Server">&nbsp;</a></h1>
+        <ul class="nav">
+            <li><a href="data_manage.html">데이터 관리</a></li>
+            <li><a href="meter_reading.html">검침 현황</a></li>
+            <li><a href="public_energe.html">공용 에너지</a></li>
+            <li><a href="statistics.html">통계</a></li>
+            <li class="on"><a href="sd_manage.html">세대 관리</a></li>
+            <li><a href="set_charge.html">기타</a>
+                <ul class="sub_menu">
+                    <li><a href="set_charge.html">요금 설정</a></li>
+                    <li><a href="set_server.html">서버 설정</a></li>
+                    <li><a href="notice.html">공지사항</a></li>
+                    <li><a href="complain.html">민원 정보</a></li>
+                </ul>               
+            </li>
+        </ul>
+
+        <div class="top_links">
+            <a href="#" class="btn_logout" title="로그아웃">로그아웃</a>            
+        </div>
+    </div>  
+</div>
+<!-- //header -->
+<!-- container -->
+<div class="container"> 
+    <!-- left 영역 -->
+    <button class="btn_tree" title="대상선택 닫기"><span class="blind">닫기</span></button>
+    <div class="device_wrap _opt">
+        LNB 영역
+    </div>
+    <!-- //left 영역 -->
+    
+    <!-- content 영역 --> 
+    <div class="content_wrap on_tree">
+        <!-- tree_pane "동" -->
+        <div class="tree_pane pane_dong on">        
+            <div class="top_title">
+                <h2>세대 관리</h2>          
+            </div>
+
+            <div class="content">
+                <div class="panel"> 
+                    <div class="panel_head">
+                        <h3>동목록</h3>
+                        <div class="opt_r btn_group">                           
+                            <button class="btn btn_blue" onClick="popup_open('.pop_regist_dong'); emptyRegDong();">등록</button>
+                            <button class="btn btn_blue" id="modDongOpenBtn">수정</button>
+                            <button class="btn btn_blue" id="delDongBtn">삭제</button>
+                        </div>
+                    </div>
+                    <div class="panel_body pd_10">
+                        <div class="table_wrap check_grp_wrap">
+                                <table class="table" id="dongTable">
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" class="checkAll" id="chk_dong_all"><label for="chk_dong_all"></label></th>
+                                            <th data="GRID_CUSTORM_SEQ">No</th>
+                                            <th data="dongName">동</th>
+                                            <th data="connGIndex">SMGW 수</th>
+                                            <th data="connMIndex">METER 수</th>
+                                            <th data="fnum">설정/총 세대 수</th>
+                                            <th data="fnumRange">세대 수 범위</th>
+                                            <th data="floorIndex">층수</th>
+                                            <th data="floorFIndex">층당 세대 수</th>
+                                            <th data="updId">상세보기</th>
+                                            <th data="dongSeq" style="display: none"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- paging -->
+                            <div class="pagination">
+                            </div>
+                            <!-- //paging -->
+                    </div>
+                </div>      
+            </div>
+        </div>
+        <!-- tree_pane "동" -->
+
+        <!-- tree_pane "호" -->
+        <div class="tree_pane pane_ho">     
+            <div class="top_title">
+                <h2>세대 관리</h2>          
+            </div>
+
+            <div class="content">
+                <div class="panel"> 
+                    <div class="panel_head">
+                        <h3>호목록</h3>
+                        <div class="opt_r btn_group">                           
+                            <button class="btn btn_blue" onClick="popup_open('.pop_regist_ho'); emptyRegHo();">등록</button>
+                            <button class="btn btn_blue" id="modHoOpenBtn">수정</button>
+                            <button class="btn btn_blue" id="delHoBtn">삭제</button>
+                            <button class="btn btn_blue"  onClick="popup_open('.pop_excel'); excelEmtpy();">엑셀등록</button>
+                        </div>
+                    </div>
+                    <div class="panel_body pd_10">
+                        <div class="table_wrap check_grp_wrap">
+                                <table class="table" id="hoTable">
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" class="checkAll" id="chk_ho_all"><label for="chk_ho_all"></label></th>
+                                            <th data="GRID_CUSTORM_SEQ">No</th>
+                                            <th data="aptUsedId">세대 ID</th>
+                                            <th data="fnumName">호</th>
+                                            <th data="smgwId">SMGW ID</th>
+                                            <th data="connMIndex">METER 수</th>
+                                            <th data="floorNum">층</th>
+                                            <th data="userName">입주자</th>
+                                            <th data="areaSize">세대 면적</th>
+                                            <th data="updId">상세보기</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+<!--                                        <tr>-->
+<!--                                            <td><input type="checkbox" class="checkMe" id="chk_ho01"><label for="chk_ho01"></label></td>-->
+<!--                                            <td>1</td>-->
+<!--                                            <td>H-101-101</td>-->
+<!--                                            <td>101</td>-->
+<!--                                            <td>GW-1320141-11A</td>-->
+<!--                                            <td>4</td>-->
+<!--                                            <td>1</td>-->
+<!--                                            <td>A씨</td>-->
+<!--                                            <td>84</td>-->
+<!--                                            <td><button class="btn"  onClick="popup_open('.pop_detail_ho')">상세보기</button></td>-->
+<!--                                        </tr>-->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- paging -->
+                            <div class="pagination">
+                            </div>
+                            <!-- //paging -->
+                    </div>
+                </div>      
+            </div>
+        </div>
+        <!-- tree_pane "호" -->
+
+        <!-- tree_pane "공용" -->
+        <div class="tree_pane pane_public">     
+            <div class="top_title">
+                <h2>세대 관리</h2>          
+            </div>
+
+            <div class="content">
+                <div class="panel"> 
+                    <div class="panel_head">
+                        <h3>공용목록</h3>
+                        <div class="opt_r btn_group">                           
+                            <button class="btn btn_blue" onClick="popup_open('.pop_regist_public'); emptyRegComm();">등록</button>
+                            <button class="btn btn_blue" id="modCommOpenBtn">수정</button>
+                            <button class="btn btn_blue" id="delCommBtn">삭제</button>
+                        </div>
+                    </div>
+                    <div class="panel_body pd_10">
+                        <div class="table_wrap check_grp_wrap">
+                                <table class="table" id="commTable">
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" class="checkAll" id="chk_public_all"><label for="chk_public_all"></label></th>
+                                            <th data="GRID_CUSTORM_SEQ">No</th>
+                                            <th data="aptUsedId">공용부 ID</th>
+                                            <th data="useCommon">공용부 사용처</th>
+                                            <th data="connGIndex">SMGW 수</th>
+                                            <th data="connMIndex">METER 수</th>
+                                            <th data="commAdmin">관리자</th>
+                                            <th data="adminNum">관리자연락처</th>
+                                            <th data="commDetail">상세정보</th>
+                                            <th data="updId">상세보기</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+<!--                                        <tr>-->
+<!--                                            <td><input type="checkbox" class="checkMe" id="chk_public01"><label for="chk_public01"></label></td>-->
+<!--                                            <td>1</td>-->
+<!--                                            <td>G-001</td>-->
+<!--                                            <td>가로등</td>-->
+<!--                                            <td>30</td>-->
+<!--                                            <td>800</td>-->
+<!--                                            <td>AAA</td>-->
+<!--                                            <td>010-1111-1111</td>-->
+<!--                                            <td>가로등입니다.</td>-->
+<!--                                            <td><button class="btn"  onClick="popup_open('.pop_detail_public')">상세보기</button></td>-->
+<!--                                        </tr>-->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- paging -->
+                            <div class="pagination">
+                            </div>
+                            <!-- //paging -->
+                    </div>
+                </div>      
+            </div>
+        </div>
+        <!-- tree_pane "공용" -->
+
+        <!-- tree_pane "미등록 디바이스 관리" -->
+        <div class="tree_pane pane_unreg_device">       
+            <div class="top_title">
+                <h2>미등록 디바이스 관리</h2>            
+            </div>
+
+            <div class="content">
+                <div class="panel"> 
+                    <div class="panel_head">
+                        <h3>디바이스 목록</h3>
+                        <div class="opt_r btn_group">                           
+                            <button class="btn btn_blue" id="insertMdmsBtn">가져오기</button>
+                            <button class="btn btn_blue">삭제</button>
+                        </div>
+                    </div>
+                    <div class="panel_body pd_10">
+                        <div class="table_wrap check_grp_wrap">
+                                <table class="table" id="unRegTable">
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" class="checkAll" id="chk_unregist_all"><label for="chk_unregist_all"></label></th>
+                                            <th data = "GRID_CUSTORM_SEQ">No</th>
+                                            <th data = "smgwId">SMGW ID</th>
+                                            <th data = "smgwProdId">SMGW 제품번호</th>
+                                            <th data = "smgwModel">모델번호</th>
+                                            <th data = "meterIdx">METER 수</th>
+                                            <th data = "addr1">주소</th>
+                                            <th data = "commEtc">디바이스 정보</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- paging -->
+                            <div class="pagination">
+                            </div>
+                            <!-- //paging -->
+                    </div>
+                </div>      
+            </div>
+        </div>
+        <!-- tree_pane "미등록 디바이스 관리" -->        
+    </div>
+    <!-- //content 영역 -->
+    
+</div>  
+<!-- //container -->
+
+<!-- 세대관리> 동 등록 팝업 -->
+<div class="popup_cont pop_regist_dong">
+    <a href="#" title="팝업닫기" class="pop_close" onclick="javascript:popup_close();"><span class="blind">닫기</span></a>
+    <h2>동 정보 등록</h2>
+    <div class="pop_wrap">
+        <div class="pop_ct">
+            <div class="">
+                <div class="pop_head pt_0">
+                    <h5>동 등록</h5>
+                </div>
+                
+                <table class="table02">
+                    <colgroup>
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>동 번호</th>
+                            <td><input type="text" id="regDongName"></td>
+                            <th>세대수 설정</th>
+                            <td><input type="text" id="regFnum"></td>
+                        </tr>       
+                        <tr>
+                            <th>호수 범위</th>
+                            <td><input type="text" class="w_60" id="regFnumRange"> <span class="txt_between">~</span> <input type="text" class="w_60" id="regFnumRange2"></td>
+                            <th>층수 / 층당 세대 수</th>
+                            <td><input type="text" class="w_60" id="regFloorIndex"> <span class="txt_between">/</span> <input type="text" class="w_60" id="regFloorFIndex"></td>
+                        </tr>       
+                        <tr>
+                            <th>상세설명</th>
+                            <td colspan="3"><textarea rows="3" id="regDongDetail"></textarea></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="pop_foot">
+            <button class="btn02 btn_blue" id="regDongBtn">저장</button>
+            <button class="btn02 btn_gray" onclick="javascript:popup_close();">취소</button>
+        </div>
+    </div>
+</div>
+<!-- 세대관리> 동 등록 팝업 -->
+
+
+<!-- 세대관리> 동 정보 상세보기 팝업 -->
+<div class="popup_cont pop_detail_dong">
+    <a href="#" title="팝업닫기" class="pop_close" onclick="javascript:popup_close();"><span class="blind">닫기</span></a>
+    <h2>동 정보 상세보기</h2>
+    <div class="pop_wrap">
+        <div class="pop_ct">
+            <!-- 동 정보 -->
+            <div class="">
+                <div class="pop_head pt_0">
+                    <h5>동 정보</h5>
+                </div>
+                
+                <table class="table02">
+                    <colgroup>
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>동 번호</th>
+                            <td id="dongName"></td>
+                            <th>세대 수(등록된 세대 수)</th>
+                            <td colspan="3" id="fnum"></td>
+                        </tr>       
+                        <tr>
+                            <th>층수 / 층당 세대 수</th>
+                            <td id="floorIndex"></td>
+                            <th>호수 범위</th>
+                            <td colspan="3" id="fnumRange"></td>
+                        </tr>       
+                        <tr>
+                            <th>연결된 SMGW 수 </th>
+                            <td id="connGIndex"></td>
+                            <th>연결된 미터 수 </th>
+                            <td id="connMIndex"></td>
+                            <th>등록일</th>
+                            <td id="regDate"></td>
+                        </tr>
+                        <tr>
+                            <th>상세설명</th>
+                            <td colspan="5" id="dongDetail"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- // 동 정보 -->
+            
+            <!-- SMGW 정보 -->
+            <div class="">
+                <div class="pop_head">
+                    <h5>SMGW 정보</h5>
+                </div>
+                
+                <div class="table_wrap">
+                    <table class="table" id="smgwTable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="checkAll"><label></label></th>
+                                <th data="GRID_CUSTORM_SEQ">No</th>
+                                <th data="smgwId">SMGW ID</th>
+                                <th data="smgwProdId">SMGW 제품 번호</th>
+                                <th data="manufCode">제조사 번호</th>
+                                <th data="smgwModel">모델명</th>
+                                <th data="meterIdx">연결된 미터 수</th>
+                                <th data="instDate">설치일</th>
+                                <th data="statusCode">상태</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- paging -->
+<!--                <div class="pagination">-->
+<!--                </div>-->
+                <!-- //paging -->
+            </div>
+            <!-- // SMGW 정보 -->
+            
+            <!-- 세대 정보 -->
+            <div class="">
+                <div class="pop_head">
+                    <h5>세대 정보</h5>
+                </div>
+                
+                <div class="table_wrap">
+                    <table class="table" id="sdTable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="checkAll"><label></label></th>
+                                <th data="aptUsedId">세대 ID</th>
+                                <th data="fnumName">호 번호</th>
+                                <th data="smgwId">SMGW ID</th>
+                                <th data="connMIndex">연결된 미터 수</th>
+                                <th data="floorNum">층수</th>
+                                <th data="userName">입주자</th>
+                                <th data="areaSize">세대면적</th>
+                                <th data="regDate">등록일</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- paging -->
+<!--                <div class="pagination">-->
+<!--                </div>-->
+                <!-- //paging -->
+            </div>
+            <!-- // 세대 정보 -->
+        </div>
+
+        <div class="pop_foot">
+            <button class="btn02 btn_blue" onclick="javascript:popup_close();">확인</button>
+        </div>
+    </div>
+</div>
+<!-- 세대관리> 동 정보 상세보기 팝업 -->
+
+
+<!-- 세대관리> 동 정보 수정 팝업 -->
+<div class="popup_cont pop_modify_dong">
+    <a href="#" title="팝업닫기" class="pop_close" onclick="javascript:popup_close();"><span class="blind">닫기</span></a>
+    <h2>동 정보 수정</h2>
+    <div class="pop_wrap">
+        <div class="pop_ct">
+            <!-- 동 정보 -->
+            <div class="">
+                <div class="pop_head pt_0">
+                    <h5>동 정보</h5>               
+                </div>
+                
+                <table class="table02">
+                    <colgroup>
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>동 번호</th>
+                            <td><input type="text" id="modDongName"><input type="hidden" id="modDongSeq"></td>
+                            <th>세대 수(등록된 세대 수)</th>
+                            <td colspan="3"><input type="text" id="modFnum"></td>
+                        </tr>       
+                        <tr>
+                            <th>층수 / 층당 세대 수</th>
+                            <td>
+                                <input type="text" class="w_60" id="modFloorIndex"> <span class="txt_between">/</span>
+                                <input type="text" class="w_60" id="modFloorFIndex">
+                            </td>
+                            <th>호수 범위</th>
+                            <td colspan="3">
+                                <input type="text" class="w_60" id="modFnumRange"> <span class="txt_between">~</span>
+                                <input type="text" class="w_60" id="modFnumRange2">
+                            </td>
+                        </tr>       
+                        <tr>
+                            <th>연결된 SMGW 수 </th>
+                            <td id="modConnGIndex"></td>
+                            <th>연결된 미터 수 </th>
+                            <td id="modConnMIndex"></td>
+                            <th>등록일</th>
+                            <td id="modRegDate"></td>
+                        </tr>
+                        <tr>
+                            <th>상세설명</th>
+                            <td colspan="5"><textarea rows="3" id="modDongDetail"></textarea></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- // 동 정보 -->
+            
+            <!-- SMGW 정보 -->
+            <div class="">
+                <div class="pop_head">
+                    <h5>SMGW 정보</h5>
+                    <button class="fr btn btn_red" id="delSmgwRowBtn">삭제</button>
+                </div>
+                
+                <div class="table_wrap check_grp_wrap">
+                    <table class="table" id="modSmgwTable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="checkAll" id="chk_dong_smgw_all"><label for="chk_dong_smgw_all"></label></th>
+                                <th data="GRID_CUSTORM_SEQ">No</th>
+                                <th data="smgwId">SMGW ID</th>
+                                <th data="smgwProdId">SMGW 제품 번호</th>
+                                <th data="manufCode">제조사 번호</th>
+                                <th data="smgwModel">모델명</th>
+                                <th data="meterIdx">연결된 미터 수</th>
+                                <th data="instDate">설치일</th>
+                                <th data="statusCode">상태</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- paging -->
+<!--                <div class="pagination">-->
+<!--                </div>-->
+                <!-- //paging -->
+            </div>
+            <!-- // SMGW 정보 -->
+            
+            <!-- 세대 정보 -->
+            <div class="">
+                <div class="pop_head">
+                    <h5>세대 정보</h5>
+                    <button class="fr btn btn_red" id="delSdBtn">삭제</button>
+                </div>
+                
+                <div class="table_wrap check_grp_wrap">
+                    <table class="table" id="modSdTable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="checkAll" id="chk_dong_sd_all"><label for="chk_dong_sd_all"></label></th>
+                                <th data="aptUsedId">세대 ID</th>
+                                <th data="fnumName">호 번호</th>
+                                <th data="smgwId">SMGW ID</th>
+                                <th data="connMIndex">연결된 미터 수</th>
+                                <th data="floorNum">층수</th>
+                                <th data="userName">입주자</th>
+                                <th data="areaSize">세대면적</th>
+                                <th data="regDate">등록일</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- paging -->
+<!--                <div class="pagination">-->
+<!--                </div>-->
+                <!-- //paging -->
+            </div>
+            <!-- 세대 정보 -->
+        </div>
+        
+        <div class="pop_foot">
+            <button class="btn02 btn_blue" id="modDongBtn">저장</button>
+            <button class="btn02 btn_gray" onclick="javascript:popup_close();">취소</button>
+        </div>
+    </div>
+</div>
+<!-- 세대관리> 동 정보 수정 팝업 -->
+
+
+<!-- 세대관리> 호 등록 팝업 -->
+<div class="popup_cont pop_regist_ho">
+    <a href="#" title="팝업닫기" class="pop_close" onclick="javascript:popup_close();"><span class="blind">닫기</span></a>
+    <h2>호 정보 등록</h2>
+    <div class="pop_wrap">
+        <div class="pop_ct">
+            <!-- 호 등록 -->
+            <div class="">
+                <div class="pop_head pt_0">
+                    <h5>호 정보</h5>
+                </div>
+
+                <table class="table02">
+                    <colgroup>
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>세대 ID</th>
+                        <td></td>
+                        <th>동 정보</th>
+                        <td><input type="text" id="regHoDongName" readonly></td>
+                        <th>호 정보</th>
+                        <td><input type="text" id="regHoFNumName"></td>
+                    </tr>
+                    <tr>
+                        <th>층수</th>
+                        <td><input type="text" id="regHoFloorNum"></td>
+                        <th>입주자명</th>
+                        <td><input type="text" id="regHoUserName"></td>
+                        <th>입주자 연락처</th>
+                        <td><input type="text" id="regHoUserNum"></td>
+                    </tr>
+                    <tr>
+                        <th>우편번호</th>
+                        <td><div class="input_grp"><input type="text" readonly="" id="regHoZip"><button class="btn btn_black searchAddressBtn" value="regHo">검색</button></div></td>
+                        <th>도로명 주소</th>
+                        <td colspan="3" id="regHoAddr1Td"></td>
+                        <input type="hidden" id="regHoAddr1">
+                    </tr>
+                    <tr>
+                        <th>세대 면적</th>
+                        <td><input type="text" id="regHoAreaSize"></td>
+                        <th>상세 정보</th>
+                        <td colspan="3"><input type="text" id="regHoFDetail"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- //호 등록 -->
+        </div>
+
+        <div class="pop_foot">
+            <button class="btn02 btn_blue" id="regHoBtn">저장</button>
+            <button class="btn02 btn_gray" onclick="javascript:popup_close();">취소</button>
+        </div>
+    </div>
+</div>
+<!-- 세대관리> 호 등록 팝업 -->
+
+<!-- 세대관리> 호 정보 상세보기 팝업 -->
+<div class="popup_cont pop_detail_ho">
+    <a href="#" title="팝업닫기" class="pop_close" onclick="javascript:popup_close();"><span class="blind">닫기</span></a>
+    <h2>호 정보 상세보기</h2>
+    <div class="pop_wrap">
+        <div class="pop_ct">
+            <!-- 호 정보 -->
+            <div class="">
+                <div class="pop_head pt_0">
+                    <h5>호 정보</h5>
+                </div>
+                
+                <table class="table02">
+                    <colgroup>
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>세대 ID</th>
+                            <td id="detHoAptUsedId"></td>
+                            <th>동 정보</th>
+                            <td id="detHoDongName"></td>
+                            <th>호 정보</th>
+                            <td id="detHoFnumName"></td>
+                        </tr>       
+                        <tr>
+                            <th>층수</th>
+                            <td id="detHoFloorNum"></td>
+                            <th>입주자명</th>
+                            <td id="detHoUserName"></td>
+                            <th>입주자 연락처</th>
+                            <td id="detHoUserNum"></td>
+                        </tr>       
+                        <tr>
+                            <th>우편번호</th>
+                            <td id="detHoZip"></td>
+                            <th>도로명 주소</th>
+                            <td colspan="3" id="detHoAddr1"></td>
+                        </tr>
+                        <tr>
+                            <th>세대 면적</th>
+                            <td id="detHoAreaSize"></td>
+                            <th>상세 정보</th>
+                            <td colspan="3" id="detHoFdetail"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- //호 정보 -->
+            
+            <!-- SMGW 정보 -->
+            <div class="">
+                <div class="pop_head">
+                    <h5>SMGW 정보</h5>
+                </div>
+                
+                <table class="table02" id="smgwInfoTable">
+                    <colgroup>
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>SMGW ID</th>
+                            <td id="detHoSmgwId"></td>
+                            <th>SMGW 제품번호</th>
+                            <td id="detHoSmgwProdId"></td>
+                            <th>제조사 번호</th>
+                            <td id="detHoManufCode"></td>
+                        </tr>       
+                        <tr>
+                            <th>SMGW 모델명</th>
+                            <td id="detHoSmgwModel"></td>
+                            <th>상태</th>
+                            <td id="detHostatusCode"></td>
+                            <th>설치일</th>
+                            <td id="detHoInstDate"></td>
+                        </tr>       
+                    </tbody>
+                </table>
+            </div>
+            <!-- //SMGW 정보 -->
+            
+            <!-- 검침 정보 -->
+            <div class="">
+                <div class="pop_head">
+                    <h5>검침 정보</h5>
+                </div>
+                
+                <table class="table02">
+                    <colgroup>
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>전기 검침일</th>
+                            <td id="detHoEReadDay"></td>
+                            <th>난방 검침일</th>
+                            <td id="detHoHReadDay"></td>
+                            <th>가스 검침일</th>
+                            <td id="detHoGReadDay"></td>
+                        </tr>       
+                        <tr>
+                            <th>수도 검침일</th>
+                            <td id="detHoWReadDay"></td>
+                            <th>온수 검침일</th>
+                            <td colspan="3" id="detHoHwReadDay"></td>
+                        </tr>       
+                    </tbody>
+                </table>
+            </div>
+            <!-- //검침 정보 -->
+            
+            <!-- METER 정보 -->
+            <div class="">
+                <div class="pop_head">
+                    <h5>METER 정보</h5>
+                </div>
+                
+                <div class="table_wrap">
+                    <table class="table" id="meterTable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="checkAll"><label></label></th>
+                                <th>No</th>
+                                <th>미터 종류</th>
+                                <th>미터 ID</th>
+                                <th>미터 제품번호</th>
+                                <th>미터 제조사</th>
+                                <th>미터 모델명</th>
+                                <th>설치일</th>
+                                <th>상태</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>          
+            </div>
+            <!-- // METER 정보 -->
+        </div>      
+
+        <div class="pop_foot">
+            <button class="btn02 btn_blue" onclick="javascript:popup_close();">확인</button>
+        </div>
+    </div>
+</div>
+<!-- 세대관리> 호 정보 상세보기 팝업 -->
+
+<!-- 세대관리> 호 정보 수정 팝업 -->
+<div class="popup_cont pop_modify_ho">
+    <a href="#" title="팝업닫기" class="pop_close" onclick="javascript:popup_close();"><span class="blind">닫기</span></a>
+    <h2>호 정보 수정</h2>
+    <div class="pop_wrap">
+        <div class="pop_ct">
+            <!-- 호 정보 -->
+            <div class="">
+                <div class="pop_head pt_0">
+                    <h5>호 정보</h5>
+                </div>
+                
+                <table class="table02">
+                    <colgroup>
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>세대 ID</th>
+                            <td id="modHoAptUsedId"></td>
+                            <th>동 정보</th>
+                            <td id="modHoDongName"></td>
+                            <th>호 정보</th>
+                            <td id="modHoFnumName"></td>
+                        </tr>       
+                        <tr>
+                            <th>층수</th>
+                            <td><input type="text" id="modHoFloorNum"></td>
+                            <th>입주자명</th>
+                            <td><input type="text" id="modHoUserName"></td>
+                            <th>입주자 연락처</th>
+                            <td><input type="text" id="modHoUserNum"></td>
+                        </tr>       
+                        <tr>
+                            <th>우편번호</th>
+                            <td><div class="input_grp"><input type="text" readonly="" id="modHoZip"><button class="btn btn_black searchAddressBtn" value="modHo">검색</button></div></td>
+                            <th>도로명 주소</th>
+                            <td colspan="3" id="modHoAddr1Td"></td>
+                            <input type="hidden" id="modHoAddr1">
+                        </tr>
+                        <tr>
+                            <th>세대 면적</th>
+                            <td><input type="text" id="modHoAreaSize"></td>
+                            <th>상세 정보</th>
+                            <td colspan="3"><input type="text" id="modHoFdetail"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- //호 정보 -->
+            
+            <!-- SMGW 정보 -->
+            <div class="">
+                <div class="pop_head">
+                    <h5>SMGW 정보</h5>
+                </div>
+                
+                <table class="table02">
+                    <colgroup>
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>SMGW ID</th>
+                            <td><div class="input_grp"><input type="text" id="modHoSmgwId"><button class="btn btn_black" id="searchSmgwInfoBtn">확인</button></div></td>
+                            <th>SMGW 제품번호</th>
+                            <td id="modHoSmgwProdId"></td>
+                            <th>제조사 번호</th>
+                            <td id="modHoManufCode"></td>
+                        </tr>       
+                        <tr>
+                            <th>SMGW 모델명</th>
+                            <td id="modHoSmgwModel"></td>
+                            <th>상태</th>
+                            <td id="modHostatusCode"></td>
+                            <th>설치일</th>
+                            <td id="modHoInstDate"></td>
+                        </tr>       
+                    </tbody>
+                </table>
+            </div>
+            <!-- //SMGW 정보 -->
+            
+            <!-- 검침 정보 -->
+            <div class="">
+                <div class="pop_head">
+                    <h5>검침 정보</h5>
+                </div>
+                
+                <table class="table02">
+                    <colgroup>
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>전기 검침일</th>
+                            <td id="modHoEReadDay"></td>
+                            <th>난방 검침일</th>
+                            <td id="modHoHReadDay"></td>
+                            <th>가스 검침일</th>
+                            <td id="modHoGReadDay"></td>
+                        </tr>       
+                        <tr>
+                            <th>수도 검침일</th>
+                            <td id="modHoWReadDay"></td>
+                            <th>온수 검침일</th>
+                            <td colspan="3" id="modHoHwReadDay"></td>
+                        </tr>       
+                    </tbody>
+                </table>
+            </div>
+            <!-- //검침 정보 -->
+            
+            <!-- METER 정보 -->
+            <div class="">
+                <div class="pop_head">
+                    <h5>METER 정보</h5>
+                    <button class="fr btn btn_red" id="delMeterBtn">삭제</button>
+                </div>
+                
+                <div class="table_wrap check_grp_wrap">
+                    <table class="table" id="modMeterTable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="checkAll" id="chk_ho_meter_all"><label for="chk_ho_meter_all"></label></th>
+                                <th>No</th>
+                                <th>미터 종류</th>
+                                <th data="meterId">미터 ID</th>
+                                <th>미터 제품번호</th>
+                                <th>미터 제조사</th>
+                                <th>미터 모델명</th>
+                                <th>설치일</th>
+                                <th>상태</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>          
+            </div>
+            <!-- // METER 정보 -->
+        </div>
+
+        <div class="pop_foot">
+            <button class="btn02 btn_blue" id="modHoBtn">저장</button>
+            <button class="btn02 btn_gray" onclick="javascript:popup_close();">취소</button>
+        </div>
+    </div>
+</div>
+<!-- 세대관리> 호 정보 수정 팝업 -->
+
+
+<!-- 세대관리> 공용부 등록 팝업 -->
+<div class="popup_cont pop_regist_public">
+    <a href="#" title="팝업닫기" class="pop_close" onclick="javascript:popup_close();"><span class="blind">닫기</span></a>
+    <h2>공용부 등록</h2>
+    <div class="pop_wrap">
+        <div class="pop_ct">
+            <div class="">
+                <div class="pop_head pt_0">
+                    <h5>공용부  등록</h5>
+                </div>
+
+                <table class="table02">
+                    <colgroup>
+                        <col style="width:150px;"><col style="width:300px;">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>공용부 ID</th>
+                            <td>
+                                <span>G-</span> <div class="input_grp"><input type="text" id="regCommAptUsedId">
+                                <button class="btn btn_black" id="regCommCheckIdBtn">확인</button>
+                                <span id="regCommCheckId" data-check="N"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>공용부 사용처</th>
+                            <td><input type="text" id="regCommUseCommon"></td>
+                        </tr>
+                        <tr>
+                            <th>관리자</th>
+                            <td><input type="text" id="regCommCommAdmin"></td>
+                        </tr>
+                        <tr>
+                            <th>관리자 연락처</th>
+                            <td><input type="text" id="regCommAdminNum"></td>
+                        </tr>
+                        <tr>
+                            <th>상세정보</th>
+                            <td><textarea rows="3" id="regCommCommDetail"></textarea></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="pop_foot">
+            <button class="btn02 btn_blue" id="regCommBtn">저장</button>
+            <button class="btn02 btn_gray" onclick="javascript:popup_close();">취소</button>
+        </div>
+    </div>
+</div>
+<!-- 세대관리> 공용부 등록 팝업 -->
+
+<!-- 세대관리> 공용부 정보 상세보기 팝업 -->
+<div class="popup_cont pop_detail_public">
+    <a href="#" title="팝업닫기" class="pop_close" onclick="javascript:popup_close();"><span class="blind">닫기</span></a>
+    <h2>공용부 정보 상세보기</h2>
+    <div class="pop_wrap">
+        <div class="pop_ct">
+            <!-- 공용부 정보 -->
+            <div class="">
+                <div class="pop_head pt_0">
+                    <h5>공용부 정보</h5>
+                </div>
+                
+                <table class="table02">
+                    <colgroup>
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>공용부 ID</th>
+                            <td id="detCommAptUsedId"></td>
+                            <th>공용부 사용처</th>
+                            <td id="detUseCommon"></td>
+                            <th>연결된 SMGW 수</th>
+                            <td id="detCommConnGIndex"></td>
+                        </tr>       
+                        <tr>
+                            <th>관리자</th>
+                            <td id="detCommCommAdmin"></td>
+                            <th>관리자 연락처</th>
+                            <td id="detCommAdminNum"></td>
+                            <th>연결된 미터 수</th>
+                            <td id="detCommConnMIndex"></td>
+                        </tr>
+                        <tr>
+                            <th>상세 정보</th>
+                            <td colspan="3" id="detCommCommDetail"></td>
+                            <th>등록일</th>
+                            <td id="detCommRegDate"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- // 공용부 정보 -->
+            
+            <!-- SMGW 정보 -->
+            <div class="">
+                <div class="pop_head">
+                    <h5>SMGW 정보</h5>
+                </div>
+                
+                <div class="table_wrap">
+                    <table class="table" id="commSmgwTable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="checkAll" ><label></label></th>
+                                <th>No</th>
+                                <th data="smgwId">SMGW ID</th>
+                                <th>SMGW 제품 번호</th>
+                                <th>제조사 번호</th>
+                                <th>모델명</th>
+                                <th>연결된 미터 수</th>
+                                <th>설치일</th>
+                                <th>상태</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <!-- // SMGW 정보 -->
+            
+            <!-- METER 정보 -->
+            <div class="">
+                <div class="pop_head">
+                    <h5>METER 정보</h5>
+                </div>
+                <div class="table_wrap">
+                    <table class="table" id="commMeterTable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="checkAll" ><label></label></th>
+                                <th>No</th>
+                                <th>미터 종류</th>
+                                <th data="meterId">미터 ID</th>
+                                <th>미터 제품번호</th>
+                                <th>미터 제조사</th>
+                                <th>미터 모델명</th>
+                                <th>설치일</th>
+                                <th>상태</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- // METER 정보 -->
+        </div>
+
+        <div class="pop_foot">
+            <button class="btn02 btn_blue" onclick="javascript:popup_close();">확인</button>
+        </div>
+    </div>
+</div>
+<!-- 세대관리> 공용부 정보 상세보기 팝업 -->
+
+<!-- 세대관리> 공용부 정보 수정 팝업 -->
+<div class="popup_cont pop_modify_public">
+    <a href="#" title="팝업닫기" class="pop_close" onclick="javascript:popup_close();"><span class="blind">닫기</span></a>
+    <h2>공용부 정보 수정</h2>
+    <div class="pop_wrap">
+        <div class="pop_ct">
+            <!-- 공용부 정보 -->
+            <div class="">
+                <div class="pop_head pt_0">
+                    <h5>공용부 정보</h5>
+                </div>
+                
+                <table class="table02">
+                    <colgroup>
+                        <col style="width:150px;"><col style="width:210px;">
+                        <col style="width:150px;"><col style="width:190px;">
+                        <col style="width:150px;"><col style="width:170px;">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>공용부 ID</th>
+                            <td id="modCommAptUsedId"></td>
+<!--                            <td><span>G-</span>-->
+<!--                                <div class="input_grp">-->
+<!--                                <input type="text" id="modCommAptUsedId">-->
+<!--                                <button class="btn btn_black" id="modCommCheckIdBtn">확인</button>-->
+<!--                                </div>-->
+<!--                                <span id="modCommCheckId" data-check="N"></span>-->
+<!--                            </td>-->
+                            <th>공용부 사용처</th>
+                            <td><input type="text" id="modUseCommon"></td>
+                            <th>연결된 SMGW 수</th>
+                            <td id="modCommConnGIndex">10</td>
+                        </tr>       
+                        <tr>
+                            <th>관리자</th>
+                            <td><input type="text" id="modCommCommAdmin"></td>
+                            <th>관리자 연락처</th>
+                            <td><input type="text" id="modCommAdminNum"></td>
+                            <th>연결된 미터 수</th>
+                            <td id="modCommConnMIndex">10</td>
+                        </tr>
+                        <tr>
+                            <th>상세 정보</th>
+                            <td colspan="3"><input type="text" id="modCommCommDetail"></td>
+                            <th>등록일</th>
+                            <td id="modCommRegDate"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- // 공용부 정보 -->
+            
+            <!-- SMGW 정보 -->
+            <div class="">
+                <div class="pop_head">
+                    <h5>SMGW 정보</h5>
+                    <button class="fr btn btn_red" id="delCommSmgwRowBtn">삭제</button>
+                </div>
+                
+                <div class="table_wrap check_grp_wrap">
+                    <table class="table" id="modCommSmgwTable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="checkAll" id="chk_public_smgw_all"><label for="chk_public_smgw_all"></label></th>
+                                <th>No</th>
+                                <th data="smgwId">SMGW ID</th>
+                                <th>SMGW 제품 번호</th>
+                                <th>제조사 번호</th>
+                                <th>모델명</th>
+                                <th>연결된 미터 수</th>
+                                <th>설치일</th>
+                                <th>상태</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <!-- // SMGW 정보 -->
+            
+            <!-- METER 정보 -->
+            <div class="">
+                <div class="pop_head">
+                    <h5>METER 정보</h5>
+                    <button class="fr btn btn_red" id="delCommMeterBtn">삭제</button>
+                </div>
+                
+                <div class="table_wrap check_grp_wrap">
+                    <table class="table" id="modCommMeterTable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="checkAll" id="chk_public_meter_all"><label for="chk_public_meter_all"></label></th>
+                                <th>No</th>
+                                <th>미터 종류</th>
+                                <th data="meterId">미터 ID</th>
+                                <th>미터 제품번호</th>
+                                <th>미터 제조사</th>
+                                <th>미터 모델명</th>
+                                <th>설치일</th>
+                                <th>상태</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- // METER 정보 -->
+        </div>
+
+        <div class="pop_foot">
+            <button class="btn02 btn_blue" id="modCommBtn">저장</button>
+            <button class="btn02 btn_gray" onclick="javascript:popup_close();">취소</button>
+        </div>
+    </div>
+</div>
+<!-- 세대관리> 공용부 정보 수정 팝업 -->
+
+
+<!-- 미등록 디바이스 관리 > 등록 팝업 -->
+<div class="popup_cont pop_regist_device">
+    <a href="#" title="팝업닫기" class="pop_close" onclick="javascript:popup_close();"><span class="blind">닫기</span></a>
+    <h2>디바이스 등록</h2>
+    <div class="pop_wrap">
+        <div class="pop_ct">
+            <div class="tabs_wrap">
+                <ul class="tabs tabs_date clearfix">
+                    <li class="on">세대</li>
+                    <li>공용</li>
+                </ul>
+
+                <div class="tab_content">
+                    <!-- 탭 : 세대 -->
+                    <div class="tab_pane on">
+                        <!--  SMGW 등록 -->
+                        <div class="">
+                            <div class="pop_head pt_0">
+                                <h5> SMGW 등록</h5>
+                            </div>
+                            
+                            <table class="table02">
+                                <colgroup>
+                                    <col style="width:150px;"><col style="width:210px;">
+                                    <col style="width:150px;"><col style="width:190px;">
+                                    <col style="width:150px;"><col style="width:170px;">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th>SMGW ID</th>
+                                        <td id="regUnregSmgwId"></td>
+                                        <th>동 설정</th>
+                                        <td><select id="unRegDongList"></select></td>
+                                    </tr>
+                                    <tr>
+                                        <th>주소</th>
+                                        <td colspan="3" id="regUnregAddr1"></td>
+                                    </tr>       
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- //  SMGW 등록 -->
+                        
+                        <!-- 미터 등록 -->
+                        <div class="">
+                            <div class="pop_head">
+                                <h5>미터 등록</h5>
+                            </div>
+                            
+                            <div class="table_wrap">
+                                <table class="table" id="unregMeterTable">
+                                    <thead>
+                                        <tr>
+                                            <th data="meterTypeName">미터 종류</th>
+                                            <th data="meterId">미터 ID</th>
+                                            <th data="addr1">주소</th>
+                                            <th data="userName">입주자</th>
+                                            <th data="userNum">입주자 연락처</th>
+                                            <th data="setHo">호 설정</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+<!--                                        <tr>                            -->
+<!--                                            <td>전기</td>-->
+<!--                                            <td>EL-1</td>-->
+<!--                                            <td>서울 서초구 서운로 6 코날 6 101동 101호</td>-->
+<!--                                            <td>AAA</td>-->
+<!--                                            <td>010-1111-1111</td>-->
+<!--                                            <td><select></select></td>-->
+<!--                                        </tr>-->
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <!-- paging -->
+                            <div class="pagination">
+                            </div>
+                            <!-- //paging -->
+                        </div>
+                        <!-- // 미터 등록 -->
+                    </div>
+                    <!-- //탭 : 세대 -->
+                    
+                    <!-- 탭 : 공용 -->
+                    <div class="tab_pane">
+                        <!--  SMGW 등록 -->
+                        <div class="">
+                            <div class="pop_head pt_0">
+                                <h5> SMGW 등록</h5>
+                            </div>
+                            
+                            <table class="table02">
+                                <colgroup>
+                                    <col style="width:150px;"><col style="width:210px;">
+                                    <col style="width:150px;"><col style="width:190px;">
+                                    <col style="width:150px;"><col style="width:170px;">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th>SMGW ID</th>
+                                        <td id="regUnregCommSmgwId"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>주소</th>
+                                        <td colspan="3" id="regUnregCommAddr1"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- //  SMGW 등록 -->
+                        
+                        <!-- 미터 등록 -->
+                        <div class="">
+                            <div class="pop_head">
+                                <h5>미터 등록</h5>
+                            </div>
+                            
+                            <div class="table_wrap">
+                                <table class="table" id="unregCommMeterTable">
+                                    <thead>
+                                    <tr>
+                                        <th data="meterTypeName">미터 종류</th>
+                                        <th data="meterId">미터 ID</th>
+                                        <th data="addr1">주소</th>
+                                        <th data="userName">입주자</th>
+                                        <th data="userNum">입주자 연락처</th>
+                                        <th data="setHo">호 설정</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!--                                        <tr>                            -->
+                                    <!--                                            <td>전기</td>-->
+                                    <!--                                            <td>EL-1</td>-->
+                                    <!--                                            <td>서울 서초구 서운로 6 코날 6 101동 101호</td>-->
+                                    <!--                                            <td>AAA</td>-->
+                                    <!--                                            <td>010-1111-1111</td>-->
+                                    <!--                                            <td><select></select></td>-->
+                                    <!--                                        </tr>-->
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <!-- paging -->
+                            <div class="pagination">
+                            </div>
+                            <!-- //paging -->
+                        </div>
+                        <!-- // 미터 등록 -->
+                    </div>
+                    <!-- //탭 : 공용 -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="pop_foot">
+            <button class="btn02 btn_blue" id="regUnregBtn">저장</button>
+            <button class="btn02 btn_gray" onclick="javascript:popup_close();">취소</button>
+        </div>
+    </div>
+</div>
+<!-- 미등록 디바이스 관리 > 등록 팝업 -->
+
+
+<!-- 세대관리> 엑셀 등록 팝업 -->
+<div class="popup_cont pop_excel">
+    <a href="#" title="팝업닫기" class="pop_close" onclick="javascript:popup_close();"><span class="blind">닫기</span></a>
+    <h2>등록</h2>
+    <div class="pop_wrap">
+        <div class="pop_ct">
+            <div class="upload_wrap">
+                <span class="label">데이터 업로드</span>
+                <div class="upload_file">
+                    <label  for="file01_h" class="btn_upload" tabindex="0">파일 추가</label>
+                    <input type="file" id="file01_h" tabindex="-1" onchange="document.getElementById('file01').value=this.value; getListByExcel();">
+                    <input type="text" id="file01" readonly>
+                </div>
+
+<!--                <span class="label ml_20">적용형태</span>-->
+<!--                <select >-->
+<!--                    <option>이전 데이터에 추가하기</option>-->
+<!--                    <option>새롭게 저장(덮어쓰기))</option>-->
+<!--                </select>-->
+
+                <button class="fr btn_download" id="excelSampleBtn">샘플 다운로드</button>
+            </div>
+
+            <!-- 세대정보 -->
+            <div class="mt_20">
+                <div class="pop_head">
+                    <h5>세대 정보</h5>
+                </div>
+
+                <div class="table_wrap">
+                    <table class="table" id="excelTable">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>동정보</th>
+                            <th>층수</th>
+                            <th>호정보</th>
+                            <th>우편번호</th>
+                            <th>도로명 주소</th>
+                            <th>상세 주소</th>
+                            <th>입주자명</th>
+                            <th>입주자 연락처</th>
+                            <th>SMGW ID</th>
+                            <th>미터 ID</th>
+                            <th>상세 정보</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+<!--                        <tr>-->
+<!--                            <td>1</td>-->
+<!--                            <td>101</td>-->
+<!--                            <td>1</td>-->
+<!--                            <td>1011</td>-->
+<!--                            <td>12345</td>-->
+<!--                            <td>서울 서초구 서운로 6</td>-->
+<!--                            <td>코날빌딩 6층</td>-->
+<!--                            <td>B0001</td>-->
+<!--                            <td>010-1111-1111</td>-->
+<!--                            <td>GW-1212121-111</td>-->
+<!--                            <td>M-1112211-1111</td>-->
+<!--                        </tr>-->
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <!-- // 세대정보 -->
+
+
+        </div>
+
+        <div class="pop_foot">
+            <button class="btn02 btn_blue" id="regExcelBtn">저장</button>
+            <button class="btn02 btn_gray" onclick="javascript:popup_close();">취소</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/layout.js"></script>
+<script type="text/javascript" src="../dev/dashboard.js"></script>
+
+</body>
+</html>

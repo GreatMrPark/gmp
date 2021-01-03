@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="keywords" content="">
+<meta name="description" lang="ko" content="">
+<meta name="viewport" content="width=1920">
+<title>ProMixSoft | FW Server</title>
+
+<link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/swiper/swiper-bundle.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/selectric.css" />
+<link rel="stylesheet" type="text/css" href="../css/style_guide.css" />
+<link rel="stylesheet" type="text/css" href="../css/common.css" />
+
+<script type="text/javascript" src="../js/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.selectric.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.fileDownload.js"></script>
+<script type="text/javascript" src="../js/swiper/swiper-bundle.min.js"></script>
+
+</head>
+
+<body class="main_body">
+<div class="wrap">    
+    <!-- header -->
+    <div class="header">
+        <div class="inwrap">
+            <h1><a href="dashboard.html" class="logo" alt="ProMixSoft | FW Server">&nbsp;</a></h1>
+            <ul class="nav">
+                <li><a href="online.html">온라인</a></li>
+                <li><a href="#">배치</a></li>
+                <li><a href="#">분석</a></li>
+                <li><a href="#">시스템</a></li>
+                <li><a href="GMPCalendar.html">스케쥴러</a></li>
+                <li><a href="chart.html">챠트</a></li>
+                <li><a href="flowcharty.html">순서도</a></li>
+                <li><a href="calendar.html">일정</a></li>
+            </ul>
+
+            <div class="top_links">
+                <a href="#" class="btn_logout" title="로그아웃">로그아웃</a>            
+            </div>
+        </div>  
+    </div>
+    <!-- //header -->
+
+    <!--조건 검색 -->
+    <div class="search_area">        
+        <div class="datetime_info" id="currentDate">2020-03-19 13:00 기준</div>
+    </div>
+    <!-- //조건 검색 -->
+
+    <!-- container -->
+    <div class="dashboard container clearfix">
+        <div class="inwrap">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="panel">
+                        <div class="panel_head">
+                            <h2>누적 발전량</h2>             
+                        </div>
+                        <div class="panel_body">
+                            <div class="hd_txt text-center">
+                                <strong>120.01</strong>
+                                <em class="unit">kWh</em>
+                            </div>
+                            <div class="chart_wrap" style="height:270px; line-height:270px">
+                                chart
+                            </div>
+                        </div>              
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel">
+                        <div class="panel_head">
+                            <h2>시간당 평균 발전량</h2>             
+                        </div>
+                        <div class="panel_body">
+                            <div class="hd_txt text-center">
+                                <strong>20.01</strong>
+                                <em class="unit">kWh</em>
+                            </div>
+                            <div class="chart_wrap" style="height:270px; line-height:270px">
+                                chart
+                            </div>
+                        </div>                  
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel">
+                        <div class="panel_head">
+                            <h2>현장별 누적 발전량</h2>             
+                        </div>
+                        <div class="panel_body">
+                            <div class="swiper-container ds_swiper">
+                                <div class="swiper-wrapper">
+                                    <!-- 한 화면당 최대 2개 현장(swiper-slide에 2개 현장이 들어감) -->
+                                    <div class="swiper-slide">
+                                        <div>
+                                            <h3>[서울] 탄천 발전 1현장</h3>
+                                            <div class="chart_wrap" style="height:120px; line-height:120px">chart</div>
+                                        </div>
+                                        <div>
+                                            <h3>[서울] 탄천 발전 2현장</h3>
+                                            <div class="chart_wrap" style="height:120px; line-height:120px">chart</div>
+                                        </div>
+                                    </div>
+                                    <!-- //한 화면당 최대 2개 현장 -->                                   
+
+                                    <div class="swiper-slide">
+                                        <div>
+                                            <h3>[서울] 탄천 발전 3현장</h3>
+                                            <div class="chart_wrap" style="height:120px; line-height:120px">chart</div>
+                                        </div>
+                                        <div>
+                                            <h3>[서울] 탄천 발전 4현장</h3>
+                                            <div class="chart_wrap" style="height:120px; line-height:120px">chart</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="swiper-slide">
+                                        <div>
+                                            <h3>[서울] 탄천 발전 5현장</h3>
+                                            <div class="chart_wrap" style="height:120px; line-height:120px">chart</div>
+                                        </div>
+                                        <div>
+                                            <h3>[서울] 탄천 발전 6현장</h3>
+                                            <div class="chart_wrap" style="height:120px; line-height:120px">chart</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>              
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel">
+                        <div class="panel_head">
+                            <h2>시간당 평균 발전 효율</h2>               
+                        </div>
+                        <div class="panel_body">
+                            <div class="hd_txt text-center">
+                                <strong>23.5</strong>
+                                <em class="unit">%</em>
+                            </div>
+                            <div class="chart_wrap" style="height:270px; line-height:270px">
+                                chart
+                            </div>
+                        </div>              
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel">
+                        <div class="panel_head">
+                            <h2>날씨</h2>             
+                        </div>
+                        <div class="panel_body">
+                            <div class="swiper-container whd_swiper">
+                                <div class="swiper-wrapper">
+                                    <!-- 한 화면당 운영중인 현장 주소지 1개 기준 -->
+                                    <div class="swiper-slide">
+                                        <p class="data_info">서울 서대문구 xx동 13시 기준</p>
+                                        <h4>금일</h4>
+                                        <div class="row whd_box">
+                                            <div class="col-lg-6"><span class="icon">날씨아이콘</span></div>
+                                            <div class="col-lg-6">
+                                                <p>
+                                                    <strong>11.0</strong>
+                                                    <em class="unit">℃</em>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <h4>전일</h4>
+                                        <div class="row whd_box">
+                                            <div class="col-lg-6"><span class="icon">날씨아이콘</span></div>
+                                            <div class="col-lg-6">
+                                                <p>
+                                                    <strong>11.0</strong>
+                                                    <em class="unit">℃</em>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="swiper-slide">
+                                        <p class="data_info">대전 서대문구 xx동 13시 기준</p>
+                                        <h4>금일</h4>
+                                        <div class="row whd_box">
+                                            <div class="col-lg-6"><span class="icon">날씨아이콘</span></div>
+                                            <div class="col-lg-6">
+                                                <p>
+                                                    <strong>11.0</strong>
+                                                    <em class="unit">℃</em>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <h4>전일</h4>
+                                        <div class="row whd_box">
+                                            <div class="col-lg-6"><span class="icon">날씨아이콘</span></div>
+                                            <div class="col-lg-6">
+                                                <p>
+                                                    <strong>11.0</strong>
+                                                    <em class="unit">℃</em>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>              
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel">
+                        <div class="panel_head">
+                            <h2>미터 장애 경보</h2>               
+                        </div>
+                        <div class="panel_body">
+                            <div class="dsboard_list">
+                                <ul>
+                                    <li class="latest">
+                                        <span>2020-03-18 12:35:21</span>
+                                        <p>[서울] 탄천 발전 1현장 역율 이상</p>
+                                    </li>
+                                    <li>
+                                        <span>2020-03-18 12:35:21</span>
+                                        <p>[서울] 탄천 발전 1현장 데이터 수집 실패</p>
+                                    </li>
+                                    <li>
+                                        <span>2020-03-18 12:35:21</span>
+                                        <p>[서울] 탄천 발전 1현장 역율 이상</p>
+                                    </li>
+                                    <li>
+                                        <span>2020-03-18 12:35:21</span>
+                                        <p>[서울] 탄천 발전 1현장 데이터 수집 실패</p>
+                                    </li>
+                                    <li>
+                                        <span>2020-03-18 12:35:21</span>
+                                        <p>[서울] 탄천 발전 1현장 역율 이상</p>
+                                    </li>
+                                    <li>
+                                        <span>2020-03-18 12:35:21</span>
+                                        <p>[서울] 탄천 발전 1현장 데이터 수집 실패</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>              
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //container -->
+
+</div>
+<!-- // wrap -->
+<script type="text/javascript">
+$(document).ready(function(){
+    // Initialize Swiper
+
+    // 현장별 누적 발전량
+    var swiperDS = new Swiper('.swiper-container.ds_swiper', {
+        autoplay: {
+            delay:3000,
+        },
+        simulateTouch:false
+    });
+    
+    // 날씨
+    var swiperWdh = new Swiper('.swiper-container.whd_swiper', {
+        autoplay: {
+            delay:3000,
+        },
+        simulateTouch:false
+    });
+});
+</script>
+<script type="text/javascript" src="../js/layout.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../dev/dashboard.js"></script>
+
+</body>
+</html>
