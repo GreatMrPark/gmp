@@ -3,6 +3,14 @@
 // --------------------------------------------------------------------------------
 gDate = new Date();
 
+//chart에 사용되는 obj
+var keyArr = [];
+var labelArr = [];
+var typesArr = [];
+var colorArr = [];
+var config;
+var chartObjArr = [];
+
 var dashbardChart = {
     lineChart : [],
     pieChart : [],
@@ -12,7 +20,8 @@ var dashbardChart = {
 
 var todaySumCount = 0;
 // 에너지 사용현황 차트를 그리기위한 데이터 임시 저장
-var todaySumData = { elec   : { todaySum : 0, yesterDauSum :0},
+var todaySumData = { 
+    elec   : { todaySum : 0, yesterDauSum :0},
     gas    : { todaySum : 0, yesterDauSum :0},
     water    : { todaySum : 0, yesterDauSum :0},
     hotw    : { todaySum : 0, yesterDauSum :0},
@@ -21,7 +30,7 @@ var todaySumData = { elec   : { todaySum : 0, yesterDauSum :0},
 };
 
 //검침 종류
-const READING_UNIT = ["성공", "실패", "진행", "로컬", "개발", "검증"];
+const READING_UNIT = ["elec", "gas", "water", "hotw", "heat", "etc"];
 var readingUnitSeq = 0;
 
 var scrollTemp = 0;
@@ -45,17 +54,25 @@ var fnInit = function() {
 var fnSetCurrentDate = function() {
     setCurrentDate = setInterval(function() {
         var currentDate = new Date();
-        $("#currentDate").html(currentDate.toLocaleString());
+//        $("#currentDate").html(currentDate.toLocaleString());
     }, 1000);
 }
 
+//chart obj destroy
+function setChartDestroy(){
+for(var i=0; i<chartObjArr.length; i++){
+    chartObjArr[i].destroy();
+}
+chartObjArr = [];
+}
+
 function centerPieLineChart(){
-    getDashboardChart("성공", "#chartElecBox"); // 전기 사용현황
-    getDashboardChart("실패", "#chartGasBox");   // 가스
-    getDashboardChart("진행", "#chartWaterBox"); //수도
-    getDashboardChart("로컬", "#chartHotwBox"); // 온수
-    getDashboardChart("개발", "#chartHeatBox"); // 난방
-    getDashboardChart("검증", "#chartEtcBox");   // 신재생
+    getDashboardChart("elec", "#chartElecBox"); // 전기 사용현황
+    getDashboardChart("gas", "#chartGasBox");   // 가스
+    getDashboardChart("water", "#chartWaterBox"); //수도
+    getDashboardChart("hotw", "#chartHotwBox"); // 온수
+    getDashboardChart("heat", "#chartHeatBox"); // 난방
+    getDashboardChart("etc", "#chartEtcBox");   // 신재생
 }
 
 
@@ -67,16 +84,15 @@ function centerPieLineChart(){
 function getDashboardChart(meterType, container){
     var data = [];
     for(var i = 0; i < 24; i++) {
-        var todayValue = Math.round(Math.random()*1000);
         var json = {};
         json.date = i;
-        json.todayValue = Math.round(Math.random()*1000);
-        json.yesterDayValue = Math.round(Math.random()*1000);
+        json.todayValue = Math.round(Math.random()*100);
+        json.yesterDayValue = Math.round(Math.random()*100);
         data.push(json);
     }
 
     displayDashboardChart(container, data, meterType);    // 라인차트
-    displayDashboardPieChart(meterType, data.data); // gauge 차트, 에너지 사용현황
+    displayDashboardPieChart(meterType, data); // gauge 차트, 에너지 사용현황
 }
 
 /**
@@ -149,11 +165,12 @@ function displayDashboardPieChart(meterType, data){
         todaySum += data[i].todayValue;
         yesterDaySum += data[i].yesterDayValue;
     }
+
     todaySumData[meterType].todaySum = todaySum;
     todaySumData[meterType].yesterDauSum = yesterDaySum;
 
     // 에너지 사용 현황 금일 사용량 출력
-    displayTodaySum(meterType, todaySum);
+//    displayTodaySum(meterType, todaySum);
 
     // 당월, 전월 게이지 차트
     var baseDate = new Date().toISOString().substring(0, 10);
@@ -162,24 +179,24 @@ function displayDashboardPieChart(meterType, data){
 
 //    $.fn.Ajax("GET", url, "", function (monthData) {
 //        if(monthData.resultCode === "OK") {
-//
-//            var chartData = {};
-//            var thisMonthVal = isEmpty(monthData.data.thisMonth) ? 0 : monthData.data.thisMonth.value;
-//            //var thisMonthValOrg = thisMonthVal;
-//            //thisMonthVal = unitPointNumber(meterType,thisMonthVal,false);
-//            var lastMonthVal = isEmpty(monthData.data.lastMonth) ? 0 : monthData.data.lastMonth.value;
-//            //lastMonthVal = unitPointNumber(meterType,lastMonthVal, false);
-//
-//            chartData.maxValue = lastMonthVal;
-//            chartData.data = [ "당월사용량", thisMonthVal];
-//            //chartData.unitString = getReadingUnit(meterType, thisMonthValOrg).displayUnit;
-//            chartData.targetObj = targetObj;
-//            chartData.colors = [getReadingUnit(meterType).color];
-//            chartData.size = { "width": $(targetObj).width() - 60 , "height": $(targetObj).height() - 60};
-//            chartData.meterType = meterType;
-//            var config = chart.gaugeConfig(chartData);
-//            config.gauge.width = 15;
-//            dashbardChart.pieChart.push(bb.generate( config ));
+var monthData = [];
+            var chartData = {};
+            var thisMonthVal = Math.round(Math.random()*100);
+            //var thisMonthValOrg = thisMonthVal;
+            //thisMonthVal = unitPointNumber(meterType,thisMonthVal,false);
+            var lastMonthVal = Math.round(Math.random()*100);
+            //lastMonthVal = unitPointNumber(meterType,lastMonthVal, false);
+
+            chartData.maxValue = lastMonthVal;
+            chartData.data = [ "당월", thisMonthVal];
+            //chartData.unitString = getReadingUnit(meterType, thisMonthValOrg).displayUnit;
+            chartData.targetObj = targetObj;
+            chartData.colors = [getReadingUnit(meterType).color];
+            chartData.size = { "width": $(targetObj).width() - 60 , "height": $(targetObj).height() - 60};
+            chartData.meterType = meterType;
+            var config = chart.gaugeConfig(chartData);
+            config.gauge.width = 15;
+            dashbardChart.pieChart.push(bb.generate( config ));
 //        };
 //    });
 
@@ -199,14 +216,11 @@ function displayTodaySum(meterType, todaySumValue){
     setTemplate($("#todayUsageSumTmpl"), $(targetObj), data, function () {
         todaySumCount +=1;
         if(todaySumCount === 6){
-            //displayTodaySumChart("#todayUsageChartBox");
             displayTodaySumChart2("#todayUsageChartBox");
             todaySumCount = 0;
         }
     });
 }
-
-
 
 function displayTodaySumChart2(container) {
 
@@ -214,34 +228,23 @@ function displayTodaySumChart2(container) {
 
     $targetObj.children().remove();
 
-    var elecValue = (todaySumData.elec.todaySum / todaySumData.elec.yesterDauSum) * 100;
-    elecValue = (elecValue > 100)  ? 100 : elecValue;
-    elecValue = (elecValue < 0) ? 0 : elecValue;
-    var gasValue = (todaySumData.gas.todaySum / todaySumData.gas.yesterDauSum) * 100;
-    gasValue = (gasValue > 100) ? 100 : gasValue;
-    gasValue = (gasValue < 0) ? 0 : gasValue;
-    var waterValue = (todaySumData.water.todaySum / todaySumData.water.yesterDauSum) * 100;
-    waterValue = (waterValue > 100) ? 100 : waterValue;
-    waterValue = (waterValue < 0) ? 0 : waterValue;
-    var hotwValue = (todaySumData.hotw.todaySum / todaySumData.hotw.yesterDauSum) * 100;
-    hotwValue = (hotwValue > 100) ? 100 : hotwValue;
-    hotwValue = (hotwValue < 0) ? 0 : hotwValue;
-    var heatValue = (todaySumData.heat.todaySum / todaySumData.heat.yesterDauSum) * 100;
-    heatValue = (heatValue > 100) ? 100 : heatValue;
-    heatValue = (heatValue < 0) ? 0 : heatValue;
-    var etcValue = (todaySumData.etc.todaySum / todaySumData.etc.yesterDauSum) * 100;
-    etcValue = (etcValue > 100) ? 100 : etcValue;
-    etcValue = (etcValue < 0) ? 0 : etcValue;
-    etcValue = isNaN(etcValue) ? 0 : etcValue;
+    var elecValue = Math.round(Math.random()*100);
+    var gasValue = Math.round(Math.random()*100);
+    var waterValue = Math.round(Math.random()*100);
+    var hotwValue = Math.round(Math.random()*100);
+    var heatValue = Math.round(Math.random()*100);
+    var etcValue = Math.round(Math.random()*100);
 
     var data = [
-        {value: elecValue.toFixed(1),   label: "전기",     color: getReadingUnit("elec").color},
-        {value: gasValue.toFixed(1), label: "가스", color: getReadingUnit("gas").color},
-        {value: waterValue.toFixed(1), label: "수도", color: getReadingUnit("water").color},
-        {value: hotwValue.toFixed(1),   label: "온수",     color: getReadingUnit("hotw").color},
-        {value: heatValue.toFixed(1),   label: "난방",     color: getReadingUnit("heat").color},
-        {value: etcValue.toFixed(1),    label: "신재생",    color: getReadingUnit("etc").color}
+        {value: elecValue.toFixed(0),   label: "성공", color: getReadingUnit("elec").color},
+        {value: gasValue.toFixed(0),    label: "실패", color: getReadingUnit("gas").color},
+        {value: waterValue.toFixed(0),  label: "진행", color: getReadingUnit("water").color},
+        {value: hotwValue.toFixed(0),   label: "로컬", color: getReadingUnit("hotw").color},
+        {value: heatValue.toFixed(0),   label: "개발", color: getReadingUnit("heat").color},
+        {value: etcValue.toFixed(0),    label: "검증", color: getReadingUnit("etc").color}
     ];
+    
+    console.log(data);
 
     var height = $targetObj.height() - 10;
     var width = height;
@@ -348,88 +351,175 @@ function displayTodaySumChart2(container) {
     render();
 }
 
+function setBarChart() {
+
+    var targetObj = "#todayUsageChartBox";
+    var keyArr = ["areaName","usageAvg"];
+    var labelArr = ["건수"];
+    var typesArr = ["bar"];
+    var colorArr = ["#D9D9D9","#FF0000","#0987DB"]; // 기본 : #D9D9D9, 최고 : #FF0000, 최저 : #01B56E, 지역 : #0987DB
+    var chartCycle = ""; // DAY, WEEK, MONTH, HOUR
+    var chartData = [];
+    var array = [];
+    var barColor = [];
+    var areaIndex = 0;
+    var areaParentAvg = Math.round(Math.random()*100);
+
+    var maxValue = 0;
+    var minValue = 0;
+    var maxIndex = 0;
+    var minIndex = 0;
+    var chatCount = 0;
+    
+    var data = [];
+    var items = ["성공","실패","진행"];
+    for (var i = 0; i < items.length; i++) {
+        var obj = new Object;
+        obj.areaName = items[i];
+        obj.usageAvg = Math.round(Math.random()*100);
+        
+        data.push(obj);
+    }
+    
+    if (data.length > 0) {
+        chatCount = data.length;
+        for (var i = 0; i < data.length; i++) {
+            var obj = new Object;
+            obj.areaName = data[i].areaName;
+            obj.usageAvg = data[i].usageAvg;
+
+            chartData.push(obj);
+            
+            array.push(data[i].usageAvg);
+
+            barColor.push("#D9D9D9");
+        }
+        var maxValue = array.reduce( function (previous, current) { 
+            return previous > current ? previous:current;
+        });
+        var minValue = array.reduce( function (previous, current) { 
+            return previous > current ? current:previous;
+        });
+        var maxIndex = $.inArray(maxValue,array);
+        var minIndex = $.inArray(minValue,array);
+        barColor[minIndex] = "#01B56E";
+        barColor[maxIndex] = "#FF0000";
+        barColor[areaIndex] = "#0987DB";
+    }
+
+    var config = chart.baseConfig(targetObj, chartData, keyArr, labelArr, typesArr, colorArr);
+    config.legend.show = false;
+    config.legend.position = "bottom";
+    config.grid.x.show = false;
+    config.grid.y.show = false;
+    config.axis.y.show = true;
+    config.axis.x.show = true;
+    config.axis.rotated = true;
+//    if (chatCount <= 10) {
+//        config.bar.width = 25;
+//        config.bar.padding = 15;
+//    }
+    config.data.labels = true;
+    config.data.color = function(color, d) {
+        return barColor[d.index];
+    }
+    // 평균 세로바 삽입..
+    config.grid.y.lines = [
+        {
+            value: (maxValue / 2),
+            class: "barchart_center_line",
+            text: "평균 : " + areaParentAvg
+        }
+    ];
+
+    chart.chartDateStr(config, chartCycle);
+    chartObjArr.push(bb.generate( config ));
+}
+
 /**
  * 날씨
  */
 function getWeather() {
     realtime.init();
+    setBarChart();
 }
 
 var realtime = {
-        inst: null,
-        interval: null,
-        start: false,
-        init: function() {
-            this.generate();
-            this.attachEvent();
-        },
-        stop: function() {
-          this.start = false;
-        },
-        generate: function() {
-             chart = this.inst = bb.generate({
-                padding: {
-                  bottom: 10
-                },
-                data: {
-                    x: 'x',
-                    columns: this.getInitData(5),
-                    type: "bar"
-                },
-                axis: {
-                    x: {
-                        type: 'timeseries',
-                        tick: {
-                            format: '%Y.%m.%d %H:%M:%S'
-                        }
+    inst: null,
+    interval: null,
+    start: false,
+    init: function() {
+        this.generate();
+        this.attachEvent();
+    },
+    stop: function() {
+      this.start = false;
+    },
+    generate: function() {
+         realChart = this.inst = bb.generate({
+            padding: {
+              bottom: 10
+            },
+            data: {
+                x: 'x',
+                columns: this.getInitData(5),
+                type: "bar"
+            },
+            axis: {
+                x: {
+                    type: 'timeseries',
+                    tick: {
+                        format: '%Y.%m.%d %H:%M:%S'
                     }
-                },
-                legend: {
-                    show: false
                 }
-            });
+            },
+            legend: {
+                show: false
+            },
+            bindto: "#realChart"
+        });
 
-            this.start = true;
-            this.flow();
-        },
-        attachEvent: function() {
-            document.addEventListener("visibilitychange", () => {
-                if (document.visibilityState === "visible") {
-                    setTimeout(() => {
-                        !this.start && this.init();
-                    }, 1500)
-                } else {
-                    this.stop()
-                }
-            });
-        },
-        flow: function() {
-            this.start && this.inst.flow({
-                columns: [
-                    ["x", +new Date],
-                    ["로컬", Math.round(Math.random()*1000)],
-                    ["개발", Math.round(Math.random()*1000)],
-                    ["검증", Math.round(Math.random()*1000)]
-                ],
-                length: 1,
-                duration: 500,
-                done: this.flow.bind(this)
-            });
-        },
-        getInitData: function(len) {
-            const d = +new Date - 1000 * len;
-            const data = [
-                ["x"], ["로컬"],
-                ["x"], ["개발"],
-                ["x"], ["검증"]
-            ];
-
-            for (let i = 0; i < len; i++) {
-                data[0].push(d + (1000 * i));
-                data[1].push(null);
+        this.start = true;
+        this.flow();
+    },
+    attachEvent: function() {
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "visible") {
+                setTimeout(() => {
+                    !this.start && this.init();
+                }, 1500)
+            } else {
+                this.stop()
             }
+        });
+    },
+    flow: function() {
+        this.start && this.inst.flow({
+            columns: [
+                ["x", +new Date],
+                ["로컬", Math.round(Math.random()*100)],
+                ["개발", Math.round(Math.random()*100)],
+                ["검증", Math.round(Math.random()*100)]
+            ],
+            length: 1,
+            duration: 500,
+            done: this.flow.bind(this)
+        });
+    },
+    getInitData: function(len) {
+        const d = +new Date - 1000 * len;
+        const data = [
+            ["x"], ["로컬"],
+            ["x"], ["개발"],
+            ["x"], ["검증"]
+        ];
 
-            return data;
+        for (let i = 0; i < len; i++) {
+            data[0].push(d + (100 * i));
+            data[1].push(null);
         }
-    };
+
+        return data;
+    }
+};
 

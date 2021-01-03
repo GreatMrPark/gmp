@@ -1,21 +1,8 @@
-/*
- *  Copyright (c) 2019 KEPCO, Inc. All right reserved.
- *  This software is the confidential and proprietary information of KEPCO, Inc. You shall not disclose such Confidential Information and
- *  shall use it only in accordance with the terms of the license agreement
- *  you entered into with KEPCO.
- *
- *  Revision History
- *  Author Date Description
- *   ------------------ -------------- ------------------
- *   doson               2019.10.7
- *
- */
-
 var CONTENT_TYPE = 'application/json;charset=UTF-8';
 var API_HEADERS = {};
 var paramObj = {};
 
-const CONTEXT_PATH = "/mdmsHouse";
+const CONTEXT_PATH = "/";
 
 /*var alert = function (msg) {
     commonMsg.alert(msg);
@@ -1475,7 +1462,7 @@ var chart = {
                             return unitPoint(data.meterType, value, true) + " " + getReadingUnit(data.meterType, value).displayUnit;
                             //return data.maxValue;
                         } else {
-                            return "당월사용량";
+                            return "0";
                         }
                     }
                 },
@@ -2610,28 +2597,28 @@ function unitPoint(meterType, value, isConv, convertUnit) {
     // 단위 환산
     if(isConv){
         switch (meterType) {
-            case "fap" :
-            case "insKcal":
-            case "elec":
-            case "etc":
-                value = formatW(value, 4, "valueOnly", isConvertUnit); break;
-            case "flow" :
-            case "gas":
-            case "water" :
-            case "hotw" :
-                value = formatM(value, 4, "valueOnly", isConvertUnit); break;
-            case "ap" :
-            case "kcal" :
-            case "heat" :
-                value = formatWh(value, 4, "valueOnly", isConvertUnit); break;
-            case "rap" :
-            case "larap" :
-            case "lerap" :
-                value = formatVarh(value, 4, "valueOnly", isConvertUnit); break;
-            case "instFlow" :
-                value = formatMh(value, 4, "valueOnly", isConvertUnit); break;
+//            case "fap" :
+//            case "insKcal":
+//            case "elec":
+//            case "etc":
+//                value = formatW(value, 4, "valueOnly", isConvertUnit); break;
+//            case "flow" :
+//            case "gas":
+//            case "water" :
+//            case "hotw" :
+//                value = formatM(value, 4, "valueOnly", isConvertUnit); break;
+//            case "ap" :
+//            case "kcal" :
+//            case "heat" :
+//                value = formatWh(value, 4, "valueOnly", isConvertUnit); break;
+//            case "rap" :
+//            case "larap" :
+//            case "lerap" :
+//                value = formatVarh(value, 4, "valueOnly", isConvertUnit); break;
+//            case "instFlow" :
+//                value = formatMh(value, 4, "valueOnly", isConvertUnit); break;
             default :
-                console.log("unitPoint(" + meterType + ", " + value + "," + isConv + ", " + convertUnit +") - 환산할 단위가 없습니다 ");
+//                console.log("unitPoint(" + meterType + ", " + value + "," + isConv + ", " + convertUnit +") - 환산할 단위가 없습니다 ");
                 return value;
         }
     }
@@ -2751,47 +2738,47 @@ function getReadingUnit(meterType, value){
 
     if(meterType === "elec"){
         return  {
-            "displayName": "전기",
-            "displayUnit" : formatWh(value, 0, "unitOnly"),
+            "displayName": "성공",
+            "displayUnit" : "",
             "color" : "#696cff"
         };
     };
     if(meterType === "gas"){
         return  {
-        "displayName": "가스",
-        "displayUnit" : formatM(value, 0, "unitOnly"),
+        "displayName": "실패",
+        "displayUnit" : "",
         "color": "#25ce60"
         };
     };
 
     if(meterType === "water") {
         return {
-            "displayName": "수도",
-            "displayUnit": formatM(value, 0, "unitOnly"),
+            "displayName": "진행",
+            "displayUnit": "",
             "color": "#00d0dd"
         };
     };
 
      if(meterType === "hotw") {
          return {
-             "displayName": "온수",
-             "displayUnit": formatM(value, 0, "unitOnly"),
+             "displayName": "로컬",
+             "displayUnit": "",
              "color": "#f15959"
          };
      }
 
      if(meterType === "heat") {
          return {
-             "displayName": "난방",
-             "displayUnit": formatWh(value, 0, "unitOnly"),
+             "displayName": "개발",
+             "displayUnit": "",
              "color": "#fcb040"
          };
      };
 
     if(meterType === "etc") {
         return {
-            "displayName": "신재생",
-            "displayUnit": formatW(value, 0, "unitOnly"),
+            "displayName": "검증",
+            "displayUnit": "",
             "color": "#3abf9e"
         };
     };
@@ -2806,7 +2793,7 @@ function getReadingUnit(meterType, value){
 /**
  * 항목별 단위
  * @param meterType
- * @Param value (value 값이 있으면 환산된 단위가 리턴된다.)  ~ Doson 2019.11.27.
+ * @Param value (value 값이 있으면 환산된 단위가 리턴된다.)
  * @returns
  */
 function getItemUnit(item, value){
@@ -3127,4 +3114,40 @@ function DATEPICKERDEFAULTOPTION() {
         nextText: "다음달",
         currentText: "오늘",
     };
+}
+
+
+
+/**
+ * 날짜 세팅
+ * @param type
+ * @param from
+ * @param to
+ * @param dateSeperator
+ * @returns
+ */
+function shiftDate(date, y, m, d, separator) {
+    
+    date.setFullYear(date.getFullYear() + y);
+    date.setMonth(date.getMonth() + m);
+    date.setDate(date.getDate() + d);
+    
+    var d = "";
+    d += date.getFullYear();
+    d += separator;
+    d += ("0" + (date.getMonth() + 1)).slice(-2);
+    d += separator;
+    d += ("0" + date.getDate()).slice(-2);
+    
+    return d;
+}
+
+/**
+ * 현재월조회
+ * @returns
+ */
+function getMonth() {
+    var date = new Date();
+    var month = date.getMonth() + 1;
+    return month; 
 }

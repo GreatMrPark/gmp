@@ -22,7 +22,6 @@
 <!--billboard-->
 <script type="text/javascript" src="../js/billboard/d3.v5.min.js"></script>
 <script type="text/javascript" src="../js/billboard/billboard.js"></script>
-<script type="text/javascript" src="../js/billboard/GMPBillboardChart.js"></script>
 <!--billboard-->
 
 <script type="text/javascript" src="../js/d3/d3.v3.min.js"></script>
@@ -31,15 +30,121 @@
 <script type="text/javascript" src="../js/handlebars-v4.1.2.js"></script>
 <script type="text/javascript" src="../js/helpers.js"></script>
 
-</head>
+<style>
+   /*도넛차트 min, max 타이틀 속성*/
+   .bb-chart-arcs-gauge-min,
+   .bb-chart-arcs-gauge-max,
+   .bb-legend-item > text
+   { font-size: 11px !important; fill: #cec6c3 !important;}
 
-<body class="">
+   /*라인차트 y 텍스트*/
+   .bb-axis-y text, .bb-axis-y2 text { font-size: 11px !important; fill: #b1a9a6 !important;}
+
+   /*라인차트 x 텍스트*/
+   .bb-axis text,  .bb-axis-x text { font-size: 11px !important; fill: #b1a9a6 !important;}
+
+   /*도넛 차트 중앙 폰트 속성*/
+   .bb-gauge-value { font-size: 15px !important; fill: #cec6c3 !important; }
+
+   /*도넛 차트 타이틀 색깔*/
+   .bb-chart-arcs-title { fill : #fff !important; }
+
+   .map-usage-layer {
+       position: absolute;
+       border-radius: 50%;
+       font-size: 18px;
+       color: #fff;
+       text-align: center;
+       background-color: rgba(105, 108, 255, 0.8);
+       white-space: nowrap
+   }
+
+
+   .map-usage-layer.rank1 {height:80px;width:80px;margin-left:-40px;margin-top:-40px;line-height:80px;}
+   .map-usage-layer.rank2 {height:77px;width:77px;margin-left:-39px;margin-top:-39px;line-height:77px;}
+   .map-usage-layer.rank3 {height:74px;width:74px;margin-left:-37px;margin-top:-37px;line-height:74px;}
+   .map-usage-layer.rank4 {height:71px;width:71px;margin-left:-36px;margin-top:-36px;line-height:71px;}
+   .map-usage-layer.rank5 {height:68px;width:68px;margin-left:-34px;margin-top:-34px;line-height:68px;}
+   .map-usage-layer.rank6 {height:65px;width:65px;margin-left:-33px;margin-top:-33px;line-height:65px;}
+   .map-usage-layer.rank7 {height:62px;width:62px;margin-left:-31px;margin-top:-31px;line-height:62px;}
+   .map-usage-layer.rank8 {height:59px;width:59px;margin-left:-30px;margin-top:-30px;line-height:59px;}
+   .map-usage-layer.rank9 {height:56px;width:56px;margin-left:-28px;margin-top:-28px;line-height:56px;}
+   .map-usage-layer.rank10 {height:53px;width:53px;margin-left:-27px;margin-top:-27px;line-height:53px;}
+   .map-usage-layer.rank11 {height:50px;width:50px;margin-left:-25px;margin-top:-25px;line-height:50px;}
+   .map-usage-layer.rank12 {height:47px;width:47px;margin-left:-24px;margin-top:-24px;line-height:47px;}
+   .map-usage-layer.rank13 {height:44px;width:44px;margin-left:-22px;margin-top:-22px;line-height:44px;}
+
+   .axis path,
+   .axis line {
+       fill: none;
+       stroke: #000;
+       shape-rendering: crispEdges;
+   }
+
+   .bar {
+       fill: orange;
+   }
+
+   .solidArc:hover {
+       fill: orangered ;
+   }
+
+   .solidArc {
+       -moz-transition: all 0.3s;
+       -o-transition: all 0.3s;
+       -webkit-transition: all 0.3s;
+       transition: all 0.3s;
+   }
+
+   .x.axis path {
+       display: none;
+   }
+
+   .aster-score {
+       line-height: 1;
+       font-weight: bold;
+       font-size: 500%;
+   }
+
+   .d3-tip {
+       line-height: 1;
+       font-weight: bold;
+       padding: 12px;
+       background: rgba(0, 0, 0, 0.8);
+       color: #fff;
+       border-radius: 2px;
+   }
+
+   /* Creates a small triangle extender for the tooltip */
+   .d3-tip:after {
+       box-sizing: border-box;
+       display: inline;
+       font-size: 10px;
+       width: 100%;
+       line-height: 1;
+       color: rgba(0, 0, 0, 0.8);
+       content: "\25BC";
+       position: absolute;
+       text-align: center;
+   }
+
+   /* Style northward tooltips differently */
+   .d3-tip.n:after {
+       margin: -1px 0 0 0;
+       top: 100%;
+       left: 0;
+   }
+
+</style>
+
+</head>
+<body class="body_home">
 <!-- header -->
 <div class="header">
     <div class="inwrap">
         <h1><a href="dashboard.html" class="logo" alt="ProMixSoft | FW Server">&nbsp;</a></h1>
         <ul class="nav">
-           <li class="on"><a href="online.html">온라인</a></li>
+           <li><a href="online.html">온라인</a></li>
            <li><a href="#">배치</a></li>
            <li><a href="#">분석</a></li>
            <li><a href="#">시스템</a></li>
@@ -71,14 +176,6 @@
                             <div class="div2 w_56p">
                                 <div class="graph_wrap" id="todayUsageChartBox" style=""></div>
                             </div>
-                            <div class="div2 w_44p graph_info" id="todayUsageSumBox">
-                                <dl id="todayUsage_elec"><dt class="txt_elec">성공</dt><dd>-<span class="txt_unit"></span></dd></dl>
-                                <dl id="todayUsage_gas"><dt class="txt_gas">진행</dt><dd>-<span class="txt_unit"></span></dd></dl>
-                                <dl id="todayUsage_water"><dt class="txt_water">실패</dt><dd>-<span class="txt_unit"></span></dd></dl>
-                                <dl id="todayUsage_hotw"><dt class="txt_hotw">로컬</dt><dd>-<span class="txt_unit"></span></dd></dl>
-                                <dl id="todayUsage_heat"><dt class="txt_heat">개발</dt><dd>-<span class="txt_unit"></span></dd></dl>
-                                <dl id="todayUsage_etc"><dt class="txt_etc">검증</dt><dd>-<span class="txt_unit"></span></dd></dl>
-                            </div>
                         </div>
                     </div>
                     <!-- // 에너지 사용 현황 -->
@@ -89,7 +186,7 @@
                         </div>
                         <div class="panel_body clearfix">
                             <div class="div2 w_56p">
-                                <div class="graph_wrap" id="chart" style=""></div>
+                                <div class="graph_wrap" id="realChart" style=""></div>
                             </div>
                         </div>
                     </div>
@@ -219,7 +316,7 @@
                 <div class="div2">
                     <div class="panel_b">
                         <div class="panel_head">
-                            <h3>진행 사용 현황</h3>
+                            <h3>진행 배치 현황</h3>
                         </div>
                         <div class="panel_body clearfix">
                             <div class="div3 w_40p">
@@ -240,6 +337,6 @@
 <!-- //container -->
 <script type="text/javascript" src="../js/layout.js"></script>
 <script type="text/javascript" src="../js/common.js"></script>
-<script src="../dev/dashboard.js"></script>
+<script type="text/javascript" src="../dev/dashboard_dark.js"></script>
 </body>
 </html>
