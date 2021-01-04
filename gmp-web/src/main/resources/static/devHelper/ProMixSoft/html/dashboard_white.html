@@ -11,15 +11,35 @@
 <link rel="stylesheet" type="text/css" href="../css/swiper/swiper-bundle.min.css" />
 <link rel="stylesheet" type="text/css" href="../css/selectric.css" />
 <link rel="stylesheet" type="text/css" href="../css/style_guide.css" />
-<link rel="stylesheet" type="text/css" href="../css/common.css" />
+<link rel="stylesheet" type="text/css" href="../css/common_white.css" />
+
+<!--billboard-->
+<link rel="stylesheet" type="text/css" href="../css/billboard/billboard.css">
+<link rel="stylesheet" type="text/css" href="../css/billboard/insight.css">
+<!--billboard-->
 
 <script type="text/javascript" src="../js/jquery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.selectric.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery-ui.min.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.fileDownload.js"></script>
-<script type="text/javascript" src="../js/swiper/swiper-bundle.min.js"></script>
 
+<!--billboard-->
+<script type="text/javascript" src="../js/billboard/d3.v5.min.js"></script>
+<script type="text/javascript" src="../js/billboard/billboard.js"></script>
+<!--billboard-->
+
+<script type="text/javascript" src="../js/d3/d3.v3.min.js"></script>
+<script type="text/javascript" src="../js/d3/d3.tip.v0.6.3.js"></script>
+
+<script type="text/javascript" src="../js/handlebars-v4.1.2.js"></script>
+<script type="text/javascript" src="../js/helpers.js"></script>
+
+<script type="text/javascript" src="../js/swiper/swiper-bundle.min.js"></script>
+<style>
+.xAxisTickPosition .bb-axis-x line, #xAxisTickPosition .bb-axis-x path { visibility: hidden; }
+#chartXAxisTickPositionServer11 .bb-axis-x line, #xAxisTickPosition .bb-axis-x path { visibility: hidden; }
+</style>
 </head>
 
 <body class="main_body">
@@ -27,7 +47,7 @@
     <!-- header -->
     <div class="header">
         <div class="inwrap">
-            <h1><a href="dashboard.html" class="logo" alt="ProMixSoft | FW Server">&nbsp;</a></h1>
+            <h1><a href="dashboard_white.html" class="logo" alt="ProMixSoft | FW Server">ProMixSoft | FW Server</a></h1>
             <ul class="nav">
                 <li><a href="online.html">온라인</a></li>
                 <li><a href="#">배치</a></li>
@@ -59,14 +79,17 @@
                 <div class="col-lg-4">
                     <div class="panel">
                         <div class="panel_head">
-                            <h2>누적 발전량</h2>             
+                            <h2>최근 24시간 배치 현황</h2>             
                         </div>
                         <div class="panel_body">
                             <div class="hd_txt text-center">
-                                <strong>120.01</strong>
-                                <em class="unit">kWh</em>
+                                <strong>
+                                - 성공 : 78
+                                - 실패 : 0
+                                - 진행 : 13
+                                </strong>
                             </div>
-                            <div class="chart_wrap" style="height:270px; line-height:270px">
+                            <div class="chart_wrap" style="height:270px; line-height:270px" >
                                 chart
                             </div>
                         </div>              
@@ -75,12 +98,15 @@
                 <div class="col-lg-4">
                     <div class="panel">
                         <div class="panel_head">
-                            <h2>시간당 평균 발전량</h2>             
+                            <h2>현재 실행 중인 배치</h2>             
                         </div>
                         <div class="panel_body">
                             <div class="hd_txt text-center">
-                                <strong>20.01</strong>
-                                <em class="unit">kWh</em>
+                                <strong>
+                                - 서버1 : 5
+                                - 서버2 : 3
+                                - 서버3 : 7
+                                </strong>
                             </div>
                             <div class="chart_wrap" style="height:270px; line-height:270px">
                                 chart
@@ -91,7 +117,7 @@
                 <div class="col-lg-4">
                     <div class="panel">
                         <div class="panel_head">
-                            <h2>현장별 누적 발전량</h2>             
+                            <h2>서버별 배치 실행 현황</h2>             
                         </div>
                         <div class="panel_body">
                             <div class="swiper-container ds_swiper">
@@ -99,35 +125,35 @@
                                     <!-- 한 화면당 최대 2개 현장(swiper-slide에 2개 현장이 들어감) -->
                                     <div class="swiper-slide">
                                         <div>
-                                            <h3>[서울] 탄천 발전 1현장</h3>
-                                            <div class="chart_wrap" style="height:120px; line-height:120px">chart</div>
+                                            <h3>[서버1] 접속정보</h3>
+                                            <div class="chart_wrap xAxisTickPosition" style="height:120px; line-height:120px" id="chartXAxisTickPositionServer11">chart</div>
                                         </div>
                                         <div>
-                                            <h3>[서울] 탄천 발전 2현장</h3>
-                                            <div class="chart_wrap" style="height:120px; line-height:120px">chart</div>
+                                            <h3>[서버1] 고객정보</h3>
+                                            <div class="chart_wrap xAxisTickPosition" style="height:120px; line-height:120px" id="chartXAxisTickPositionServer12">chart</div>
                                         </div>
                                     </div>
                                     <!-- //한 화면당 최대 2개 현장 -->                                   
 
                                     <div class="swiper-slide">
                                         <div>
-                                            <h3>[서울] 탄천 발전 3현장</h3>
-                                            <div class="chart_wrap" style="height:120px; line-height:120px">chart</div>
+                                            <h3>[서버2] 대리점 정보</h3>
+                                            <div class="chart_wrap xAxisTickPosition" style="height:120px; line-height:120px" id="chartXAxisTickPositionServer21">chart</div>
                                         </div>
                                         <div>
-                                            <h3>[서울] 탄천 발전 4현장</h3>
-                                            <div class="chart_wrap" style="height:120px; line-height:120px">chart</div>
+                                            <h3>[서버2] 대리점 정산 정보</h3>
+                                            <div class="chart_wrap xAxisTickPosition" style="height:120px; line-height:120px" id="chartXAxisTickPositionServer22">chart</div>
                                         </div>
                                     </div>
 
                                     <div class="swiper-slide">
                                         <div>
-                                            <h3>[서울] 탄천 발전 5현장</h3>
-                                            <div class="chart_wrap" style="height:120px; line-height:120px">chart</div>
+                                            <h3>[서버3] 통계정보</h3>
+                                            <div class="chart_wrap xAxisTickPosition" style="height:120px; line-height:120px" id="chartXAxisTickPositionServer31">chart</div>
                                         </div>
                                         <div>
-                                            <h3>[서울] 탄천 발전 6현장</h3>
-                                            <div class="chart_wrap" style="height:120px; line-height:120px">chart</div>
+                                            <h3>[서버3] 현황정보</h3>
+                                            <div class="chart_wrap xAxisTickPosition" style="height:120px; line-height:120px" id="chartXAxisTickPositionServer32">chart</div>
                                         </div>
                                     </div>
 
@@ -139,7 +165,7 @@
                 <div class="col-lg-4">
                     <div class="panel">
                         <div class="panel_head">
-                            <h2>시간당 평균 발전 효율</h2>               
+                            <h2>일별 배치 현황</h2>               
                         </div>
                         <div class="panel_body">
                             <div class="hd_txt text-center">
@@ -155,7 +181,7 @@
                 <div class="col-lg-4">
                     <div class="panel">
                         <div class="panel_head">
-                            <h2>날씨</h2>             
+                            <h2>월별 배치 현황</h2>             
                         </div>
                         <div class="panel_body">
                             <div class="swiper-container whd_swiper">
@@ -217,34 +243,34 @@
                 <div class="col-lg-4">
                     <div class="panel">
                         <div class="panel_head">
-                            <h2>미터 장애 경보</h2>               
+                            <h2>배치 장애 경보</h2>               
                         </div>
                         <div class="panel_body">
                             <div class="dsboard_list">
                                 <ul>
                                     <li class="latest">
-                                        <span>2020-03-18 12:35:21</span>
-                                        <p>[서울] 탄천 발전 1현장 역율 이상</p>
+                                        <span>2021-01-05 02:35:21</span>
+                                        <p>[서버1] 고객 정보 적재 오류</p>
                                     </li>
                                     <li>
-                                        <span>2020-03-18 12:35:21</span>
-                                        <p>[서울] 탄천 발전 1현장 데이터 수집 실패</p>
+                                        <span>2021-01-04 02:35:21</span>
+                                        <p>[서버2] 고객 정보 전송 오류</p>
                                     </li>
                                     <li>
-                                        <span>2020-03-18 12:35:21</span>
-                                        <p>[서울] 탄천 발전 1현장 역율 이상</p>
+                                        <span>2021-01-03 02:35:21</span>
+                                        <p>[서버3] 고객 정보 추출 오류</p>
                                     </li>
                                     <li>
-                                        <span>2020-03-18 12:35:21</span>
-                                        <p>[서울] 탄천 발전 1현장 데이터 수집 실패</p>
+                                        <span>2021-01-03 02:35:21</span>
+                                        <p>[서버1] 년간 고객 현황 데이타 적재 오류</p>
                                     </li>
                                     <li>
-                                        <span>2020-03-18 12:35:21</span>
-                                        <p>[서울] 탄천 발전 1현장 역율 이상</p>
+                                        <span>2020-01-02 02:35:21</span>
+                                        <p>[서버2] 월별 고객 현황 데이타 적재 오류</p>
                                     </li>
                                     <li>
-                                        <span>2020-03-18 12:35:21</span>
-                                        <p>[서울] 탄천 발전 1현장 데이터 수집 실패</p>
+                                        <span>2021-01-01 01:35:21</span>
+                                        <p>[서버3] 일별 고객 현황 데이타 적재 오류</p>
                                     </li>
                                 </ul>
                             </div>
@@ -281,7 +307,7 @@ $(document).ready(function(){
 </script>
 <script type="text/javascript" src="../js/layout.js"></script>
 <script type="text/javascript" src="../js/common.js"></script>
-<script type="text/javascript" src="../dev/dashboard.js"></script>
+<script type="text/javascript" src="../dev/dashboard_white.js"></script>
 
 </body>
 </html>
