@@ -82,14 +82,14 @@
                             <h2>최근 24시간 배치 현황</h2>             
                         </div>
                         <div class="panel_body">
-                            <div class="hd_txt text-center">
+                            <div class="hd_txt text-center" id="summeryHourRealTime">
                                 <strong>
-                                - 성공 : 78
-                                - 실패 : 0
-                                - 진행 : 13
+                                - 완료 : <span id="comleted">78</span>
+                                - 실패 : <span id="failed">0</span>
+                                - 진행 : <span id="start">13</span>
                                 </strong>
                             </div>
-                            <div class="chart_wrap" style="height:270px; line-height:270px" >
+                            <div class="chart_wrap" style="height:270px; line-height:270px" id="chartHourRealTime">
                                 chart
                             </div>
                         </div>              
@@ -126,11 +126,39 @@
                                     <div class="swiper-slide">
                                         <div>
                                             <h3>[서버1] 접속정보</h3>
-                                            <div class="chart_wrap xAxisTickPosition" style="height:120px; line-height:120px" id="chartXAxisTickPositionServer11">chart</div>
+                                            <div class="chart_wrap xAxisTickPosition" style="height:120px; line-height:120px; " id="chartXAxisTickPositionServer11">chart</div>
                                         </div>
                                         <div>
                                             <h3>[서버1] 고객정보</h3>
-                                            <div class="chart_wrap xAxisTickPosition" style="height:120px; line-height:120px" id="chartXAxisTickPositionServer12">chart</div>
+                                            <div class="clearfix">
+                                                <ul class="fr legend">
+                                                    <li class="l_yellow">진행</li>
+                                                    <li class="l_blue">완료</li>
+                                                    <li class="l_red">실패</li>
+                                                </ul>
+                                            </div>
+                                            <table width="100%" border="0">
+                                            <tr>
+                                                <td align="right" width="60">금일&nbsp;&nbsp;</td>
+                                                <td>
+                                                    <ul class="ratio_bar _on_number">
+                                                        <li class="bg_yellow" style="width:80%;"></li>
+                                                        <li class="bg_bg" style="width:20%;"></li>
+                                                    </ul>
+                                                </td>
+                                                <td align="right" width="10">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" width="60">전일&nbsp;&nbsp;</td>
+                                                <td>
+                                                    <ul class="ratio_bar _on_number">
+                                                        <li class="bg_blue" style="width:100%;"></li>
+                                                    </ul>
+                                                </td>
+                                                <td align="right" width="10">&nbsp;</td>
+                                            </tr>
+                                            </table>
+                                            <!-- div class="chart_wrap xAxisTickPosition" style="height:120px; line-height:120px" id="chartXAxisTickPositionServer12">chart</div -->
                                         </div>
                                     </div>
                                     <!-- //한 화면당 최대 2개 현장 -->                                   
@@ -138,22 +166,141 @@
                                     <div class="swiper-slide">
                                         <div>
                                             <h3>[서버2] 대리점 정보</h3>
-                                            <div class="chart_wrap xAxisTickPosition" style="height:120px; line-height:120px" id="chartXAxisTickPositionServer21">chart</div>
+                                            <div class="clearfix">
+                                                <ul class="fr legend">
+                                                    <li class="l_yellow">진행</li>
+                                                    <li class="l_blue">완료</li>
+                                                    <li class="l_red">실패</li>
+                                                </ul>
+                                            </div>
+                                            <table width="100%" border="0">
+                                            <tr>
+                                                <td align="right" width="60">금일&nbsp;&nbsp;</td>
+                                                <td>
+                                                    <ul class="ratio_bar _on_number">
+                                                        <li class="bg_yellow" style="width:10%;"></li>
+                                                        <li class="bg_blue" style="width:80%;"></li>
+                                                        <li class="bg_red" style="width:5%;"></li>
+                                                        <li class="bg_bg" style="width:5%;"></li>
+                                                    </ul>
+                                                </td>
+                                                <td align="right" width="10">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" width="60">전일&nbsp;&nbsp;</td>
+                                                <td>
+                                                    <ul class="ratio_bar _on_number">
+                                                        <li class="bg_blue" style="width:100%;"></li>
+                                                    </ul>
+                                                </td>
+                                                <td align="right" width="10">&nbsp;</td>
+                                            </tr>
+                                            </table>
                                         </div>
                                         <div>
                                             <h3>[서버2] 대리점 정산 정보</h3>
-                                            <div class="chart_wrap xAxisTickPosition" style="height:120px; line-height:120px" id="chartXAxisTickPositionServer22">chart</div>
+                                            <div class="clearfix">
+                                                <ul class="fr legend">
+                                                    <li class="l_yellow">진행</li>
+                                                    <li class="l_blue">완료</li>
+                                                    <li class="l_red">실패</li>
+                                                </ul>
+                                            </div>
+                                            <table width="100%" border="0">
+                                            <tr>
+                                                <td align="right" width="60">금일&nbsp;&nbsp;</td>
+                                                <td>
+                                                    <ul class="ratio_bar _on_number">
+                                                        <li class="bg_yellow" style="width:80%;"></li>
+                                                        <li class="bg_bg" style="width:20%;"></li>
+                                                    </ul>
+                                                </td>
+                                                <td align="right" width="10">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" width="60">전일&nbsp;&nbsp;</td>
+                                                <td>
+                                                    <ul class="ratio_bar _on_number">
+                                                        <li class="bg_yellow" style="width:10%;"></li>
+                                                        <li class="bg_blue" style="width:80%;"></li>
+                                                        <li class="bg_red" style="width:5%;"></li>
+                                                        <li class="bg_bg" style="width:5%;"></li>
+                                                    </ul>
+                                                </td>
+                                                <td align="right" width="10">&nbsp;</td>
+                                            </tr>
+                                            </table>
                                         </div>
                                     </div>
 
                                     <div class="swiper-slide">
                                         <div>
                                             <h3>[서버3] 통계정보</h3>
-                                            <div class="chart_wrap xAxisTickPosition" style="height:120px; line-height:120px" id="chartXAxisTickPositionServer31">chart</div>
+                                            <div class="clearfix">
+                                                <ul class="fr legend">
+                                                    <li class="l_yellow">진행</li>
+                                                    <li class="l_blue">완료</li>
+                                                    <li class="l_red">실패</li>
+                                                </ul>
+                                            </div>
+                                            <table width="100%" border="0">
+                                            <tr>
+                                                <td align="right" width="60">금일&nbsp;&nbsp;</td>
+                                                <td>
+                                                    <ul class="ratio_bar _on_number">
+                                                        <li class="bg_yellow" style="width:80%;"></li>
+                                                        <li class="bg_bg" style="width:20%;"></li>
+                                                    </ul>
+                                                </td>
+                                                <td align="right" width="10">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" width="60">전일&nbsp;&nbsp;</td>
+                                                <td>
+                                                    <ul class="ratio_bar _on_number">
+                                                        <li class="bg_yellow" style="width:10%;"></li>
+                                                        <li class="bg_blue" style="width:80%;"></li>
+                                                        <li class="bg_red" style="width:5%;"></li>
+                                                        <li class="bg_bg" style="width:5%;"></li>
+                                                    </ul>
+                                                </td>
+                                                <td align="right" width="10">&nbsp;</td>
+                                            </tr>
+                                            </table>
                                         </div>
                                         <div>
                                             <h3>[서버3] 현황정보</h3>
-                                            <div class="chart_wrap xAxisTickPosition" style="height:120px; line-height:120px" id="chartXAxisTickPositionServer32">chart</div>
+                                            <div class="clearfix">
+                                                <ul class="fr legend">
+                                                    <li class="l_yellow">진행</li>
+                                                    <li class="l_blue">완료</li>
+                                                    <li class="l_red">실패</li>
+                                                </ul>
+                                            </div>
+                                            <table width="100%" border="0">
+                                            <tr>
+                                                <td align="right" width="60">금일&nbsp;&nbsp;</td>
+                                                <td>
+                                                    <ul class="ratio_bar _on_number">
+                                                        <li class="bg_yellow" style="width:10%;"></li>
+                                                        <li class="bg_blue" style="width:80%;"></li>
+                                                        <li class="bg_red" style="width:5%;"></li>
+                                                        <li class="bg_bg" style="width:5%;"></li>
+                                                    </ul>
+                                                </td>
+                                                <td align="right" width="10">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" width="60">전일&nbsp;&nbsp;</td>
+                                                <td>
+                                                    <ul class="ratio_bar _on_number">
+                                                        <li class="bg_blue" style="width:90%;"></li>
+                                                        <li class="bg_red" style="width:10%;"></li>
+                                                    </ul>
+                                                </td>
+                                                <td align="right" width="10">&nbsp;</td>
+                                            </tr>
+                                            </table>
                                         </div>
                                     </div>
 
@@ -184,60 +331,14 @@
                             <h2>월별 배치 현황</h2>             
                         </div>
                         <div class="panel_body">
-                            <div class="swiper-container whd_swiper">
-                                <div class="swiper-wrapper">
-                                    <!-- 한 화면당 운영중인 현장 주소지 1개 기준 -->
-                                    <div class="swiper-slide">
-                                        <p class="data_info">서울 서대문구 xx동 13시 기준</p>
-                                        <h4>금일</h4>
-                                        <div class="row whd_box">
-                                            <div class="col-lg-6"><span class="icon">날씨아이콘</span></div>
-                                            <div class="col-lg-6">
-                                                <p>
-                                                    <strong>11.0</strong>
-                                                    <em class="unit">℃</em>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <h4>전일</h4>
-                                        <div class="row whd_box">
-                                            <div class="col-lg-6"><span class="icon">날씨아이콘</span></div>
-                                            <div class="col-lg-6">
-                                                <p>
-                                                    <strong>11.0</strong>
-                                                    <em class="unit">℃</em>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="swiper-slide">
-                                        <p class="data_info">대전 서대문구 xx동 13시 기준</p>
-                                        <h4>금일</h4>
-                                        <div class="row whd_box">
-                                            <div class="col-lg-6"><span class="icon">날씨아이콘</span></div>
-                                            <div class="col-lg-6">
-                                                <p>
-                                                    <strong>11.0</strong>
-                                                    <em class="unit">℃</em>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <h4>전일</h4>
-                                        <div class="row whd_box">
-                                            <div class="col-lg-6"><span class="icon">날씨아이콘</span></div>
-                                            <div class="col-lg-6">
-                                                <p>
-                                                    <strong>11.0</strong>
-                                                    <em class="unit">℃</em>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
+                            <div class="hd_txt text-center">
+                                <strong>23.5</strong>
+                                <em class="unit">%</em>
                             </div>
-                        </div>              
+                            <div class="chart_wrap" style="height:270px; line-height:270px">
+                                chart
+                            </div>
+                        </div>          
                     </div>
                 </div>
                 <div class="col-lg-4">
