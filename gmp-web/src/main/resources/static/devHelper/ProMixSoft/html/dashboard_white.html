@@ -101,14 +101,14 @@
                             <h2>현재 실행 중인 배치</h2>             
                         </div>
                         <div class="panel_body">
-                            <div class="hd_txt text-center">
+                            <div class="hd_txt text-center"  id="summeryServerRealTime">
                                 <strong>
-                                - 서버1 : 5
-                                - 서버2 : 3
-                                - 서버3 : 7
+                                - 서버1 : <span id="server01">78</span>
+                                - 서버2 : <span id="server02">78</span>
+                                - 서버3 : <span id="server03">78</span>
                                 </strong>
                             </div>
-                            <div class="chart_wrap" style="height:270px; line-height:270px">
+                            <div class="chart_wrap" style="height:270px; line-height:270px" id="chartServerRealTime">
                                 chart
                             </div>
                         </div>                  
@@ -315,11 +315,7 @@
                             <h2>일별 배치 현황</h2>               
                         </div>
                         <div class="panel_body">
-                            <div class="hd_txt text-center">
-                                <strong>23.5</strong>
-                                <em class="unit">%</em>
-                            </div>
-                            <div class="chart_wrap" style="height:270px; line-height:270px">
+                            <div class="chart_wrap" style="height:360px; line-height:360px" id="chartDaily">
                                 chart
                             </div>
                         </div>              
@@ -331,11 +327,7 @@
                             <h2>월별 배치 현황</h2>             
                         </div>
                         <div class="panel_body">
-                            <div class="hd_txt text-center">
-                                <strong>23.5</strong>
-                                <em class="unit">%</em>
-                            </div>
-                            <div class="chart_wrap" style="height:270px; line-height:270px">
+                            <div class="chart_wrap" style="height:360px; line-height:360px" id="chartMonthly">
                                 chart
                             </div>
                         </div>          
