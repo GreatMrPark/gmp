@@ -291,13 +291,12 @@ function fnChartMonthly() {
     
     var chartData = [];
 
-    var toDate = new Date();
     var data = [];
-    for (var i = 0; i < 30; i++) {
-        toDate.setDate(toDate.getDate()-1);
-        
+    for (var i = 30; i > 0; i--) {
+        var dayDiff = i * (-1);
+
         var obj = new Object;
-        obj.ctime       = shiftDate(toDate, 0, 0, 0, "-");
+        obj.ctime       = shiftDate(new Date(), 0, 0, dayDiff , "-");
         obj.completed   = Math.round(Math.random()*100);
         obj.failed      = Math.round(Math.random()*100);
         obj.start       = Math.round(Math.random()*100);
