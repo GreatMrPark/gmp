@@ -142,9 +142,7 @@ function makeChart(targetObj, chartData, chartType, chartCycle) {
 
     var data = chartData;
     var chartData = data.data.resultData.chartList;
-    console.log(chartData);
     var codeList  = data.data.resultData.codeList;
-    console.log(codeList);
 
     //chart
     keyArr = ["chartDate"];
@@ -157,10 +155,7 @@ function makeChart(targetObj, chartData, chartType, chartCycle) {
         labelArr.push(codeList[i].masterDesc);
         typesArr.push(chartType);
     }
-    console.log(keyArr);
-    console.log(labelArr);
-    console.log(typesArr);
-
+    
     config = chart.baseConfig(targetObj, chartData, keyArr, labelArr, typesArr, colorArr);    
     config.axis.y.show = true;
     config.legend.show = true;
