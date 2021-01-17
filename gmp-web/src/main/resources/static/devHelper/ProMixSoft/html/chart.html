@@ -21,15 +21,160 @@
 <script type="text/javascript" src="../js/billboard/billboard.js"></script>
 <!--billboard-->
 <body>
-<h1>1. 막대 챠트</h1>
-<div id="barChart"></div>
+<h1>1. 시간대별</h1>
+<div id="hourChart"></div>
 
-<h1>2. 선 챠트</h1>
-<div id="lineChart"></div>
+<h1>2. 일별</h1>
+<div id="dayChart"></div>
 
-<h1>3. 게이지 챠트</h1>
-<div id="gaugeChart"></div>
+<h1>3. 주별</h1>
+<div id="weekChart"></div>
+
+<h1>3. 월별</h1>
+<div id="monthChart"></div>
 
 <script type="text/javascript" src="../js/common.js"></script>
-<script type="text/javascript" src="../dev/gmpChart.js"></script>
+<script type="text/javascript" >
+//--------------------------------------------------------------------------------
+//chart에 사용되는 obj
+//--------------------------------------------------------------------------------
+var keyArr = [];
+var labelArr = [];
+var typesArr = [];
+var colorArr = [];
+var config;
+var chartObjArr = [];
+
+//--------------------------------------------------------------------------------
+//chart obj destroy
+//--------------------------------------------------------------------------------
+function setChartDestroy(){
+  for(var i=0; i<chartObjArr.length; i++){
+      chartObjArr[i].destroy();
+  }
+  chartObjArr = [];
+}
+
+var fnChart = function() {
+    
+    // 챠트초기화
+    setChartDestroy();
+    
+    // 월챠트 
+     monthMakechart();
+     
+     // 주챠트 
+     weekMakechart();
+     
+     // 일챠트 
+     dayMakechart();
+     
+     // 시간챠트 
+     hourMakechart();
+}
+
+//--------------------------------------------------------------------------------
+//hourMakechart
+//--------------------------------------------------------------------------------
+function hourMakechart() {
+  var targetObj = '#hourChart';
+  var chartType = 'line';
+  var chartCycle = 'HOUR'; //HOUR, DAY, WEEK, MONTH
+
+  // 통신을 통한 json data
+  var chartJson = '{ "resultCode": "OK", "resultMsg": "결과가 있습니다.", "data": { "totalCnt": 0, "page": 1, "pageCnt": 0, "resultCnt": 10, "resultData": { "chartList": [ { "chartDate": "2021-01-17 00:00:00", "DS_0003": 0, "DS_0002": 0, "DS_0001": 0, "DS_0007": 0, "DS_0006": 0, "tolalCount": 0, "DS_0005": 0, "selectDate": "2021-01-17 00:00:00", "DS_0004": 0 }, { "chartDate": "2021-01-17 01:00:00", "DS_0003": 44, "DS_0002": 0, "DS_0001": 0, "DS_0007": 0, "DS_0006": 0, "tolalCount": 44, "DS_0005": 0, "selectDate": "2021-01-17 01:00:00", "DS_0004": 0 }, { "chartDate": "2021-01-17 02:00:00", "DS_0003": 88, "DS_0002": 0, "DS_0001": 0, "DS_0007": 0, "DS_0006": 0, "tolalCount": 88, "DS_0005": 0, "selectDate": "2021-01-17 02:00:00", "DS_0004": 0 }, { "chartDate": "2021-01-17 03:00:00", "DS_0003": 12, "DS_0002": 0, "DS_0001": 0, "DS_0007": 0, "DS_0006": 0, "tolalCount": 12, "DS_0005": 0, "selectDate": "2021-01-17 03:00:00", "DS_0004": 0 }, { "chartDate": "2021-01-17 04:00:00", "DS_0003": 0, "DS_0002": 0, "DS_0001": 0, "DS_0007": 0, "DS_0006": 0, "tolalCount": 0, "DS_0005": 0, "selectDate": "2021-01-17 04:00:00", "DS_0004": 0 }, { "chartDate": "2021-01-17 05:00:00", "DS_0003": 0, "DS_0002": 0, "DS_0001": 0, "DS_0007": 0, "DS_0006": 0, "tolalCount": 0, "DS_0005": 0, "selectDate": "2021-01-17 05:00:00", "DS_0004": 0 }, { "chartDate": "2021-01-17 06:00:00", "DS_0003": 0, "DS_0002": 0, "DS_0001": 0, "DS_0007": 0, "DS_0006": 0, "tolalCount": 0, "DS_0005": 0, "selectDate": "2021-01-17 06:00:00", "DS_0004": 0 }, { "chartDate": "2021-01-17 07:00:00", "DS_0003": 0, "DS_0002": 0, "DS_0001": 0, "DS_0007": 0, "DS_0006": 0, "tolalCount": 0, "DS_0005": 0, "selectDate": "2021-01-17 07:00:00", "DS_0004": 0 }, { "chartDate": "2021-01-17 08:00:00", "DS_0003": 3, "DS_0002": 0, "DS_0001": 0, "DS_0007": 0, "DS_0006": 0, "tolalCount": 3, "DS_0005": 0, "selectDate": "2021-01-17 08:00:00", "DS_0004": 0 }, { "chartDate": "2021-01-17 09:00:00", "DS_0003": 42, "DS_0002": 1, "DS_0001": 0, "DS_0007": 0, "DS_0006": 0, "tolalCount": 43, "DS_0005": 0, "selectDate": "2021-01-17 09:00:00", "DS_0004": 0 }, { "chartDate": "2021-01-17 10:00:00", "DS_0003": 7, "DS_0002": 0, "DS_0001": 0, "DS_0007": 0, "DS_0006": 0, "tolalCount": 7, "DS_0005": 0, "selectDate": "2021-01-17 10:00:00", "DS_0004": 0 }, { "chartDate": "2021-01-17 11:00:00", "DS_0003": 1, "DS_0002": 0, "DS_0001": 0, "DS_0007": 0, "DS_0006": 0, "tolalCount": 1, "DS_0005": 0, "selectDate": "2021-01-17 11:00:00", "DS_0004": 0 }, { "chartDate": "2021-01-17 12:00:00", "DS_0003": 5, "DS_0002": 0, "DS_0001": 0, "DS_0007": 0, "DS_0006": 0, "tolalCount": 5, "DS_0005": 0, "selectDate": "2021-01-17 12:00:00", "DS_0004": 0 }, { "chartDate": "2021-01-17 13:00:00", "DS_0003": 0, "DS_0002": 0, "DS_0001": 0, "DS_0007": 0, "DS_0006": 0, "tolalCount": 0, "DS_0005": 0, "selectDate": "2021-01-17 13:00:00", "DS_0004": 0 }, { "chartDate": "2021-01-17 14:00:00", "DS_0003": 0, "DS_0002": 0, "DS_0001": 0, "DS_0007": 0, "DS_0006": 0, "tolalCount": 0, "DS_0005": 0, "selectDate": "2021-01-17 14:00:00", "DS_0004": 0 }, { "chartDate": "2021-01-17 15:00:00", "DS_0003": 0, "DS_0002": 0, "DS_0001": 0, "DS_0007": 0, "DS_0006": 0, "tolalCount": 0, "DS_0005": 0, "selectDate": "2021-01-17 15:00:00", "DS_0004": 0 } ], "codeList": [ { "codeMasterSeq": 1, "codeGroup": "DEVICE_STATUS", "masterCode": "DS_0001", "masterCodeName": "REGISTERED", "masterDesc": "등록 ", "remark": "등록 ", "useYn": true, "delYn": false, "regId": "geilx3272", "regDate": "2019-06-27 11:51:02", "updId": "geilx3020", "updDate": "2019-06-27 11:51:02", "masterCodePrnt": null, "ord": 0 }, { "codeMasterSeq": 2, "codeGroup": "DEVICE_STATUS", "masterCode": "DS_0002", "masterCodeName": "STOPPED", "masterDesc": "중지", "remark": "중지", "useYn": true, "delYn": false, "regId": "geilx3272", "regDate": "2019-06-27 11:51:02", "updId": "geilx3020", "updDate": "2019-06-27 11:51:02", "masterCodePrnt": null, "ord": 0 }, { "codeMasterSeq": 3, "codeGroup": "DEVICE_STATUS", "masterCode": "DS_0003", "masterCodeName": "RUNNING", "masterDesc": "운행", "remark": "운행 상태", "useYn": true, "delYn": false, "regId": "geilx3272", "regDate": "2019-06-27 11:51:02", "updId": "geilx3020", "updDate": "2019-06-27 11:51:02", "masterCodePrnt": null, "ord": 0 }, { "codeMasterSeq": 4, "codeGroup": "DEVICE_STATUS", "masterCode": "DS_0004", "masterCodeName": "DEALLOCATED", "masterDesc": "할당 해제", "remark": "할당 해제 상태", "useYn": true, "delYn": false, "regId": "geilx3272", "regDate": "2019-06-27 11:51:02", "updId": "geilx3020", "updDate": "2019-06-27 11:51:02", "masterCodePrnt": null, "ord": 0 }, { "codeMasterSeq": 5, "codeGroup": "DEVICE_STATUS", "masterCode": "DS_0005", "masterCodeName": "DELETED", "masterDesc": "삭제", "remark": "삭제 상태", "useYn": true, "delYn": false, "regId": "geilx3272", "regDate": "2019-06-27 11:51:02", "updId": "geilx3020", "updDate": "2019-06-27 11:51:02", "masterCodePrnt": null, "ord": 0 }, { "codeMasterSeq": 6, "codeGroup": "DEVICE_STATUS", "masterCode": "DS_0006", "masterCodeName": "FAILURE", "masterDesc": "오류", "remark": "오류 상태", "useYn": true, "delYn": false, "regId": "geilx3272", "regDate": "2019-06-27 11:51:02", "updId": "geilx3020", "updDate": "2019-06-27 11:51:02", "masterCodePrnt": null, "ord": 0 }, { "codeMasterSeq": 7, "codeGroup": "DEVICE_STATUS", "masterCode": "DS_0007", "masterCodeName": "UGING", "masterDesc": "업그레이드 중", "remark": "업그레이드 중인 상태", "useYn": true, "delYn": false, "regId": "geilx3272", "regDate": "2019-06-27 11:51:02", "updId": "geilx3020", "updDate": "2019-06-27 11:51:02", "masterCodePrnt": null, "ord": 0 } ] } } }';
+  var chartData = JSON.parse(chartJson);
+  makeChart(targetObj, chartData, chartType, chartCycle);
+}
+
+
+//--------------------------------------------------------------------------------
+//dayMakechart
+//--------------------------------------------------------------------------------
+function dayMakechart() {
+    var targetObj = '#dayChart';
+    var chartType = 'bar';
+    var chartCycle = 'DAY'; //HOUR, DAY, WEEK, MONTH
+
+    // 통신을 통한 json data
+    var chartJson = '{"resultCode":"OK","resultMsg":"결과가 있습니다.","data":{"totalCnt":0,"page":1,"pageCnt":0,"resultCnt":10,"resultData":{"chartList":[{"chartDate":"2019-09-08","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2019-09-08","DS_0004":0},{"chartDate":"2019-09-09","DS_0003":44,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":44,"DS_0005":0,"selectDate":"2019-09-09","DS_0004":0},{"chartDate":"2019-09-10","DS_0003":88,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":88,"DS_0005":0,"selectDate":"2019-09-10","DS_0004":0},{"chartDate":"2019-09-11","DS_0003":12,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":12,"DS_0005":0,"selectDate":"2019-09-11","DS_0004":0},{"chartDate":"2019-09-12","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2019-09-12","DS_0004":0},{"chartDate":"2019-09-13","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2019-09-13","DS_0004":0},{"chartDate":"2019-09-14","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2019-09-14","DS_0004":0},{"chartDate":"2019-09-15","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2019-09-15","DS_0004":0},{"chartDate":"2019-09-16","DS_0003":3,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":3,"DS_0005":0,"selectDate":"2019-09-16","DS_0004":0},{"chartDate":"2019-09-17","DS_0003":42,"DS_0002":1,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":43,"DS_0005":0,"selectDate":"2019-09-17","DS_0004":0},{"chartDate":"2019-09-18","DS_0003":7,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":7,"DS_0005":0,"selectDate":"2019-09-18","DS_0004":0},{"chartDate":"2019-09-19","DS_0003":1,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":1,"DS_0005":0,"selectDate":"2019-09-19","DS_0004":0},{"chartDate":"2019-09-20","DS_0003":5,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":5,"DS_0005":0,"selectDate":"2019-09-20","DS_0004":0},{"chartDate":"2019-09-21","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2019-09-21","DS_0004":0},{"chartDate":"2019-09-22","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2019-09-22","DS_0004":0},{"chartDate":"2019-09-23","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2019-09-23","DS_0004":0}],"codeList":[{"codeMasterSeq":1,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0001","masterCodeName":"REGISTERED","masterDesc":"등록 ","remark":"등록 ","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":2,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0002","masterCodeName":"STOPPED","masterDesc":"중지","remark":"중지","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":3,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0003","masterCodeName":"RUNNING","masterDesc":"운행","remark":"운행 상태","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":4,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0004","masterCodeName":"DEALLOCATED","masterDesc":"할당 해제","remark":"할당 해제 상태","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":5,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0005","masterCodeName":"DELETED","masterDesc":"삭제","remark":"삭제 상태","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":6,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0006","masterCodeName":"FAILURE","masterDesc":"오류","remark":"오류 상태","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":7,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0007","masterCodeName":"UGING","masterDesc":"업그레이드 중","remark":"업그레이드 중인 상태","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0}]}}}';
+    var chartData = JSON.parse(chartJson);
+    makeChart(targetObj, chartData, chartType, chartCycle);
+}
+
+//--------------------------------------------------------------------------------
+//weekMakechart
+//--------------------------------------------------------------------------------
+function weekMakechart() {
+    var targetObj = '#weekChart';
+    var chartType = 'spline';
+    var chartCycle = 'WEEK'; //HOUR, DAY, WEEK, MONTH
+  
+    // 통신을 통한 json data
+    var chartJson = '{"resultCode":"OK","resultMsg":"결과가 있습니다.","data":{"totalCnt":0,"page":1,"pageCnt":0,"resultCnt":10,"resultData":{"chartList":[{"chartDate":"2019-10-03","DS_0003":140,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":141,"DS_0005":1,"selectDate":"2019-42","DS_0004":0},{"chartDate":"2019-10-04","DS_0003":107,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":107,"DS_0005":0,"selectDate":"2019-43","DS_0004":0},{"chartDate":"2019-10-05","DS_0003":132,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":132,"DS_0005":0,"selectDate":"2019-44","DS_0004":0},{"chartDate":"2019-11-01","DS_0003":41,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":41,"DS_0005":0,"selectDate":"2019-45","DS_0004":0},{"chartDate":"2019-11-02","DS_0003":57,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":57,"DS_0005":0,"selectDate":"2019-46","DS_0004":0},{"chartDate":"2019-11-03","DS_0003":58,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":58,"DS_0005":0,"selectDate":"2019-47","DS_0004":0},{"chartDate":"2019-11-04","DS_0003":42,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":42,"DS_0005":0,"selectDate":"2019-48","DS_0004":0},{"chartDate":"2019-12-01","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2019-49","DS_0004":0},{"chartDate":"2019-12-02","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2019-50","DS_0004":0},{"chartDate":"2019-12-03","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2019-51","DS_0004":0},{"chartDate":"2019-12-04","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2019-52","DS_0004":0},{"chartDate":"2020-01-01","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2020-01","DS_0004":0},{"chartDate":"2020-01-02","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2020-02","DS_0004":0},{"chartDate":"2020-01-03","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2020-03","DS_0004":0}],"codeList":[{"codeMasterSeq":1,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0001","masterCodeName":"REGISTERED","masterDesc":"등록 ","remark":"등록 ","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":2,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0002","masterCodeName":"STOPPED","masterDesc":"중지","remark":"중지","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":3,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0003","masterCodeName":"RUNNING","masterDesc":"운행","remark":"운행 상태","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":4,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0004","masterCodeName":"DEALLOCATED","masterDesc":"할당 해제","remark":"할당 해제 상태","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":5,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0005","masterCodeName":"DELETED","masterDesc":"삭제","remark":"삭제 상태","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":6,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0006","masterCodeName":"FAILURE","masterDesc":"오류","remark":"오류 상태","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":7,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0007","masterCodeName":"UGING","masterDesc":"업그레이드 중","remark":"업그레이드 중인 상태","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0}]}}}';
+    var chartData = JSON.parse(chartJson);
+    makeChart(targetObj, chartData, chartType, chartCycle);
+}
+
+//--------------------------------------------------------------------------------
+//monthMakechart
+//--------------------------------------------------------------------------------
+function monthMakechart() {
+
+    var targetObj = '#monthChart';
+    var chartType = 'spline';
+    var chartCycle = 'MONTH'; //HOUR, DAY, WEEK, MONTH
+    
+    // 통신을 통한 json data
+    var chartJson = '{"resultCode":"OK","resultMsg":"결과가 있습니다.","data":{"totalCnt":0,"page":1,"pageCnt":0,"resultCnt":10,"resultData":{"chartList":[{"chartDate":"2019-09","DS_0003":314,"DS_0002":1,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":315,"DS_0005":0,"selectDate":"2019-09","DS_0004":0},{"chartDate":"2019-10","DS_0003":581,"DS_0002":4,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":601,"DS_0005":3,"selectDate":"2019-10","DS_0004":13},{"chartDate":"2019-11","DS_0003":253,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":253,"DS_0005":0,"selectDate":"2019-11","DS_0004":0},{"chartDate":"2019-12","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2019-12","DS_0004":0},{"chartDate":"2020-01","DS_0003":0,"DS_0002":0,"DS_0001":0,"DS_0007":0,"DS_0006":0,"tolalCount":0,"DS_0005":0,"selectDate":"2020-01","DS_0004":0}],"codeList":[{"codeMasterSeq":1,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0001","masterCodeName":"REGISTERED","masterDesc":"등록 ","remark":"등록 ","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":2,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0002","masterCodeName":"STOPPED","masterDesc":"중지","remark":"중지","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":3,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0003","masterCodeName":"RUNNING","masterDesc":"운행","remark":"운행 상태","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":4,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0004","masterCodeName":"DEALLOCATED","masterDesc":"할당 해제","remark":"할당 해제 상태","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":5,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0005","masterCodeName":"DELETED","masterDesc":"삭제","remark":"삭제 상태","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":6,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0006","masterCodeName":"FAILURE","masterDesc":"오류","remark":"오류 상태","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0},{"codeMasterSeq":7,"codeGroup":"DEVICE_STATUS","masterCode":"DS_0007","masterCodeName":"UGING","masterDesc":"업그레이드 중","remark":"업그레이드 중인 상태","useYn":true,"delYn":false,"regId":"geilx3272","regDate":"2019-06-27 11:51:02","updId":"geilx3020","updDate":"2019-06-27 11:51:02","masterCodePrnt":null,"ord":0}]}}}';
+    var chartData = JSON.parse(chartJson);
+    makeChart(targetObj, chartData, chartType, chartCycle);
+}
+
+//--------------------------------------------------------------------------------
+//chart obj destroy
+// targetObj : 챠트영역 객체
+// chartType : 챠트타입
+// chartCycle : 챠트주기
+// chartData : 챠트데이타 
+//--------------------------------------------------------------------------------
+function makeChart(targetObj, chartData, chartType, chartCycle) {
+
+    var data = chartData;
+    var chartData = data.data.resultData.chartList;
+    console.log(chartData);
+    var codeList  = data.data.resultData.codeList;
+    console.log(codeList);
+
+    //chart
+    keyArr = ["chartDate"];
+    labelArr = [];
+    typesArr = [];
+    colorArr = [];
+
+    for (var i = 0; i < codeList.length; i++) {
+        keyArr.push(codeList[i].masterCode);
+        labelArr.push(codeList[i].masterDesc);
+        typesArr.push(chartType);
+    }
+    console.log(keyArr);
+    console.log(labelArr);
+    console.log(typesArr);
+
+    config = chart.baseConfig(targetObj, chartData, keyArr, labelArr, typesArr, colorArr);    
+    config.axis.y.show = true;
+    config.legend.show = true;
+    config.legend.position = "right";
+
+    // 원하는 포맷이 있으면 common.js chart 객체 내부를 수정 해야 함.
+    // 아니면 공백을 넣고 실제 데이터 x 좌표를 가공해야함.
+    chart.chartDateStr(chartCycle);
+    
+    chartObjArr.push(bb.generate( config ));
+}
+
+$(document).ready(function(){
+    fnChart();
+});
+</Script>
 </body>
