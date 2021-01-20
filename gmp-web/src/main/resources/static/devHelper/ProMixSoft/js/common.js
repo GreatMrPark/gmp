@@ -1496,37 +1496,54 @@ var chart = {
         return config;
     },
 
-    chartDateStr : function(config, chartCycle){
-        if(chartCycle == 'DAY'){
-            config.axis.x.tick.format =function(index, axisVal) {
-                if(axisVal !== undefined){
-                    var tempStr = axisVal + "";
-                    return tempStr.substr(5,10);
-                }
-            };
-        }else if(chartCycle == 'WEEK'){
-            config.axis.x.tick.format =function(index, axisVal) {
-                if(axisVal !== undefined){
-                    var tempStr = axisVal + "";
-                    return tempStr.substr(5,10);
-                }
-            };
-        }else if(chartCycle == 'MONTH'){
+    chartDateStr : function(config, chartCycle) {
 
-        }else if(chartCycle == 'HOUR'){
+        if(chartCycle == 'HOUR'){
+            config.axis.x.tick.format =function(index, axisVal) {
+                console.log(axisVal);
+                if(axisVal !== undefined){
+                    var tempStr = axisVal + "";
+                    tempStr = tempStr.substr(10);
+                    tempStr = tempStr.split(":")[0] + "H";
+                    console.log(axisVal);
+                    return tempStr; // .substr(10);
+                }
+            };
+        }
+        else if(chartCycle ==='HOUR_BY_FULLSTRING'){
             config.axis.x.tick.format =function(index, axisVal) {
                 if(axisVal !== undefined){
                     var tempStr = axisVal + "";
-                    return tempStr.substr(5,13);
+                    tempStr = tempStr.substr(10);
+                    return tempStr;
                 }
             };
-        }else if(chartCycle ==='HOUR_BY_FULLSTRING'){
+        }
+        else if(chartCycle == 'DAY'){
             config.axis.x.tick.format =function(index, axisVal) {
                 if(axisVal !== undefined){
                     var tempStr = axisVal + "";
-                    return tempStr.substr(8);
+                    return tempStr;
                 }
             };
+        }
+        else if(chartCycle == 'WEEK') {
+            config.axis.x.tick.format = function(index, axisVal) {
+                if(axisVal !== undefined){
+                    var tempStr = axisVal + "";
+                    tempStr = tempStr.substr(5,10) + " 주차";
+                    return tempStr;
+                }
+            };
+        }
+        else if(chartCycle == 'MONTH') {
+            config.axis.x.tick.format = function(index, axisVal) {
+                if(axisVal !== undefined){
+                    var tempStr = axisVal + "";
+                    return tempStr;//.substr(5,10);
+                }
+            };
+
         }
 
         return config;
