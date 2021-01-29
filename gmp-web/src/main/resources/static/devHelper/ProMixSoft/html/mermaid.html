@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Mermaid Quick Test Page</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=">
+<style>
+div.mermaid {
+    /* font-family: 'trebuchet ms', verdana, arial; */
+    font-family: 'Courier New', Courier, monospace !important;
+}
+</style>
+<script type="text/javascript" src="../js/jquery/jquery-3.2.1.min.js"></script>  
+</head>
+<body>
+<h1>스케쥴러 진행사항</h1>
+
+<div class="mermaid" id="diagram"></div>
+<script src="../js/mermaid/mermaid.js"></script>
+<script>
+var text = "";
+text += "classDiagram";
+text += "class JOB20210129_01";
+text += "JOB20210129_01 : 선후범시연 - 1 레벨";
+text += "JOB20210129_01 : 10 / 10 (100%)";
+text += "JOB20210129_01 : SLEEP";
+
+$("#diagram").html(text);
+mermaid.initialize({
+    theme: 'default'
+});
+</script>
+</body>
+</html>
