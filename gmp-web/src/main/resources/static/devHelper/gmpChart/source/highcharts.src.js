@@ -41,8 +41,7 @@
          * */
         /* globals Image, window */
         /**
-         * Reference to the global SVGElement class as a workaround for a name conflict
-         * in the Highcharts namespace.
+         * Reference to the global SVGElement class as a workaround for a name conflict in the Highcharts namespace.
          *
          * @global
          * @typedef {global.SVGElement} GlobalSVGElement
